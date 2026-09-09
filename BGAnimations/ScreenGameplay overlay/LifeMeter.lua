@@ -7,7 +7,9 @@ local BarW = math.ceil(GAMESTATE:GetCurrentStyle():GetWidth(pn) * 1.5)
 if BarW > SCREEN_WIDTH then BarW = SCREEN_WIDTH - 80 end
 if (GAMESTATE:GetNumPlayersEnabled() > 1 or GAMESTATE:GetCurrentStyle():GetStyleType() == "StyleType_OnePlayerOneSide")
     and BarW > SCREEN_WIDTH / 2 then BarW = BarW / 2 end 
-local BarH = 30
+local BarH = 40
+
+-- thing
 
 local MeterHot = false
 local MeterHotPro = false
@@ -74,14 +76,14 @@ local t = Def.ActorFrame {
             if LifeAmount <= 0.33 and not MeterDanger then
                 self:GetChild("BarBody"):diffusebottomedge(Color.Red)
                 self:GetChild("BarEdgeL"):diffusebottomedge(Color.Red)
-                self:GetChild("BarEdgeR"):diffusetopedge(Color.Red) -- This one is flipped :)
+                self:GetChild("BarEdgeR"):diffusebottomedge(Color.Red) -- this thing aint flipped bruh
 		        self:GetChild("Tip"):visible(0)
 		        self:GetChild("Tip-Danger"):visible(1)
                 MeterDanger = true
             elseif LifeAmount > 0.33 and MeterDanger and not MeterFail then
                 self:GetChild("BarBody"):stoptweening():linear(0.5):diffusebottomedge(Color.White)
                 self:GetChild("BarEdgeL"):stoptweening():linear(0.5):diffusebottomedge(Color.White)
-                self:GetChild("BarEdgeR"):stoptweening():linear(0.5):diffusetopedge(Color.White)
+                self:GetChild("BarEdgeR"):stoptweening():linear(0.5):diffusebottomedge(Color.White)
 		        self:GetChild("Tip-Danger"):visible(0)
                 MeterDanger = false
             end
@@ -173,32 +175,32 @@ local t = Def.ActorFrame {
         Name="Avatar",
         Texture=LoadModule("Options.GetProfileData.lua")(pn)["Image"],
         InitCommand=function(self)
-            self:scaletofit(0, 0, 30, 30)
-            :xy(pn == PLAYER_1 and -BarW / 2 - 15 or BarW / 2 + 15, 0)
+            self:scaletofit(0, 0, 37, 37):rotationy(pn==PLAYER_1 and 0 or -180)
+            :xy(-BarW / 2 - 29, 0)
         end
     },
 
     Def.Sprite {
         Name="BarBody",
-        Texture=THEME:GetPathG("", "UI/BarBody"),
+        Texture=THEME:GetPathG("", "UI/euv_center_lifebars"),
         InitCommand=function(self)
-            self:setsize(BarW - 12, BarH)
+            self:setsize(BarW - 5, BarH)
         end
     },
 
     Def.Sprite {
         Name="BarEdgeL",
-        Texture=THEME:GetPathG("", "UI/BarEdge"),
+        Texture=THEME:GetPathG("", "UI/euv_lifebars_sides"),
         InitCommand=function(self)
-            self:x(-BarW / 2):halign(0)
+            self:x(-BarW / 1.974):halign(0):zoomx(0.83):setsize(9.3 , BarH)
         end
     },
 
     Def.Sprite {
         Name="BarEdgeR",
-        Texture=THEME:GetPathG("", "UI/BarEdge"),
+        Texture=THEME:GetPathG("", "UI/euv_lifebars_sides"),
         InitCommand=function(self)
-            self:x(BarW / 2):halign(0):rotationz(180)
+            self:x(BarW / 1.974):halign(0):zoomx(-0.83):setsize(9.3 , BarH)
         end
     },
 
@@ -214,9 +216,9 @@ local t = Def.ActorFrame {
     Def.Quad {
         Name="Meter",
         InitCommand=function(self)
-            self:zoomto(BarW - 12, BarH - 12):x(-20):cropright(0.5)
-            :diffuse(pn == PLAYER_1 and color("#f7931e") or color("#ab78f5"))
-            :diffusebottomedge(pn == PLAYER_1 and color("#ed1e79") or color("#1fbcff"))
+            self:zoomto(BarW - 10, BarH - 16):x(-20):cropright(0.5)
+            :diffuse(pn == PLAYER_1 and color("#00d7fd") or color("#00d7fd"))
+            :diffusebottomedge(pn == PLAYER_1 and color("#007be8") or color("#007be8"))
             :MaskDest():ztestmode("ZTestMode_WriteOnFail")
         end
     },
@@ -224,9 +226,9 @@ local t = Def.ActorFrame {
     Def.Quad {
         Name="Pulse",
         InitCommand=function(self)
-            self:zoomto(20, BarH - 12):halign(0)
-            :diffuse(pn == PLAYER_1 and color("#f7931e") or color("#ab78f5"))
-            :diffusebottomedge(pn == PLAYER_1 and color("#ed1e79") or color("#1fbcff"))
+            self:zoomto(20, BarH - 16):halign(0)
+            :diffuse(pn == PLAYER_1 and color("#00d7fd") or color("#00d7fd"))
+            :diffusebottomedge(pn == PLAYER_1 and color("#007be8") or color("#007be8"))
 
             self:bounce():effectmagnitude(-20,0,0):effectclock("bgm"):effecttiming(1,0,0,0)
             :MaskDest():ztestmode("ZTestMode_WriteOnFail")
@@ -258,18 +260,25 @@ local t = Def.ActorFrame {
         Name="RainbowMeter",
         Texture=THEME:GetPathG("", "UI/RainbowBar"),
         InitCommand=function(self)
-            self:zoomto(BarW - 12, BarH - 12)
-            :texcoordvelocity(-0.5, 0)
-            :diffusealpha(0)
+            self:zoomto(BarW - 10.5, BarH - 16)
+            :texcoordvelocity(-0.9, 0)
+            :diffusealpha(0):diffuseblink():effectcolor1(color("#FFFFFF")):effectcolor2(color("#bbbbbb")):effectperiod(0.09)
         end
     },
-	
+
+    Def.Sprite {
+        Name="BarBodyShine",
+        Texture=THEME:GetPathG("", "UI/euv_shine_lifebars"),
+        InitCommand=function(self)
+            self:setsize(BarW - 5, BarH):diffusealpha(0.5)
+        end
+    },
+
     Def.Sprite {
         Name="Tip",
         Texture=THEME:GetPathG("", "UI/LifeBarTip/normal-tip"),
         InitCommand=function(self)
-            self:zoomto(60, 60)
-            self:pulse():effectmagnitude(1.0,1.25,1.0):effectclock("bgm"):effecttiming(1,0,0,0)
+            self:zoomto(60, 85)
         end
     },
 
@@ -278,8 +287,7 @@ local t = Def.ActorFrame {
         Texture=THEME:GetPathG("", "UI/LifebarTip/danger-tip"),
         InitCommand=function(self)
 			self:visible(0)
-            self:zoomto(60, 60)
-            self:pulse():effectmagnitude(1.0,1.25,1.0):effectclock("bgm"):effecttiming(1,0,0,0)
+            self:zoomto(60, 85)
 		end
     },
 	
@@ -288,15 +296,14 @@ local t = Def.ActorFrame {
         Texture=THEME:GetPathG("", "UI/LifebarTip/pro-tip"),
         InitCommand=function(self)
 			self:visible(0)
-            self:zoomto(60, 60)
-            self:pulse():effectmagnitude(1.0,1.25,1.0):effectclock("bgm"):effecttiming(1,0,0,0)
+            self:zoomto(60, 85)
 		end
     },
 
     Def.BitmapText{
-        Font="Montserrat semibold 20px",
+        Font="inter medium 25px",
         InitCommand=function(self)
-            self:x(BarW / 2 - 10):zoom(0.8):skewx(-0.2):halign(1)
+            self:y(-2.5):x(BarW / 2 - 15):rotationy(pn==PLAYER_1 and 0 or -180):zoom(0.8):halign(pn==PLAYER_1 and 1 or 0)
             :diffuse(Color.Yellow):shadowlength(1):playcommand("Refresh")
         end,
         JudgmentMessageCommand=function(self, params)

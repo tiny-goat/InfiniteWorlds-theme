@@ -73,11 +73,11 @@ local Selections = Def.ActorFrame{
                 Name="Top",
                 InitCommand=function(self)
                         self:valign(1):zoomto(250, 60):y(-90)
-                        self:diffuse(color("#ab78f5")):diffusebottomedge(color("#1fbcff"))
+                        self:diffuse(color("#BB10DD")):diffusebottomedge(color("#1fbcff"))
                 end
         },
         Def.BitmapText {
-                Font="Montserrat Extrabold 40px",
+                Font="inter extrabold 45px",
                 InitCommand=function(self)
                         self:skewx(-0.2):settext("PAUSED")
                         :y(-120)
@@ -110,9 +110,9 @@ for i,v in ipairs(Choices) do
             GainFocusCommand=function(self) self:diffusealpha(0.25) end
         },
         Def.BitmapText {
-            Font="Montserrat semibold 20px",
+            Font="inter medium 32px",
             Text=THEME:GetString("PauseMenu", v.Name),
-            InitCommand=function(self) self:y(-80+(40*i)):strokecolor(Color.Black):playcommand("LoseFocus") end,
+            InitCommand=function(self) self:zoom(0.6):y(-80+(40*i)):strokecolor(Color.Black):playcommand("LoseFocus") end,
             LoseFocusCommand=function(self) self:diffuse(0.8, 0.8, 0.8, 1) end,
             GainFocusCommand=function(self) self:diffuse(Color.White) end
         }

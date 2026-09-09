@@ -39,7 +39,8 @@ for pn in ivalues(GAMESTATE:GetHumanPlayers()) do
     
     t[#t+1] = Def.ActorFrame {
         InitCommand=function(self)
-            self:xy(PosX, PosY)
+		-- janky way of doing the KPump lifebar (jkob)
+            self:xy(PosX, PosY):rotationy(pn==PLAYER_1 and 0 or -180)
         end,
         
         LoadActor("LifeMeter", pn)

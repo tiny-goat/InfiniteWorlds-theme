@@ -1,27 +1,64 @@
-local WheelSize = 13
+local WheelSize = 15
 local WheelCenter = math.ceil( WheelSize * 0.5 )
 local WheelItem = { Width = 212, Height = 120 }
-local WheelSpacing = 250
-local WheelRotation = 0.1
+local WheelSpacing = 230
+local WheelRotation = 0.14
 
 local Songs = {}
 local Targets = {}
 
--- Not load anything if Preferred Sort is not available, this silly check is done
--- because the game will fallback to all songs present in the game install
-if #SONGMAN:GetPreferredSortSongs() == SONGMAN:GetNumSongs() then
-    return Def.Actor {}
-else
+local ChartPreview = LoadModule("Config.Load.lua")("ChartPreview","Save/OutFoxPrefs.ini")
 
-for Song in ivalues(SONGMAN:GetPreferredSortSongs()) do
-	if #SongUtil.GetPlayableSteps(Song) > 0 then
-		Songs[#Songs+1] = Song
-	end
+-- Not load anything if no group sorts are available (catastrophic event or no songs)
+if next(GroupsList) == nil then
+    AssembleGroupSorting()
+    UpdateGroupSorting()
+    
+    if next(GroupsList) == nil then
+        Warn("Groups list is currently inaccessible, halting music wheel!")
+        return Def.Actor {}
+    end
 end
 
-local CurrentIndex = math.random(#Songs)
-if LastSongIndex ~= 0 then CurrentIndex = LastSongIndex end
-local SongIsChosen = false
+LastGroupMainIndex = tonumber(LoadModule("Config.Load.lua")("GroupMainIndex", CheckIfUserOrMachineProfile(string.sub(GAMESTATE:GetMasterPlayerNumber(),-1)-1).."/OutFoxPrefs.ini")) or 1
+LastGroupSubIndex = tonumber(LoadModule("Config.Load.lua")("GroupSubIndex", CheckIfUserOrMachineProfile(string.sub(GAMESTATE:GetMasterPlayerNumber(),-1)-1).."/OutFoxPrefs.ini")) or 1
+LastSongIndex = tonumber(LoadModule("Config.Load.lua")("SongIndex", CheckIfUserOrMachineProfile(string.sub(GAMESTATE:GetMasterPlayerNumber(),-1)-1).."/OutFoxPrefs.ini")) or 1
+--reset LastGroup/Sub/Song if they were deleted since last session to avoid "attempt to index nil" crashes
+if GroupsList[LastGroupMainIndex] == nil then
+    LastGroupMainIndex = 1
+    LastGroupSubIndex = 1
+    LastSongIndex = 1
+    Warn("ScreenSelectMusicFull underlay / MusicWheel.lua: LastGroupMainIndex no longer present, reset performed")
+end
+if GroupsList[LastGroupMainIndex].SubGroups[LastGroupSubIndex] == nil then
+    LastGroupSubIndex = 1
+    LastSongIndex = 1
+    Warn("ScreenSelectMusicFull underlay / MusicWheel.lua: LastGroupSubIndex no longer present, reset performed")
+end
+if GroupsList[LastGroupMainIndex].SubGroups[LastGroupSubIndex].Songs == nil then 
+    LastSongIndex = 1
+    Warn("ScreenSelectMusicFull underlay / MusicWheel.lua: LastSongIndex no longer present, reset performed")
+end
+
+
+local SongIndex = LastSongIndex > 0 and LastSongIndex or 1
+local GroupMainIndex = LastGroupMainIndex > 0 and LastGroupMainIndex or 1
+local GroupSubIndex = LastGroupSubIndex > 0 and LastGroupSubIndex or 1
+
+local IsBusy = false
+
+-- Default is to start at All for now
+Songs = GroupsList[GroupMainIndex].SubGroups[GroupSubIndex].Songs
+
+-- Update Songs item targets
+local function UpdateItemTargets(val)
+    for i = 1, WheelSize do
+        Targets[i] = val + i - WheelCenter
+        -- Wrap to fit to Songs list size
+        while Targets[i] > #Songs do Targets[i] = Targets[i] - #Songs end
+        while Targets[i] < 1 do Targets[i] = Targets[i] + #Songs end
+    end
+end
 
 local function InputHandler(event)
 	local pn = event.PlayerNumber
@@ -30,7 +67,7 @@ local function InputHandler(event)
     -- Don't want to move when releasing the button
     if event.type == "InputEventType_Release" then return end
 
-    local button = event.button
+    local button = event.GameButton
     
     -- If an unjoined player attempts to join and has enough credits, join them
     if (button == "Start" or button == "MenuStart" or button == "Center") and 
@@ -44,24 +81,28 @@ local function InputHandler(event)
 		if pn == PLAYER_1 and not GAMESTATE:IsPlayerEnabled(PLAYER_1) then return end
 		if pn == PLAYER_2 and not GAMESTATE:IsPlayerEnabled(PLAYER_2) then return end
 
-		if not SongIsChosen then
+		if not IsBusy then
 			if button == "Left" or button == "MenuLeft" or button == "DownLeft" then
-				CurrentIndex = CurrentIndex - 1
-				if CurrentIndex < 1 then CurrentIndex = #Songs end
+				SongIndex = SongIndex - 1
+				if SongIndex < 1 then SongIndex = #Songs end
 				
-				GAMESTATE:SetCurrentSong(Songs[CurrentIndex])
-				UpdateItemTargets(CurrentIndex)
+				GAMESTATE:SetCurrentSong(Songs[SongIndex])
+				UpdateItemTargets(SongIndex)
 				MESSAGEMAN:Broadcast("Scroll", { Direction = -1 })
 
 			elseif button == "Right" or button == "MenuRight" or button == "DownRight" then
-				CurrentIndex = CurrentIndex + 1
-				if CurrentIndex > #Songs then CurrentIndex = 1 end
+				SongIndex = SongIndex + 1
+				if SongIndex > #Songs then SongIndex = 1 end
 				
-				GAMESTATE:SetCurrentSong(Songs[CurrentIndex])
-				UpdateItemTargets(CurrentIndex)
+				GAMESTATE:SetCurrentSong(Songs[SongIndex])
+				UpdateItemTargets(SongIndex)
 				MESSAGEMAN:Broadcast("Scroll", { Direction = 1 })
-
+				
 			elseif button == "Start" or button == "MenuStart" or button == "Center" then
+				-- Save this for later
+				LastSongIndex = SongIndex
+				LoadModule("Config.Save.lua")("SongIndex", LastSongIndex, CheckIfUserOrMachineProfile(string.sub(pn,-1)-1).."/OutFoxPrefs.ini")
+				
 				MESSAGEMAN:Broadcast("MusicWheelStart")
 
 			elseif button == "Back" then
@@ -73,60 +114,59 @@ local function InputHandler(event)
 	end
 end
 
--- Update Songs item targets
-function UpdateItemTargets(val)
-    for i = 1, WheelSize do
-        Targets[i] = val + i - WheelCenter
-        -- Wrap to fit to Songs list size
-        while Targets[i] > #Songs do Targets[i] = Targets[i] - #Songs end
-        while Targets[i] < 1 do Targets[i] = Targets[i] + #Songs end
-    end
-end
-
 -- Manages banner on sprite
-function UpdateBanner(self, Song)
-    self:LoadFromSongBanner(Song):scaletoclipped(WheelItem.Width, WheelItem.Height)
+local function UpdateBanner(self, Song)
+    self:LoadFromSongBanner(Song):scaletoclipped(WheelItem.Width, WheelItem.Height):zoomx(0.87)
 end
 
 local t = Def.ActorFrame {
     InitCommand=function(self)
         self:y(SCREEN_HEIGHT / 2 + 155):fov(90):SetDrawByZPosition(true)
         :vanishpoint(SCREEN_CENTER_X, SCREEN_BOTTOM - 150)
-        UpdateItemTargets(CurrentIndex)
+        UpdateItemTargets(SongIndex)
     end,
 
     OnCommand=function(self)
-        GAMESTATE:SetCurrentSong(Songs[CurrentIndex])
+        GAMESTATE:SetCurrentSong(Songs[SongIndex])
         SCREENMAN:GetTopScreen():AddInputCallback(InputHandler)
 
-        self:easeoutexpo(1):y(SCREEN_HEIGHT / 2 - 150)
+        self:easeoutexpo(1):y(SCREEN_HEIGHT / 2 - 165)
     end,
 	
 	OffCommand=function(self)
-		self:easeoutexpo(1):y(SCREEN_HEIGHT / 2 + 155)
+		self:easeoutexpo(1):y(SCREEN_HEIGHT / 2 + 165)
 	end,
-
-    CodeCommand=function(self, params)
-        if params.Name == "FullMode" then
-            -- Prevent the song list from moving when transitioning
-            SongIsChosen = true
-            self:finishtweening():sleep(1):easeoutexpo(1):y(SCREEN_HEIGHT / 2 + 155)
-        end
-    end,
     
     -- Race condition workaround (yuck)
     MusicWheelStartMessageCommand=function(self) self:sleep(0.01):queuecommand("Confirm") end,
     ConfirmCommand=function(self) MESSAGEMAN:Broadcast("SongChosen") end,
-
     -- These are to control the functionality of the music wheel
     SongChosenMessageCommand=function(self)
-        self:stoptweening():easeoutexpo(1):y(SCREEN_HEIGHT / 2 + 150)
-        SongIsChosen = true
+        self:stoptweening():decelerate(0.2):y(SCREEN_HEIGHT / 2 + 165)
+        :playcommand("Busy")
     end,
     SongUnchosenMessageCommand=function(self)
-        self:stoptweening():easeoutexpo(0.5):y(SCREEN_HEIGHT / 2 - 150)
-        SongIsChosen = false
+        self:stoptweening():decelerate(0.2):y(SCREEN_HEIGHT / 2 - 169):accelerate(0.1):y(SCREEN_HEIGHT / 2 - 165)
+        :playcommand("NotBusy")
     end,
+    
+    OpenGroupWheelMessageCommand=function(self) IsBusy = true end,
+    CloseGroupWheelMessageCommand=function(self, params)
+        if params.Silent == false then
+            -- Grab the new list of songs from the selected group
+            Songs = GroupsList[GroupIndex].SubGroups[SubGroupIndex].Songs
+            -- Reset back to the first song of the list
+            SongIndex = 1
+            GAMESTATE:SetCurrentSong(Songs[SongIndex])
+        end
+        -- Update wheel yada yada
+        UpdateItemTargets(SongIndex)
+        MESSAGEMAN:Broadcast("ForceUpdate")
+        self:sleep(0.01):queuecommand("NotBusy")
+    end,
+    
+    BusyCommand=function(self) IsBusy = true end,
+    NotBusyCommand=function(self) IsBusy = false end,
     
     -- Play song preview (thanks Luizsan)
     Def.Actor {
@@ -138,7 +178,16 @@ local t = Def.ActorFrame {
         PlayMusicCommand=function(self)
             local Song = GAMESTATE:GetCurrentSong()
             if Song then
-                SOUND:PlayMusicPart(Song:GetMusicPath(), Song:GetSampleStart(), Song:GetSampleLength(), 0, 1, false, false, false, Song:GetTimingData())
+                if ChartPreview then
+                    local StepList = Song:GetAllSteps()
+                    local FirstStep = StepList[1]
+                    local Duration = FirstStep:GetChartLength()
+                    SOUND:PlayMusicPart(Song:GetMusicPath(), Song:GetSampleStart(), 
+                    (Duration - Song:GetSampleStart()), 0, 1, false, false, false, Song:GetTimingData())
+                else
+                    SOUND:PlayMusicPart(Song:GetMusicPath(), Song:GetSampleStart(), 
+                    Song:GetSampleLength(), 0, 1, false, false, false, Song:GetTimingData())
+                end
             end
         end
     },
@@ -150,7 +199,7 @@ local t = Def.ActorFrame {
     },
 
     Def.Sound {
-        File=THEME:GetPathS("Common", "Start"),
+        File=THEME:GetPathS("", "euv_stepsselect"),
         IsAction=true,
         MusicWheelStartMessageCommand=function(self) self:play() end
     },
@@ -167,11 +216,18 @@ for i = 1, WheelSize do
             -- Set initial position, Direction = 0 means it won't tween
             self:playcommand("Scroll", {Direction = 0})
         end,
+		
+		ForceUpdateMessageCommand=function(self)
+			-- Load banner
+            UpdateBanner(self:GetChild("Banner"), Songs[Targets[i]])
+            
+            --SCREENMAN:SystemMessage(GroupsList[GroupIndex].Name)
+
+            -- Set initial position, Direction = 0 means it won't tween
+            self:playcommand("Scroll", {Direction = 0})
+		end,
 
         ScrollMessageCommand=function(self,param)
-            -- Save this so that we can resume the last selection after gameplay
-            LastSongIndex = CurrentIndex
-            
             self:stoptweening()
 
             -- Calculate position
@@ -192,7 +248,7 @@ for i = 1, WheelSize do
             if i == 1 or i == WheelSize then
 				UpdateBanner(self:GetChild("Banner"), Songs[Targets[i]])
             elseif tween then
-                self:easeoutexpo(0.4)
+                self:easeoutexpo(0.3)
             end
 
             -- Animate!
@@ -207,7 +263,8 @@ for i = 1, WheelSize do
         },
 
         Def.Sprite {
-            Texture=THEME:GetPathG("", "MusicWheel/SongFrame"),
+            Texture=THEME:GetPathG("", "MusicWheel/euv_wheelitem_music"),
+	    InitCommand=function(self) self:x(1.8):zoomx(0.73):zoomy(0.73) end
         },
 
         Def.ActorFrame {
@@ -221,9 +278,9 @@ for i = 1, WheelSize do
 
             Def.BitmapText {
                 Name="Index",
-                Font="Montserrat semibold 40px",
+                Font="inter medium 25px",
                 InitCommand=function(self)
-                    self:addy(-50):zoom(0.4):skewx(-0.1):diffusetopedge(0.95,0.95,0.95,0.8):shadowlength(1.5)
+                    self:addy(-52):zoom(0.6):diffusetopedge(0.95,0.95,0.95,0.8):shadowlength(1.5)
                 end,
                 RefreshCommand=function(self,param) self:settext(Targets[i]) end
             }
@@ -232,5 +289,3 @@ for i = 1, WheelSize do
 end
 
 return t
-
-end

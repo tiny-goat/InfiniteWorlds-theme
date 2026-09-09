@@ -1,24 +1,24 @@
 return Def.ActorFrame {
-
+    -- repositioned for the nfinity logo
     Def.Sprite {
         Name="PartyHat",
         Texture="PartyHat",
         InitCommand=function(self)
-            self:xy(325, -350):rotationz(28):diffusealpha(0)
+            self:xy(420, -500):rotationz(32):diffusealpha(0)
         end,
         OnCommand=function(self)
             self:sleep(1)
             :easeoutexpo(0.5)
             :diffusealpha(1)
-            :y(-250)
+            :y(-300)
         end
     },
 
     Def.BitmapText {
-        Font="Montserrat extrabold 40px",
+        Font="inter extrabold 40px",
         InitCommand=function(self)
-            self:settext(string.format("%d YEAR ANNIVERSARY", (Year() - 2020)))
-            :y(-350)
+            self:settext(string.format("%d YEAR ANNIVERSARY!", (Year() - 2020)))
+            :y(-500)
             :shadowlength(2)
             :diffusealpha(0)
         end,
@@ -26,7 +26,7 @@ return Def.ActorFrame {
             self:sleep(1)
             :easeoutexpo(0.5)
             :diffusealpha(1)
-            :y(-250)
+            :y(-380)
         end
     }
 

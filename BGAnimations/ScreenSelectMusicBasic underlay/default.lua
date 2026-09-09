@@ -63,18 +63,50 @@ local t = Def.ActorFrame {
 t[#t+1] = Def.Quad {
     InitCommand=function(self)
         self:xy(SCREEN_CENTER_X,SCREEN_CENTER_Y):valign(0.5)
-        :zoomx(255)
-        :diffuse(0,0,0,0.75)
-        :zoomy(0)
-        :decelerate(0.5)
+        :zoomx(SCREEN_WIDTH)
+        :diffuse(0,0,0,0)
         :zoomy(SCREEN_HEIGHT)
-    end,
-    OffCommand=function(self)
-        self:stoptweening():decelerate(0.5):zoomy(0)
-    end
+    end,       
+
+	SongChosenMessageCommand=function(self) self:stoptweening():easeoutexpo(0.7):diffusealpha(0.8) end,
+	SongUnchosenMessageCommand=function(self) self:stoptweening():easeoutexpo(0.2):diffusealpha(0) end,
 }
 
+-- background dim 2, the one behind musicwheel
+t[#t+1] = Def.Quad {
+    InitCommand=function(self)
+        self:xy(SCREEN_CENTER_X,SCREEN_BOTTOM-150)
+        :zoomx(SCREEN_WIDTH)
+        :diffuse(0,0,0,0.9)
+        :zoomy(280):fadetop(0.2)
+    end,       
+
+	SongChosenMessageCommand=function(self) self:stoptweening():diffusealpha(0) end,
+	SongUnchosenMessageCommand=function(self) self:stoptweening():easeoutexpo(0.2):diffusealpha(0.9) end,
+}
+
+
 t[#t+1] = LoadActor("MusicWheel")..{ Name="MusicWheel" }
+
+t[#t+1] = Def. ActorFrame {
+	Def.ActorFrame {
+        InitCommand=function(self)
+            self:diffusealpha(0):xy(SCREEN_CENTER_X, SCREEN_BOTTOM-164)
+            :zoomx(1):zoomy(1.35)
+        end,
+	OnCommand=function(self) self:diffusealpha(0):zoomx(1):zoomy(1):sleep(0.4):linear(0.2):diffusealpha(1):zoomx(0.8):zoomy(0.8):pulse():effectmagnitude(1,1.05,1) end,
+ 	SongChosenMessageCommand=function(self)
+            self:stoptweening():easeoutquad(0.2):zoomx(1.2):zoomy(0.8):diffusealpha(0)
+        end,
+        SongUnchosenMessageCommand=function(self)
+            self:stoptweening():zoomx(1.2):zoomy(0.8):easeoutquad(0.2):zoomx(0.8):zoomy(0.8):diffusealpha(1)
+        end,
+	CloseGroupWheelMessageCommand=function(self) self:zoomx(1.2):zoomy(0.8):sleep(0.2):easeoutexpo(1):zoomx(0.8):zoomy(0.8) end,
+        ScrollMessageCommand=function(self) self:stoptweening():zoomx(0.8):zoomy(0.8):linear(0.12):zoomx(0.9):zoomy(0.9):linear(0.1):zoomx(0.8):zoomy(0.8) end,
+
+	LoadActor(THEME:GetPathB("", "ScreenSelectMusicFull overlay/tg_frameselect")) .. {},
+	}
+}
 
 for pn in ivalues(GAMESTATE:GetEnabledPlayers()) do
     local spacing = (IsUsingWideScreen() and 80 or 15)
@@ -95,42 +127,37 @@ for pn in ivalues(GAMESTATE:GetEnabledPlayers()) do
         end,
 
         OffCommand=function(self)
-            self:stoptweening():easeoutexpo(1):y(-SCREEN_CENTER_Y)
+            self:stoptweening()
         end,
 
         Def.ActorFrame {
-            InitCommand=function(self) self:y(85):zoom(1) end,
+            InitCommand=function(self) self:y(85):diffusealpha(0):zoom(1) end,
 
             StepsChosenMessageCommand=function(self, params)
                 if params.Player == pn then
-                    self:finishtweening():easeoutexpo(0.5)
-                    :x(pn == PLAYER_2 and 360 or -360)
+                    self:finishtweening():easeoutexpo(0.4)
+                    :x(pn == PLAYER_2 and 340 or -340):diffusealpha(1)
                 end
             end,
-
-            UpdateChartDisplayMessageCommand=function(self, params) 
-                if params ~= nil then
-                    if params.Player == pn then
-                        self:finishtweening():easeoutexpo(0.5):x(0) 
-                    end
-                end
+            UpdateChartDisplayMessageCommand=function(self, params) if params.Player == pn then
+                self:finishtweening():easeoutexpo(0.3):x(0):diffusealpha(0) end
             end,
 
             SongChosenMessageCommand=function(self)
-                self:finishtweening():easeoutexpo(0.5):y(160):zoom(2)
+                self:finishtweening():easeoutexpo(0.3):y(160):zoom(2):diffusealpha(0)
             end,
             SongUnchosenMessageCommand=function(self)
-                self:finishtweening():easeoutexpo(0.5):xy(0, 85):zoom(1)
+                self:finishtweening():easeoutexpo(0.3):xy(0, 85):zoom(1):diffusealpha(0)
             end,
 
             Def.Quad {
                 InitCommand=function(self)
-                    self:zoomto(128, 32):diffuse(Color.White)
+                    self:zoomto(190, 53):diffuse(Color.White)
 
                     if pn == PLAYER_2 then
-                        self:diffuserightedge(Color.Invisible)
+                        self:faderight(0.2)
                     else
-                        self:diffuseleftedge(Color.Invisible)
+                        self:fadeleft(0.2)
                     end
                 end
             },
@@ -143,28 +170,35 @@ for pn in ivalues(GAMESTATE:GetEnabledPlayers()) do
     }
 end
 
+
 t[#t+1] = Def.ActorFrame {
     Def.ActorFrame {
         InitCommand=function(self)
-            self:xy(SCREEN_CENTER_X, -SCREEN_CENTER_Y)
-            :easeoutexpo(1):y(SCREEN_CENTER_Y)
+            self:xy(SCREEN_CENTER_X, SCREEN_CENTER_Y)
         end,
         OffCommand=function(self)
             self:stoptweening():easeoutexpo(1):y(-SCREEN_CENTER_Y)
         end,
 
-        LoadActor("SongPreview") .. {
-            InitCommand=function(self) self:y(-100) end
+        SongChosenMessageCommand=function(self)
+            self:stoptweening():easeoutexpo(0.5):y(SCREEN_CENTER_Y-23):zoom(0.89)
+        end,
+        SongUnchosenMessageCommand=function(self)
+            self:stoptweening():easeoutexpo(0.5):y(SCREEN_CENTER_Y):zoom(1)
+        end,
+
+        LoadActor("SongsInfo") .. {
+            InitCommand=function(self) self:zoom(2):y(-110):easeoutexpo(1):zoom(0.8) end
         },
 
         Def.ActorFrame {
-            InitCommand=function(self) self:y(85) end,
+            InitCommand=function(self) self:y(210):zoom(2):easeoutexpo(1):zoom(1):y(85) end,
 
             SongChosenMessageCommand=function(self)
-                self:finishtweening():easeoutexpo(0.5):y(160):zoom(2)
+                self:finishtweening():easeoutexpo(0.28):y(205):zoom(2)
             end,
             SongUnchosenMessageCommand=function(self)
-                self:finishtweening():easeoutexpo(0.5):y(85):zoom(1)
+                self:finishtweening():easeoutexpo(0.28):y(85):zoom(1)
             end,
 
             Def.Sprite {

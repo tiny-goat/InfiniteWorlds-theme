@@ -5,11 +5,11 @@ return Def.ActorFrame {
     end,
 
     Def.BitmapText {
-        Font="VCR OSD Mono 20px",
+        Font="inter light 22px",
         InitCommand=function(self)
             self:xy(SCREEN_LEFT + 20, SCREEN_BOTTOM - 20)
-            :halign(0):valign(1)
-            :settext("INFINITESIMAL\n"..ToUpper(string.format("OutFox %s - %s", ProductVersion(), VersionDate())))
+            :halign(0):valign(1):zoom(0.7)
+            :settext("INFNITEWORLDS \n"..ToUpper(string.format("OutFox %s - %s", ProductVersion(), VersionDate())))
         end
     }
 }

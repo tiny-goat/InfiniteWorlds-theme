@@ -1,8 +1,8 @@
-local WheelSize = 13
+local WheelSize = 15
 local WheelCenter = math.ceil( WheelSize * 0.5 )
 local WheelItem = { Width = 212, Height = 120 }
-local WheelSpacing = 250
-local WheelRotation = 0.1
+local WheelSpacing = 230
+local WheelRotation = 0.14
 
 local Songs = {}
 local Targets = {}
@@ -116,7 +116,7 @@ end
 
 -- Manages banner on sprite
 local function UpdateBanner(self, Song)
-    self:LoadFromSongBanner(Song):scaletoclipped(WheelItem.Width, WheelItem.Height)
+    self:LoadFromSongBanner(Song):scaletoclipped(WheelItem.Width, WheelItem.Height):zoomx(0.87)
 end
 
 local t = Def.ActorFrame {
@@ -130,24 +130,23 @@ local t = Def.ActorFrame {
         GAMESTATE:SetCurrentSong(Songs[SongIndex])
         SCREENMAN:GetTopScreen():AddInputCallback(InputHandler)
 
-        self:easeoutexpo(1):y(SCREEN_HEIGHT / 2 - 150)
+        self:easeoutexpo(1):y(SCREEN_HEIGHT / 2 - 165)
     end,
 	
 	OffCommand=function(self)
-		self:easeoutexpo(1):y(SCREEN_HEIGHT / 2 + 155)
+		self:easeoutexpo(1):y(SCREEN_HEIGHT / 2 + 165)
 	end,
     
     -- Race condition workaround (yuck)
     MusicWheelStartMessageCommand=function(self) self:sleep(0.01):queuecommand("Confirm") end,
     ConfirmCommand=function(self) MESSAGEMAN:Broadcast("SongChosen") end,
-
     -- These are to control the functionality of the music wheel
     SongChosenMessageCommand=function(self)
-        self:stoptweening():easeoutexpo(1):y(SCREEN_HEIGHT / 2 + 150)
+        self:stoptweening():decelerate(0.2):y(SCREEN_HEIGHT / 2 + 165)
         :playcommand("Busy")
     end,
     SongUnchosenMessageCommand=function(self)
-        self:stoptweening():easeoutexpo(0.5):y(SCREEN_HEIGHT / 2 - 150)
+        self:stoptweening():decelerate(0.2):y(SCREEN_HEIGHT / 2 - 169):accelerate(0.1):y(SCREEN_HEIGHT / 2 - 165)
         :playcommand("NotBusy")
     end,
     
@@ -200,7 +199,7 @@ local t = Def.ActorFrame {
     },
 
     Def.Sound {
-        File=THEME:GetPathS("Common", "Start"),
+        File=THEME:GetPathS("", "euv_stepsselect"),
         IsAction=true,
         MusicWheelStartMessageCommand=function(self) self:play() end
     },
@@ -249,7 +248,7 @@ for i = 1, WheelSize do
             if i == 1 or i == WheelSize then
 				UpdateBanner(self:GetChild("Banner"), Songs[Targets[i]])
             elseif tween then
-                self:easeoutexpo(0.4)
+                self:easeoutexpo(0.3)
             end
 
             -- Animate!
@@ -264,7 +263,8 @@ for i = 1, WheelSize do
         },
 
         Def.Sprite {
-            Texture=THEME:GetPathG("", "MusicWheel/SongFrame"),
+            Texture=THEME:GetPathG("", "MusicWheel/euv_wheelitem_music"),
+	    InitCommand=function(self) self:x(1.8):zoomx(0.73):zoomy(0.73) end
         },
 
         Def.ActorFrame {
@@ -278,9 +278,9 @@ for i = 1, WheelSize do
 
             Def.BitmapText {
                 Name="Index",
-                Font="Montserrat semibold 40px",
+                Font="inter medium 25px",
                 InitCommand=function(self)
-                    self:addy(-50):zoom(0.4):skewx(-0.1):diffusetopedge(0.95,0.95,0.95,0.8):shadowlength(1.5)
+                    self:addy(-52):zoom(0.6):diffusetopedge(0.95,0.95,0.95,0.8):shadowlength(1.5)
                 end,
                 RefreshCommand=function(self,param) self:settext(Targets[i]) end
             }

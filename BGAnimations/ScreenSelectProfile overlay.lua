@@ -13,11 +13,11 @@ function GetLocalProfiles()
         },
 
         Def.BitmapText {
-            Font="Montserrat semibold 40px",
+            Font="inter medium 32px",
             Text="Guest",
             InitCommand=function(self)
                 self:shadowlength(1):xy(CardItemW / 2 - 8, -3)
-                :zoom(0.75):halign(1):maxwidth(250):ztest(true)
+                :zoom(0.55):halign(1):maxwidth(250):ztest(true)
             end,
         }
     }
@@ -41,17 +41,17 @@ function GetLocalProfiles()
             },
 
             Def.BitmapText {
-                Font="Montserrat semibold 40px",
+                Font="inter medium 32px",
                 Text=Profile:GetDisplayName(),
                 InitCommand=function(self)
                     self:shadowlength(1):xy(CardItemW / 2 - 8, -14)
-                    :zoom(0.75):halign(1):maxwidth(250):ztest(true)
+                    :zoom(0.55):halign(1):maxwidth(250):ztest(true)
                 end,
             },
 
             Def.BitmapText {
-                Font="Montserrat normal 20px",
-                InitCommand=function(self) self:shadowlength(1):xy(CardItemW / 2 - 8, 14):zoom(0.75):halign(1):ztest(true) end,
+                Font="inter medium 32px",
+                InitCommand=function(self) self:shadowlength(1):xy(CardItemW / 2 - 8, 14):zoom(0.55):halign(1):ztest(true) end,
                 BeginCommand=function(self)
                     local NumSongsPlayed = Profile:GetNumTotalSongsPlayed()
                     self:settext(string.format(GetSongsPlayedString(NumSongsPlayed), NumSongsPlayed))
@@ -75,8 +75,8 @@ function LoadCard(cColor)
         },
 
         Def.Sprite {
-            Texture=THEME:GetPathG("", "UI/CardFrame"),
-            InitCommand=function(self) self:y(-15):zoom(0.75) end,
+            Texture=THEME:GetPathG("", "UI/euv_profile_frame"),
+            InitCommand=function(self) self:y(-15):zoom(0.4) end,
         }
     }
 
@@ -98,11 +98,11 @@ function LoadPlayerStuff(Player)
             RefreshCommand=function(self)
     			CardState = MEMCARDMAN:GetCardState(Player)
     			if CardState == "MemoryCardState_none" then
-    				self:GetChild("Press"):Load(THEME:GetPathG("", "PressCenterStep/Press"))
+    				self:GetChild("Press"):Load(THEME:GetPathG("", "PressCenterStep/tg_press_step"))
     			elseif CardState == "MemoryCardState_ready" then
-    				self:GetChild("Press"):Load(THEME:GetPathG("", "PressCenterStep/USB"))
+    				self:GetChild("Press"):Load(THEME:GetPathG("", "PressCenterStep/euv_usb1"))
     			elseif CardState == "MemoryCardState_error" then
-    				self:GetChild("Press"):Load(THEME:GetPathG("", "PressCenterStep/Error"))
+    				self:GetChild("Press"):Load(THEME:GetPathG("", "PressCenterStep/euv_usb2"))
     			end
     		end
         }
@@ -136,7 +136,7 @@ function LoadPlayerStuff(Player)
     t[#t+1] = Def.ActorFrame {
         Name="GuestText",
         Def.BitmapText {
-            Font="Montserrat semibold 40px",
+            Font="inter medium 32px",
             Text="No profile!",
             InitCommand=function(self) self:shadowlength(1) end
         }
@@ -303,8 +303,8 @@ local t = Def.ActorFrame {
     children = {
         Def.ActorFrame {
             Name="P1Frame",
-            OnCommand=function(self) self:x(SCREEN_CENTER_X-200):y(SCREEN_CENTER_Y):zoom(0):easeoutexpo(1):zoom(1) end,
-            OffCommand=function(self) self:stoptweening():easeinback(0.5):zoom(0) end,
+            OnCommand=function(self) self:diffusealpha(0):rotationz(20):x(SCREEN_CENTER_X-500):y(SCREEN_CENTER_Y):zoom(2):easeoutexpo(1):x(SCREEN_CENTER_X-200):rotationz(0):zoom(1):diffusealpha(1) end,
+            OffCommand=function(self) self:stoptweening():easeoutexpo(1):diffusealpha(0):x(SCREEN_CENTER_X-10):y(SCREEN_CENTER_Y):zoom(0) end,
             PlayerJoinedMessageCommand=function(self, params)
                 if params.Player == PLAYER_1 then
                     self:stoptweening():zoom(1.15):easeoutexpo(0.25):zoom(1)
@@ -315,8 +315,8 @@ local t = Def.ActorFrame {
 
         Def.ActorFrame {
             Name="P2Frame",
-            OnCommand=function(self) self:x(SCREEN_CENTER_X+200):y(SCREEN_CENTER_Y):zoom(0):easeoutexpo(1):zoom(1) end,
-            OffCommand=function(self) self:stoptweening():easeinback(0.5):zoom(0) end,
+            OnCommand=function(self) self:diffusealpha(0):rotationz(-20):x(SCREEN_CENTER_X+500):y(SCREEN_CENTER_Y):zoom(2):easeoutexpo(1):x(SCREEN_CENTER_X+200):rotationz(0):zoom(1):diffusealpha(1) end,
+            OffCommand=function(self) self:stoptweening():easeoutexpo(1):diffusealpha(0):x(SCREEN_CENTER_X+10):y(SCREEN_CENTER_Y):zoom(0) end,
             PlayerJoinedMessageCommand=function(self, params)
                 if params.Player == PLAYER_2 then
                     self:stoptweening():zoom(1.15):easeoutexpo(0.25):zoom(1)
@@ -327,7 +327,7 @@ local t = Def.ActorFrame {
 
         -- Sounds!
         Def.Sound {
-            File=THEME:GetPathS("Common", "start"),
+            File=THEME:GetPathS("", "euv_profile_start"),
             IsAction=true,
             StartButtonMessageCommand=function(self) self:play() end
         },

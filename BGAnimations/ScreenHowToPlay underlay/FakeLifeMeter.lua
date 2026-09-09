@@ -1,5 +1,5 @@
 local BarW = 375
-local BarH = 30
+local BarH = 40
 
 local MeterHot = false
 local MeterDanger = false
@@ -79,7 +79,7 @@ local t = Def.ActorFrame {
     
     Def.Sprite {
         Name="BarBody",
-        Texture=THEME:GetPathG("", "UI/BarBody"),
+        Texture=THEME:GetPathG("", "UI/euv_center_lifebars"),
         InitCommand=function(self)
             self:setsize(BarW - 12, BarH)
         end
@@ -87,24 +87,24 @@ local t = Def.ActorFrame {
     
     Def.Sprite {
         Name="BarEdgeL",
-        Texture=THEME:GetPathG("", "UI/BarEdge"),
+        Texture=THEME:GetPathG("", "UI/euv_lifebars_sides"),
         InitCommand=function(self)
-            self:x(-BarW / 2):halign(0)
+            self:x(-BarW / 2):setsize(9.3,BarH):halign(0)
         end
     },
     
     Def.Sprite {
         Name="BarEdgeR",
-        Texture=THEME:GetPathG("", "UI/BarEdge"),
+        Texture=THEME:GetPathG("", "UI/euv_lifebars_sides"),
         InitCommand=function(self)
-            self:x(BarW / 2):halign(0):rotationz(180)
+            self:x(BarW / 2):setsize(9.3,BarH):halign(0):rotationz(180)
         end
     },
     
     Def.Quad {
         Name="Mask",
         InitCommand=function(self)
-            self:zoomto(BarW - 12, BarH - 12)
+            self:zoomto(BarW - 20, BarH - 12)
             :diffuse(color(1,1,1,1))
             :MaskSource()
         end
@@ -113,7 +113,7 @@ local t = Def.ActorFrame {
     Def.Quad {
         Name="Meter",
         InitCommand=function(self)
-            self:zoomto(BarW - 12, BarH - 12):x(-20):cropright(0.5)
+            self:zoomto(BarW - 16, BarH - 16):x(-25):cropright(0.5)
             :diffuse(pn == PLAYER_1 and color("#f7931e") or color("#ab78f5"))
             :diffusebottomedge(pn == PLAYER_1 and color("#ed1e79") or color("#1fbcff"))
             :MaskDest():ztestmode("ZTestMode_WriteOnFail")
@@ -123,7 +123,7 @@ local t = Def.ActorFrame {
     Def.Quad {
         Name="Pulse",
         InitCommand=function(self)
-            self:zoomto(20, BarH - 12):halign(0)
+            self:zoomto(20, BarH - 16):halign(0)
             :diffuse(pn == PLAYER_1 and color("#f7931e") or color("#ab78f5"))
             :diffusebottomedge(pn == PLAYER_1 and color("#ed1e79") or color("#1fbcff"))
             
@@ -136,8 +136,8 @@ local t = Def.ActorFrame {
         Name="RainbowMeter",
         Texture=THEME:GetPathG("", "UI/RainbowBar"),
         InitCommand=function(self)
-            self:zoomto(BarW - 12, BarH - 12)
-            :texcoordvelocity(-0.5, 0)
+            self:zoomto(BarW - 16, BarH - 16)
+            :texcoordvelocity(-0.9, 0)
             :diffusealpha(0)
         end
     }

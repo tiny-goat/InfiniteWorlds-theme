@@ -15,15 +15,12 @@ return Def.ActorFrame {
             local BPMLow = math.ceil(BPMRaw[1])
             local BPMHigh = math.ceil(BPMRaw[2])
             local BPMDisplay = (BPMLow == BPMHigh and BPMHigh or BPMLow .. "-" .. BPMHigh)
-            local StepList = Song:GetAllSteps()
-            local FirstStep = StepList[1]
-            local Duration = FirstStep:GetChartLength()
 
             if Song:IsDisplayBpmRandom() or BPMDisplay == 0 then BPMDisplay = "???" end
 
             self:GetChild("Title"):settext(TitleText)
             self:GetChild("Artist"):settext(AuthorText)
-            self:GetChild("Length"):settext(SecondsToMMSS(Duration))
+            self:GetChild("Length"):settext(SecondsToMMSS(Song:MusicLengthSeconds()))
             self:GetChild("BPM"):settext(BPMDisplay .. " BPM")
         else
             self:GetChild("Title"):settext("")
@@ -34,49 +31,61 @@ return Def.ActorFrame {
     end,
 
     Def.Sprite {
-        Texture=THEME:GetPathG("", "Evaluation/EvalSongInfo"),    },
+        Texture=THEME:GetPathG("", "Evaluation/tg_songinfo"),
+	InitCommand=function(self) self:zoomx(0):zoomy(0.5):sleep(0.3):easeoutexpo(0.3):zoomx(0.5) end
+    },
 
     Def.BitmapText {
-        Font="Montserrat semibold 40px",
+        Font="inter extrabold 40px",
         Name="Title",
         InitCommand=function(self)
-            self:zoom(0.8):valign(0)
-            :maxwidth(FrameW * 0.89 / self:GetZoom())
+            self:zoom(0.3):valign(0)
             :diffuse(Color.Black)
+	    :diffusealpha(0)
             :y(-30)
+	    :sleep(0.4)
+	    :easeoutexpo(0.3)
+	    :zoom(0.7)
+	    :maxwidth(FrameW * 0.79 / self:GetZoom())
+	    :diffusealpha(1)
         end
     },
 
     Def.BitmapText {
-        Font="Montserrat normal 20px",
+        Font="inter medium 25px",
         Name="Artist",
         InitCommand=function(self)
-            self:zoom(1):valign(1)
+            self:zoom(0.1):valign(1)
             :maxwidth(FrameW * 0.5 / self:GetZoom())
             :diffuse(Color.Black)
-            :y(16)
+   	    :diffusealpha(0)
+            :y(24)
+	    :sleep(0.45)
+	    :easeoutexpo(0.3)
+	    :diffusealpha(1)
+	    :zoom(0.7)
         end
     },
 
     Def.BitmapText {
-        Font="Montserrat normal 20px",
+        Font="inter medium 25px",
         Name="Length",
         InitCommand=function(self)
-            self:zoom(1):halign(1):valign(1)
+            self:zoom(0):sleep(0.50):easeoutexpo(0.35):zoom(0.7):halign(1):valign(1)
             :maxwidth(FrameW * 0.2 / self:GetZoom())
             :diffuse(Color.Black)
-            :xy(FrameW / 2 - 36, 16)
+            :xy(FrameW / 2 - 36, 24)
         end
     },
 
     Def.BitmapText {
-        Font="Montserrat normal 20px",
+        Font="inter medium 25px",
         Name="BPM",
         InitCommand=function(self)
-            self:zoom(1):halign(0):valign(1)
+            self:zoom(0):sleep(0.50):easeoutexpo(0.35):zoom(0.7):halign(0):valign(1)
             :maxwidth(FrameW * 0.175 / self:GetZoom())
             :diffuse(Color.Black)
-            :xy(-FrameW / 2 + 36, 16)
+            :xy(-FrameW / 2 + 36, 24)
         end
     }
 }

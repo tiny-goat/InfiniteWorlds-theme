@@ -10,7 +10,7 @@ Length = Length + 4
 
 local RowAmount = Length
 local RowH = 40
-local RowX = IsUsingWideScreen() and 490 or 400
+local RowX = IsUsingWideScreen() and 490 or 380
 local RowY = SCREEN_CENTER_Y - (RowAmount * RowH) / 2
 
 -- And a function to make even better use out of the table.
@@ -72,12 +72,47 @@ end
 local t = Def.ActorFrame {}
 
 -- We want the row lines to stay behind the main column, so we create them first
+-- well lmao lets animate it
 for i = 1, RowAmount do
     t[#t+1] = Def.ActorFrame {
         Def.Sprite {
             Texture=THEME:GetPathG("", "Evaluation/EvalRow"),
             InitCommand=function(self)
-                self:xy(SCREEN_CENTER_X, RowY + RowH * (i - 1) + 24):zoom(0.8)
+                self:xy(SCREEN_CENTER_X, RowY + RowH * (i - 1) + 24):zoomy(0):sleep(0.2):easeoutexpo(0.9):xy(SCREEN_CENTER_X, RowY + RowH * (i - 1) + 24):zoomx(0.92):zoomy(0.9)
+            end
+        }
+    }
+end
+
+-- Separation lines between the center column text
+for i = 1, RowAmount + 1 do
+    t[#t+1] = Def.ActorFrame {
+        Def.Quad {
+            InitCommand=function(self)
+                self:xy(SCREEN_CENTER_X, RowY + RowH * (i - 1) + 24 - (RowH / 2))
+                :zoomto(190 + math.sin(math.abs(self:GetY() - SCREEN_CENTER_Y) / SCREEN_CENTER_Y) * 210, 3)
+                :diffuse(color("#11CCFFFF"))
+                :fadeleft(0.1):faderight(0.1)
+            end
+        }
+    }
+end
+for i = 1, RowAmount do
+    t[#t+1] = Def.ActorFrame {
+            InitCommand=function(self)
+            self:xy(SCREEN_CENTER_X, RowY + RowH * (i - 1) + 26)
+            :zoomy(0):zoomx(1):rotationz(20):diffusealpha(0):sleep(0.5 + i * 0.1):easeoutexpo(0.2):rotationz(0):zoomx(0.68):zoomy(0.68):diffusealpha(1)
+        end,
+        Def.BitmapText {
+            Font="Strike Fighter 45px",
+            InitCommand=function(self)
+                self:maxwidth(360):zoom(0.7):visible(true):y(-3)
+
+                if Name[i] == "Accuracy" or Name[i] == "Score" then
+                    self:settext(ToUpper(THEME:GetString("EvaluationLabel", Name[i])))
+                else
+                    self:settext(ToUpper(THEME:GetString(CurPrefTiming or "Original" , "Judgment" .. Name[i])))
+                end
             end
         }
     }
@@ -87,30 +122,22 @@ end
 t[#t+1] = Def.ActorFrame {
     Def.ActorFrame {
         InitCommand=function(self)
-            self:xy(SCREEN_CENTER_X, RowY + RowH * RowAmount + 20)
+            self:xy(SCREEN_CENTER_X, RowY + RowH * RowAmount +1)
         end,
 
         Def.Sprite {
             Texture=THEME:GetPathG("", "Evaluation/StepArtistP1"),
             InitCommand=function(self)
-                self:x(-140):halign(1):valign(0):zoom(0.75)
-                :visible(GAMESTATE:IsSideJoined(PLAYER_1))
-            end
-        },
-
-        Def.Quad {
-            InitCommand=function(self)
-                self:xy(-138, RowH):halign(1):valign(0):zoomto(192, 26)
-                :diffuse(Color.Black):diffusealpha(0.5):fadeleft(0.5)
+                self:x(-250):halign(1):valign(0):zoomy(0.75):zoomx(0.75):sleep(0.1):easeoutexpo(0.2):x(-150)
                 :visible(GAMESTATE:IsSideJoined(PLAYER_1))
             end
         },
 
         Def.BitmapText {
-            Font="Montserrat semibold 40px",
+            Font="inter extrabold 40px",
             Text=GAMESTATE:GetCurrentSteps(PLAYER_1):GetAuthorCredit() ~= "" and GAMESTATE:GetCurrentSteps(PLAYER_1):GetAuthorCredit() or "Unknown",
             InitCommand=function(self)
-                self:xy(-146, RowH + 4):halign(1):valign(0):shadowlength(1)
+                self:xy(-150, RowH + 4):halign(1):valign(0)
                 :zoom(0.6):visible(GAMESTATE:IsSideJoined(PLAYER_1))
             end
         },
@@ -118,95 +145,62 @@ t[#t+1] = Def.ActorFrame {
         Def.Sprite {
             Texture=THEME:GetPathG("", "Evaluation/StepArtistP2"),
             InitCommand=function(self)
-                self:x(140):halign(0):valign(0):zoom(0.75)
-                :visible(GAMESTATE:IsSideJoined(PLAYER_2))
-            end
-        },
-
-        Def.Quad {
-            InitCommand=function(self)
-                self:xy(138, RowH):halign(0):valign(0):zoomto(192, 26)
-                :diffuse(Color.Black):diffusealpha(0.5):faderight(0.5)
+                self:x(250):halign(0):valign(0):zoomy(0.75):zoomx(0.75):sleep(0.1):easeoutexpo(0.2):x(150)
                 :visible(GAMESTATE:IsSideJoined(PLAYER_2))
             end
         },
 
         Def.BitmapText {
-            Font="Montserrat semibold 40px",
+            Font="inter extrabold 40px",
             Text=GAMESTATE:GetCurrentSteps(PLAYER_2):GetAuthorCredit() ~= "" and GAMESTATE:GetCurrentSteps(PLAYER_2):GetAuthorCredit() or "Unknown",
             InitCommand=function(self)
-                self:xy(146, RowH + 4):halign(0):valign(0):shadowlength(1)
+                self:xy(150, RowH + 4):halign(0):valign(0)
                 :zoom(0.6):visible(GAMESTATE:IsSideJoined(PLAYER_2))
             end
         }
     },
-
+-- scales up or down depending on what timing window was used, may apply this to EvalBall and EvalSongInfo
     Def.Sprite {
-        Texture=THEME:GetPathG("", "Evaluation/EvalColumn"),
+        Texture=THEME:GetPathG("", "Evaluation/tg_curve_glow"),
         InitCommand=function(self)
-            self:Center()
-        end
-    }
+            self:y(SCREEN_CENTER_Y+4):x(SCREEN_CENTER_X):diffusealpha(0):diffuseleftedge(color("#16EEFFFF")):diffuserightedge(color("#EE16FFFF")):sleep(0.2):zoomx(6):zoomy(0.64):easeoutexpo(0.2):zoomx(RowAmount == 9 and 0.78 or 0.7):zoomy(RowAmount == 9 and 0.71 or 0.64):diffusealpha(1)
+        end,
+    },
+    Def.Sprite {
+        Texture=THEME:GetPathG("", "Evaluation/tg_eval_curve"),
+        InitCommand=function(self)
+            self:y(SCREEN_CENTER_Y+4):x(SCREEN_CENTER_X):zoomy(0.65):zoomx(6.3):sleep(0.1):easeoutexpo(0.5):zoomy(RowAmount == 9 and 0.71 or 0.64):zoomx(RowAmount == 9 and 0.78 or 0.7)
+        end,
+    },
 }
 
--- Separation lines between the center column text
-for i = 1, RowAmount + 1 do
-    t[#t+1] = Def.ActorFrame {
-        Def.Quad {
-            InitCommand=function(self)
-                self:xy(SCREEN_CENTER_X, RowY + RowH * (i - 1) + 24 - (RowH / 2))
-                :zoomto(150 + math.sin(math.abs(self:GetY() - SCREEN_CENTER_Y) / SCREEN_CENTER_Y) * 60, 2)
-                :diffuse(RowAmount == 9 and color("#FFA4FF") or color("#99D3FF"))
-                :fadeleft(0.1):faderight(0.1)
-            end
-        }
-    }
-end
 
 for i = 1, RowAmount do
     t[#t+1] = Def.ActorFrame {
         InitCommand=function(self)
-            self:xy(SCREEN_CENTER_X, RowY + RowH * (i - 1) + 24)
-            :diffusealpha(0):sleep(0.5 + i * 0.1):linear(0.1):diffusealpha(1)
+            self:xy(SCREEN_CENTER_X, RowY + RowH * (i - 1) + 22)
+            :zoomy(0):diffusealpha(1):sleep(0.5 + i * 0.1):easeoutexpo(0.1):zoomy(1):diffusealpha(1)
         end,
-        Def.BitmapText {
-            Font="Montserrat normal 40px",
-            InitCommand=function(self)
-                self:maxwidth(360):skewx(-0.2):zoom(0.75):visible(true)
-
-                if Name[i] == "Accuracy" or Name[i] == "Score" then
-                    self:settext(ToUpper(THEME:GetString("EvaluationLabel", Name[i])))
-                else
-                    self:settext(ToUpper(THEME:GetString(CurPrefTiming or "Original" , "Judgment" .. Name[i])))
-                end
-            end
-        },
 
         Def.BitmapText {
-            Font="Montserrat numbers 40px",
-            Text=string.rep("0",3-string.len(GetJLineValue(Name[i], PLAYER_1)))..GetJLineValue(Name[i], PLAYER_1),
+            Font="inter medium 25px",
+            Text=GetJLineValue(Name[i], PLAYER_1),
             InitCommand=function(self)
-                self:x(-RowX):shadowlength(1):zoom(0.8)
+                self:x(-RowX):zoom(0.95)
                 :halign(0):maxwidth(360):visible(GAMESTATE:IsSideJoined(PLAYER_1))
-				if Name[i] ~= "Score" and Name[i] ~= "Accuracy" then
-					self:AddAttribute(0, { Length = math.max(3-string.len(GetJLineValue(Name[i], PLAYER_1)), 0) ; Diffuse = color("#FFFFFF88"); })
-                end
-				if Name[i] == "Score" then
+                if Name[i] == "Score" then
                     ColourHighScoreCount(self)
                 end
             end
         },
 
         Def.BitmapText {
-            Font="Montserrat numbers 40px",
-            Text=string.rep("0",3-string.len(GetJLineValue(Name[i], PLAYER_2)))..GetJLineValue(Name[i], PLAYER_2),
+            Font="inter medium 25px",
+            Text=GetJLineValue(Name[i], PLAYER_2),
             InitCommand=function(self)
-                self:x(RowX):shadowlength(1):zoom(0.8)
+                self:x(RowX):zoom(0.95)
                 :halign(1):maxwidth(360):visible(GAMESTATE:IsSideJoined(PLAYER_2))
-                if Name[i] ~= "Score" and Name[i] ~= "Accuracy" then
-						self:AddAttribute(0, { Length = math.max(3-string.len(GetJLineValue(Name[i], PLAYER_2)), 0) ; Diffuse = color("#FFFFFF88"); })
-                end
-				if Name[i] == "Score" then
+                if Name[i] == "Score" then
                     ColourHighScoreCount(self)
                 end
             end

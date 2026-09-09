@@ -14,7 +14,7 @@ local t = Def.ActorFrame {
         Texture=THEME:GetPathG("", "Noise"),
         InitCommand=function(self)
             self:CropTo(SCREEN_WIDTH, SCREEN_HEIGHT):Center()
-            :diffusealpha(0.15)
+            :diffusealpha(0.04)
             :blend("BlendMode_Add")
             :texcoordvelocity(24,16)
         end
@@ -25,12 +25,12 @@ local t = Def.ActorFrame {
         InitCommand=function(self)
             self:diffuse(0,0,0,1):zoomto(SCREEN_WIDTH, SCREEN_HEIGHT):Center()
             :sleep(2)
-            :linear(0.5):diffusealpha(0.25)
+            :linear(0.5):diffuse(1,1,1,0.9)
         end
     },
 
     LoadActor("Pad")..{
-        FOV=45,
+	FOV=50,
         InitCommand=function(self)
             self:diffusealpha(0):xy(SCREEN_CENTER_X + 250, SCREEN_CENTER_Y + 100):zoom(0.75)
             :rotationx(-45)
@@ -42,11 +42,23 @@ local t = Def.ActorFrame {
         end
     },
 
+    InitCommand=function(self)
+        self:queuecommand("Message1")
+    end,
+
+    LoadModule("UI.MessageBox.lua")(SCREEN_CENTER_X - 400, SCREEN_CENTER_Y / 1.75, 290, 2, 14, Title1, Body1),
+    LoadModule("UI.MessageBox.lua")(SCREEN_CENTER_X - 400, SCREEN_CENTER_Y / 1.75, 290, 17, 5, Title2, Body2),
+    LoadModule("UI.MessageBox.lua")(SCREEN_CENTER_X - 400, SCREEN_CENTER_Y / 1.75, 290, 23, 6, Title3, Body3),
+
+    Message1Command=function(self)
+
+    end,
+
     Def.Quad {
         Name="HowToPlayBarBG",
         InitCommand=function(self)
-            self:halign(0):valign(0):diffuse(0,0,0,0.5):zoomto(550, 65):xy(0, 80):cropright(1)
-            :sleep(2)
+            self:halign(0):valign(0):diffuse(0,0,0,0.8):zoomto(550, 65):xy(70, 80):cropright(1)
+            :sleep(1.9)
             :easeoutquad(0.5):cropright(0)
         end
     },
@@ -55,12 +67,12 @@ local t = Def.ActorFrame {
         Name="HowToPlay",
         Texture=THEME:GetPathG("", "UI/HowToPlay"),
         InitCommand=function(self)
-            self:diffusealpha(0):sleep(0.25):xy(SCREEN_CENTER_X - self:GetWidth() / 2, SCREEN_CENTER_Y - self:GetHeight() / 2 - 20):halign(0):valign(0)
+            self:diffusealpha(0):cropright(1):sleep(0.25):xy(SCREEN_CENTER_X - self:GetWidth() / 2, SCREEN_CENTER_Y - self:GetHeight() / 2 - 20):halign(0):valign(0)
             :easeoutquad(0.5)
-            :y(SCREEN_CENTER_Y - self:GetHeight() / 2):diffusealpha(1)
+            :y(SCREEN_CENTER_Y - self:GetHeight() / 2):cropright(0):diffusealpha(1)
             :sleep(1)
             :easeinoutquad(0.5)
-            :xy(20, 80):zoom(0.5)
+            :xy(90, 80):zoom(0.5)
         end
     },
 
@@ -93,17 +105,6 @@ local t = Def.ActorFrame {
         end
     },
 
-    InitCommand=function(self)
-        self:queuecommand("Message1")
-    end,
-
-    LoadModule("UI.MessageBox.lua")(SCREEN_CENTER_X - 390, SCREEN_CENTER_Y / 1.75, 290, 2, 14, Title1, Body1),
-    LoadModule("UI.MessageBox.lua")(SCREEN_CENTER_X - 390, SCREEN_CENTER_Y / 1.75, 290, 17, 5, Title2, Body2),
-    LoadModule("UI.MessageBox.lua")(SCREEN_CENTER_X - 390, SCREEN_CENTER_Y / 1.75, 290, 23, 6, Title3, Body3),
-
-    Message1Command=function(self)
-
-    end,
 }
 
 return t

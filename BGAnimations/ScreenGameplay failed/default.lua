@@ -1,116 +1,62 @@
 local t = Def.ActorFrame{
-
     Def.Sprite {
         Texture=THEME:GetPathG("", "Gradient background"),
         InitCommand=function(self)
-            self:zoomto(SCREEN_WIDTH, SCREEN_HEIGHT):Center()
-        end
+            self:zoomto(SCREEN_WIDTH, SCREEN_HEIGHT):Center():diffusecolor(Color.Red)
+        end,
     },
 
-    Def.Sprite {
-        Texture=THEME:GetPathG("", "ParticlesAndEffects/Stars1"),
+    Def.Quad {
         InitCommand=function(self)
-            self:zoom(0.1)
-            :diffusealpha(0)
-            :sleep(0.5)
-            :Center()
-            :diffusealpha(0.5)
-            :decelerate(1)
-            :zoom(0.4)
+            self:zoomto(SCREEN_WIDTH, SCREEN_HEIGHT)
+            :Center():diffuse(1,1,1,0.9)
+        end,
+
+        OnCommand=function(self)
+            self:easeoutexpo(0.3)
             :diffusealpha(0)
         end
     },
 
-    Def.Sprite {
-        Texture=THEME:GetPathG("", "ParticlesAndEffects/Stars2"),
+Def.Sprite {
+        Texture="broken glass",
         InitCommand=function(self)
-            self:zoom(0.1)
-            :diffusealpha(0)
-            :sleep(0.5)
-            :Center()
-            :diffusealpha(0.5)
-            :decelerate(1)
-            :zoom(0.5)
-            :diffusealpha(0)
+            self:Center():diffusealpha(0):zoom(3):easeoutexpo(0.05):diffusealpha(0.3):zoom(1.1):linear(5):diffusealpha(0)
         end
-    },
+	},
 
     Def.Sprite {
-        Texture=THEME:GetPathG("", "ParticlesAndEffects/Stars3"),
+        Texture="fail_hey",
         InitCommand=function(self)
-            self:zoom(0.1)
-            :diffusealpha(0)
-            :sleep(0.5)
-            :Center()
-            :diffusealpha(0.75)
-            :decelerate(1)
-            :zoom(0.6)
-            :diffusealpha(0)
-        end
-    },
-
-    Def.Sprite {
-        Texture=THEME:GetPathG("", "ParticlesAndEffects/Circle"),
-        InitCommand=function(self)
-            self:xy(SCREEN_CENTER_X, SCREEN_CENTER_Y-100)
-            :diffusealpha(0)
-            :sleep(0.5)
-            :diffusealpha(0.1)
-            :sleep(0.25)
-            :zoom(0)
-            :decelerate(5)
-            :diffusealpha(1)
-            :zoom(2)
-        end
-    },
-    
-    Def.Sprite {
-        Texture=THEME:GetPathG("", "ParticlesAndEffects/Circle"),
-        InitCommand=function(self)
-            self:xy(SCREEN_CENTER_X, SCREEN_CENTER_Y+50)
-            :diffusealpha(0)
-            :sleep(0.5)
-            :diffusealpha(0.1)
-            :sleep(0.85)
-            :zoom(0)
-            :decelerate(5)
-            :diffusealpha(1)
-            :zoom(2)
-        end
-    },
-
-    Def.Sprite {
-        Texture="Hey",
-        InitCommand=function(self)
-            self:xy(SCREEN_CENTER_X, SCREEN_CENTER_Y-150)
+            self:xy(SCREEN_CENTER_X, SCREEN_CENTER_Y-140)
             :diffusealpha(0)
             :shadowlength(3)
             :shadowcolor(0,0,0,0.25)
-            :zoom(0.7)
+            :zoom(0.2)
             :sleep(0.5 + 0.25)
-            :accelerate(0.25)
+            :easeoutexpo(0.25)
             :diffusealpha(1)
-            :zoom(0.4)
+            :zoom(0.7):linear(4.9):rotationz(-2):zoom(0.8):y(SCREEN_CENTER_Y-170)
         end
     },
 
     Def.Sprite {
-        Texture="GetUpAndDanceMan",
+        Texture="fail_u_suck",
         InitCommand=function(self)
-            self:xy(SCREEN_CENTER_X - 10, SCREEN_CENTER_Y+75)
+            self:xy(SCREEN_CENTER_X - 10, SCREEN_CENTER_Y+60)
             :diffusealpha(0)
             :shadowlength(3)
             :shadowcolor(0,0,0,0.25)
-            :zoom(2)
+            :zoom(0.1)
             :sleep(0.5 + 0.85)
-            :accelerate(0.25)
+            :easeoutexpo(0.25)
             :diffusealpha(1)
-            :zoom(0.8)
+            :zoom(0.6):linear(4):rotationz(6):zoom(0.7):y(SCREEN_CENTER_Y+70)
         end
     },
 
     Def.Sound {
-        File=THEME:GetPathS("", "Pewwwww"),
+        File="Shatter",
         OnCommand=function(self)
             self:queuecommand("Play")
         end,
@@ -127,24 +73,11 @@ local t = Def.ActorFrame{
     },
 
     Def.Sound {
-        File=THEME:GetPathS("", "Boom"),
+        File="stage_crash",
         OnCommand=function(self)
-            self:sleep(1.8)
-            :queuecommand("Play")
+            self:queuecommand("Play")
         end,
         PlayCommand=function(self) self:play() end
-    },
-    
-    Def.Quad {
-        InitCommand=function(self)
-            self:zoomto(SCREEN_WIDTH, SCREEN_HEIGHT)
-            :Center():diffuse(1,1,1,1)
-        end,
-
-        OnCommand=function(self)
-            self:accelerate(1)
-            :diffusealpha(0)
-        end
     },
     
     Def.Quad {
@@ -154,8 +87,8 @@ local t = Def.ActorFrame{
         end,
 
         OnCommand=function(self)
-            self:sleep(4)
-            :decelerate(1)
+            self:sleep(3.6)
+            :linear(2)
             :diffusealpha(1)
         end
     }

@@ -24,10 +24,10 @@ if GAMESTATE:GetNumSidesJoined() < 2 then
         end,
 
         SongChosenMessageCommand=function(self)
-            self:stoptweening():easeoutquad(0.25):y(PosY - 40)
+            self:stoptweening():easeoutexpo(0.5):y(PosY - 40)
         end,
         SongUnchosenMessageCommand=function(self)
-            self:stoptweening():easeoutquad(0.25):y(PosY)
+            self:stoptweening():easeoutexpo(0.5):y(PosY)
         end,
 
         CoinInsertedMessageCommand=function(self) self:playcommand('Refresh') end,
@@ -53,23 +53,65 @@ if GAMESTATE:GetNumSidesJoined() < 2 then
     }
 end
 
+
+t[#t+1] = Def. ActorFrame {
+	Def.ActorFrame {
+        InitCommand=function(self)
+            self:diffusealpha(0):xy(SCREEN_CENTER_X, SCREEN_BOTTOM-164)
+            :zoomx(1):zoomy(1.35)
+        end,
+	OnCommand=function(self) self:diffusealpha(0):zoomx(1):zoomy(1):sleep(0.4):linear(0.2):diffusealpha(1):zoomx(0.8):zoomy(0.8):pulse():effectmagnitude(1,1.05,1) end,
+ 	SongChosenMessageCommand=function(self)
+            self:stoptweening():easeoutquad(0.2):zoomx(1.2):zoomy(0.8):diffusealpha(0)
+        end,
+        SongUnchosenMessageCommand=function(self)
+            self:stoptweening():zoomx(1.2):zoomy(0.8):easeoutquad(0.2):zoomx(0.8):zoomy(0.8):diffusealpha(1)
+        end,
+	CloseGroupWheelMessageCommand=function(self) self:zoomx(1.2):zoomy(0.8):sleep(0.2):easeoutexpo(1):zoomx(0.8):zoomy(0.8) end,
+        ScrollMessageCommand=function(self) self:stoptweening():zoomx(0.8):zoomy(0.8):linear(0.12):zoomx(0.9):zoomy(0.9):linear(0.1):zoomx(0.8):zoomy(0.8) end,
+
+	LoadActor("tg_frameselect") .. {},
+	}
+}
+
+
 t[#t+1] = Def.ActorFrame {
     -- Background for the group select wheel
     Def.Quad {
         InitCommand=function(self)
-            self:FullScreen():diffuse(Color.Black):diffusebottomedge(color("#001122")):diffusealpha(0)
+            self:FullScreen():diffusetopedge(Color.Black):diffusebottomedge(color("#00BBDD")):diffusealpha(0)
         end,
-        CloseGroupWheelMessageCommand=function(self) self:stoptweening():easeoutexpo(0.25):diffusealpha(0) end,
-        OpenGroupWheelMessageCommand=function(self) self:stoptweening():easeoutexpo(1):diffusealpha(0.8) end,
+        CloseGroupWheelMessageCommand=function(self) self:stoptweening():sleep(0.25):diffusealpha(0) end,
+        OpenGroupWheelMessageCommand=function(self) self:stoptweening():easeoutexpo(0.4):diffusealpha(1) end,
+    },
+
+    Def.BitmapText {
+        Font="Strike Fighter 45px",
+        Name="ChanText",
+        InitCommand=function(self)
+            self:diffusealpha(0)
+            :xy(SCREEN_CENTER_X, SCREEN_CENTER_Y - 200):zoom(0.7)
+            :settext("CHANNEL SELECT")
+        end,
+        CloseGroupWheelMessageCommand=function(self) self:stoptweening():sleep(0.25):diffusealpha(0) end,
+        OpenGroupWheelMessageCommand=function(self) self:stoptweening():easeoutexpo(0.4):diffusealpha(1) end
     },
 
     LoadActor("GroupSelect") .. {
         -- Zoom doesn't center things so we need to recenter them
         InitCommand=function(self)
             self:zoom(1.25):xy(-SCREEN_WIDTH / 8, -SCREEN_HEIGHT / 8)
-        end
+        end,
     },
-    
+
+ -- here bro, have a flashbang (jkob)
+    Def.Quad {
+        InitCommand=function(self)
+            self:FullScreen():diffuse(Color.White):diffusealpha(0)
+        end,
+        CloseGroupWheelMessageCommand=function(self) self:stoptweening():diffusealpha(1):sleep(0.3):linear(0.5):diffusealpha(0) end,
+    },
+   
     LoadActor("../HudPanels"),
 
     LoadActor("../CornerArrows"),
@@ -77,7 +119,7 @@ t[#t+1] = Def.ActorFrame {
     LoadActor("OptionsList"),
 
     Def.Sound {
-        File=THEME:GetPathS("Common", "start"),
+        File=THEME:GetPathS("", "euv_start"),
         IsAction=true,
         PlayerJoinedMessageCommand=function(self)
             self:play()

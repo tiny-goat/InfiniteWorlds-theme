@@ -13,15 +13,15 @@ local LabelMaxZoom = THEME:GetMetric("Combo", "LabelMaxZoom")
 local t = Def.ActorFrame {
 
     Def.BitmapText {
-        Font="Combo numbers",
+        Font="Combo Numbers",
         Name="Number",
-        OnCommand = function(self) self:valign(0):y(-20) end
+        OnCommand = function(self) self:zoomy(0.8):zoomx(0.8)end
     },
 
     Def.Sprite {
-        Texture="ComboLabel",
+        Texture="combo_label",
         Name="ComboLabel",
-        OnCommand = function(self) self:valign(1):y(-20) end
+        OnCommand = function(self) self:zoom(0.3):skewx(-0.3) end
     },
 
     InitCommand = function(self)
@@ -48,12 +48,12 @@ local t = Def.ActorFrame {
         c.Number:settext(string.rep("0",3-string.len(iCombo))..iCombo)
 
         c.Number:stoptweening():diffuse(params.Misses and Color.Red or Color.White)
-        :diffusealpha(0.85):zoom(1.25*Zoom):decelerate(0.15):diffusealpha(1.0):zoom(Zoom)
-        :sleep(0.35):decelerate(0.3):diffusealpha(0)
+        :zoom(0.8):diffusealpha(1):y(5):decelerate(0.15):y(1):zoom(0.8)
+        :sleep(0.35):accelerate(0.4):y(-12):zoomy(0):zoomx(1.6):diffusealpha(0)
         
         c.ComboLabel:stoptweening():diffuse(params.Misses and Color.Red or Color.White)
-        :diffusealpha(0.85):zoom(0.75):decelerate(0.15):diffusealpha(1.0):zoom(0.65)
-        :sleep(0.35):decelerate(0.3):diffusealpha(0):zoomy(0.4):zoomx(0.85)
+        :diffusealpha(1):y(-25):zoomx(1.3):zoomy(1.3):decelerate(0.15):diffusealpha(1.0):y(-22):zoom(0.85)
+        :sleep(0.35):accelerate(0.35):diffusealpha(0):y(-14):zoomy(0):zoomx(0.85)
     end
 }
 

@@ -1,6 +1,6 @@
-local ItemW = 56
+local ItemW = 49.5
 local ItemH = 56
-local ItemAmount = ...
+local ItemAmount = 14
 local ItemTotalW = ItemW * ((ItemAmount - 1) / 2)
 
 local FrameX = -ItemTotalW
@@ -262,6 +262,10 @@ local t = Def.ActorFrame {
                         (ChartIndex[PLAYER_1] == i + ListOffset) and SongIsChosen and GAMESTATE:IsHumanPlayer(PLAYER_1))
                     self:GetChild("")[i]:GetChild("HighlightP2"):visible(
                         (ChartIndex[PLAYER_2] == i + ListOffset) and SongIsChosen and GAMESTATE:IsHumanPlayer(PLAYER_2))
+                    self:GetChild("")[i]:GetChild("RingP1"):visible(
+                        (ChartIndex[PLAYER_1] == i + ListOffset) and SongIsChosen and GAMESTATE:IsHumanPlayer(PLAYER_1))
+                    self:GetChild("")[i]:GetChild("RingP2"):visible(
+                        (ChartIndex[PLAYER_2] == i + ListOffset) and SongIsChosen and GAMESTATE:IsHumanPlayer(PLAYER_2))
 
                     --local ChartLabelString = ""
                     local ChartLabelIndex = 0
@@ -290,6 +294,8 @@ local t = Def.ActorFrame {
                     self:GetChild("")[i]:GetChild("Label"):visible(false)
                     self:GetChild("")[i]:GetChild("HighlightP1"):visible(false)
                     self:GetChild("")[i]:GetChild("HighlightP2"):visible(false)
+                    self:GetChild("")[i]:GetChild("RingP1"):visible(false)
+                    self:GetChild("")[i]:GetChild("RingP2"):visible(false)
                 end
             end
         else
@@ -300,6 +306,8 @@ local t = Def.ActorFrame {
                 self:GetChild("")[i]:GetChild("Label"):visible(false)
                 self:GetChild("")[i]:GetChild("HighlightP1"):visible(false)
                 self:GetChild("")[i]:GetChild("HighlightP2"):visible(false)
+                self:GetChild("")[i]:GetChild("RingP1"):visible(false)
+                self:GetChild("")[i]:GetChild("RingP2"):visible(false)
             end
         end
     end,
@@ -307,27 +315,27 @@ local t = Def.ActorFrame {
 
 for i=1,ItemAmount do
     t[#t+1] = Def.ActorFrame {
-        Def.Sprite {
-            Name="Icon",
-            Texture=THEME:GetPathG("", "DifficultyDisplay/Ball"),
+	Def.Sprite {
+            Name="IconTrim",
+            Texture=THEME:GetPathG("", "DifficultyDisplay/euv_shadow_ball"),
             InitCommand=function(self)
-                self:xy(FrameX + ItemW * (i - 1), 0)
+                self:xy(FrameX + ItemW * (i - 1), 0):zoom(0.56):diffusealpha(1)
             end
         },
 
         Def.Sprite {
-            Name="IconTrim",
-            Texture=THEME:GetPathG("", "DifficultyDisplay/Trim"),
+            Name="Icon",
+            Texture=THEME:GetPathG("", "DifficultyDisplay/euv_ball"),
             InitCommand=function(self)
-                self:xy(FrameX + ItemW * (i - 1), 0)
+                self:xy(FrameX + ItemW * (i - 1), 0):zoom(0.56)
             end
         },
 
         Def.BitmapText {
-            Font="Montserrat numbers 40px",
+            Font="inter extrabold 40px",
             Name="Level",
             InitCommand=function(self)
-                self:xy(FrameX + ItemW * (i - 1), 0):zoom(0.6):maxwidth(75)
+                self:xy(FrameX + ItemW * (i - 1), 0):zoom(0.5):maxwidth(75):strokecolor(Color.Black)
             end
         },
 
@@ -339,24 +347,46 @@ for i=1,ItemAmount do
             end
         },
 
+	Def.Sprite {
+            Name="RingP1",
+            Texture=THEME:GetPathG("", "DifficultyDisplay/Cursor/euv_curP1"),
+            InitCommand=function(self)
+                self:x(FrameX + ItemW * (i - 1))
+                :zoom(0.4)
+                :visible(false)
+		:queuecommand("Bounce")
+            end,
+	    BounceCommand=function(self) self:zoom(1):accelerate(0.4):zoom(0.9):decelerate(0.4):zoom(1):queuecommand("Bounce") end
+        },
+
+        Def.Sprite {
+            Name="RingP2",
+            Texture=THEME:GetPathG("", "DifficultyDisplay/Cursor/euv_curP2"),
+            InitCommand=function(self)
+                self:x(FrameX + ItemW * (i - 1))
+                :zoom(1.1)
+                :visible(false)
+		:queuecommand("Bounce")
+            end,
+	    BounceCommand=function(self) self:zoom(1):accelerate(0.43):zoom(0.9):decelerate(0.45):zoom(1):queuecommand("Bounce") end
+        },
+
         Def.Sprite {
             Name="HighlightP1",
-            Texture=THEME:GetPathG("", "DifficultyDisplay/Cursor/P1"),
+            Texture=THEME:GetPathG("", "DifficultyDisplay/Cursor/euv_labelP1"),
             InitCommand=function(self)
-                self:xy(FrameX + ItemW * (i - 1), -22)
-                :zoom(0.5)
-                :bounce():effectmagnitude(0, -5, 0):effectclock("bgm")
+                self:xy(FrameX + ItemW * (i - 1), 1)
+                :zoom(0.53)
                 :visible(false)
             end
         },
 
         Def.Sprite {
             Name="HighlightP2",
-            Texture=THEME:GetPathG("", "DifficultyDisplay/Cursor/P2"),
+            Texture=THEME:GetPathG("", "DifficultyDisplay/Cursor/euv_labelP2"),
             InitCommand=function(self)
-                self:xy(FrameX + ItemW * (i - 1), 22)
-                :zoom(0.5)
-                :bounce():effectmagnitude(0, 5, 0):effectclock("bgm")
+                self:xy(FrameX + ItemW * (i - 1), 1)
+                :zoom(0.53)
                 :visible(false)
             end
         },
@@ -371,26 +401,32 @@ t[#t+1] = Def.ActorFrame {
         Texture=THEME:GetPathG("", "DifficultyDisplay/MoreLeft"),
         InitCommand=function(self)
             self:xy(FrameX - 16 - ItemW, 0):zoom(0.4):visible(false)
-            :bounce():effectmagnitude(16, 0, 0):effectclock("bgm")
         end
     },
     Def.Sprite {
         Name="MoreRight",
         Texture=THEME:GetPathG("", "DifficultyDisplay/MoreRight"),
         InitCommand=function(self)
-            self:xy(FrameX + 16 + ItemW * 12, 0):zoom(0.4):visible(false)
-            :bounce():effectmagnitude(-16, 0, 0):effectclock("bgm")
+            self:xy(FrameX + 16 + ItemW * 14, 0):zoom(0.4):visible(false)
         end
     },
+
     Def.Sound {
-        File=THEME:GetPathS("Common", "value"),
+        File=THEME:GetPathS("", "euv_change_diff"),
         IsAction=true,
         UpdateChartDisplayMessageCommand=function(self) self:play() end
     },
-	Def.Sound {
-        File=THEME:GetPathS("Common", "Start"),
+
+    Def.Sound {
+        File=THEME:GetPathS("", "euv_stepsselect"),
         IsAction=true,
         StepsChosenMessageCommand=function(self) self:play() end
+    },
+
+    Def.Sound {
+        File=THEME:GetPathS("", "euv_reverse_step"),
+        IsAction=true,
+        SongUnchosenMessageCommand=function(self) self:play() end
     }
 }
 

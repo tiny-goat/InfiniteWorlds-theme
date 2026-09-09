@@ -83,7 +83,7 @@ for pn in ivalues(GAMESTATE:GetHumanPlayers()) do
                 Name="PersonalScore",
                 Font="Common normal",
                 InitCommand=function(self)
-                    self:xy(90 + CorrectionX, -35):zoom(1):halign(1)
+                    self:xy(90 + CorrectionX, -35):zoom(0.64):halign(1)
                     :diffuse(Color.White):vertspacing(-6):shadowlength(1)
                 end,
             },
@@ -99,7 +99,7 @@ for pn in ivalues(GAMESTATE:GetHumanPlayers()) do
                 Name="MachineScore",
                 Font="Common normal",
                 InitCommand=function(self)
-                    self:xy(90 + CorrectionX, 60):zoom(1):halign(1)
+                    self:xy(90 + CorrectionX, 60):zoom(0.64):halign(1)
                     :diffuse(Color.White):vertspacing(-6):shadowlength(1)
                 end,
             },

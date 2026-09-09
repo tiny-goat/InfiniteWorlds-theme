@@ -39,7 +39,7 @@ return Def.ActorFrame {
     Def.Sprite {
         Name="Judgment",
         Texture=GetTexture(),
-        InitCommand=function(self) self:pause():visible(false) end,
+        InitCommand=function(self) self:pause():y(20):visible(false):valign(1) end,
         ResetCommand=function(self) self:finishtweening():stopeffect():visible(false) end
     },
     
@@ -99,27 +99,24 @@ return Def.ActorFrame {
         self:playcommand("Reset")
 
         Judg:visible(not bHideJudgment):setstate(iFrame)
-        :stoptweening():zoom(0.85 * AddZoom):diffusealpha(0.75):decelerate(0.15)
-        :zoom(0.70 * AddZoom):diffusealpha(1):sleep(0.35):decelerate(0.3)
-        :diffusealpha(0):zoomy(0.4 * AddZoom):zoomx(0.85 * AddZoom)
+        :stoptweening():zoom(0.88 * AddZoom):y(5):diffusealpha(1):decelerate(0.15)
+        :zoom(0.70 * AddZoom):y(7):diffusealpha(1):sleep(0.35):smooth(0.45)
+        :diffusealpha(0):zoomy(0):y(8):zoomx(0.85 * AddZoom)
         
         Prot:visible(bProtiming)
         OFB:GetChild("Background"):visible(bOffsetBar)
         
-        if not (params.TapNoteScore == "TapNoteScore_CheckpointHit" or params.TapNoteScore == "TapNoteScore_CheckpointMiss" or params.TapNoteScore == "TapNoteScore_Miss" ) then
-            
+        if not (params.TapNoteScore == "TapNoteScore_CheckpointHit" or params.TapNoteScore == "TapNoteScore_CheckpointMiss") then
             -- Manage MS timing
             Prot:finishtweening():diffusealpha(1)
-            :settext( math.floor(params.TapNoteOffset * 1000) .. " ms")
+            :settext(math.floor(math.abs(params.TapNoteOffset * 1000)*(params.Early and -1 or 1) ) .. " ms")
             :sleep(0.5):decelerate(0.3):diffusealpha(0)
 
             -- Manage Offset Bar
             if bOffsetBar then
-                OFB:GetChild("Background"):finishtweening():diffuse(Color.White)
                 OFB:GetChild(""):finishtweening():diffuse(Color.White)
-                :decelerate(0.1):x(math.floor(params.TapNoteOffset * 600)) 
+                :decelerate(0.1):x(math.floor(math.abs(params.TapNoteOffset * 600)) * (params.Early and -1 or 1))
                 :sleep(0.4):decelerate(0.3):diffusealpha(0)
-                OFB:GetChild("Background"):sleep(0.4):decelerate(0.3):diffusealpha(0)
             end
         end
     end

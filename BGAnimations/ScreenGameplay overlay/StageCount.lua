@@ -6,7 +6,7 @@ local FieldWidth = math.ceil(GAMESTATE:GetCurrentStyle():GetWidth(pn) * 0.75) + 
 
 return Def.ActorFrame {
     InitCommand=function(self)
-        self:y(SCREEN_TOP + 34)
+        self:y(SCREEN_TOP + 24)
         if IsCenter and not IsTwoPlayer then
             
             self:x(SCREEN_CENTER_X + (GAMESTATE:IsPlayerEnabled(PLAYER_2) and -FieldWidth or FieldWidth))
@@ -16,15 +16,15 @@ return Def.ActorFrame {
     end,
     
     Def.Sprite {
-        Texture=THEME:GetPathG("", "UI/StageCount"),
-        InitCommand=function(self) self:zoom(0.4) end
+        Texture=THEME:GetPathG("", "UI/euv_stageindicator_base"),
+        InitCommand=function(self) self:zoom(0.8):y(8) end
     },
 
     Def.BitmapText {
-        Font="Montserrat semibold 40px",
+        Font="Strike Fighter 45px",
         Text=string.format("%02d", GAMESTATE:GetCurrentStageIndex() + 1),
         InitCommand=function(self)
-            self:y(9):zoom(0.6):skewx(-0.1):shadowlength(1)
+            self:y(14):zoom(0.56)
         end
     }
 }

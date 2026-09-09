@@ -12,40 +12,7 @@ local ChartLabels = {
     "JUMP",
 }
 
-local t = Def.ActorFrame {
-    Def.Quad {
-        OnCommand=function(self) self:playcommand("Refresh") end,
-        StartTransitioningCommand=function(self) self:playcommand("Refresh") end,
-
-        RefreshCommand=function(self)
-            if SCREENMAN:GetTopScreen():GetNextScreenName() ~= "ScreenSelectProfile" then
-                self:FullScreen():diffuse(Color.Black)
-            else
-                self:visible(false)
-            end
-        end
-    },
-
-    Def.Sprite {
-        OnCommand=function(self) self:playcommand("Refresh") end,
-        StartTransitioningCommand=function(self) self:playcommand("Refresh") end,
-
-        RefreshCommand=function(self)
-            if SCREENMAN:GetTopScreen():GetNextScreenName() ~= "ScreenSelectProfile" then
-                if GAMESTATE:GetCurrentSong() then
-                    local Path = GAMESTATE:GetCurrentSong():GetBackgroundPath()
-                    if Path and FILEMAN:DoesFileExist(Path) then
-                        self:Load(Path):scale_or_crop_background()
-                    else
-                        self:Load(THEME:GetPathG("Common", "fallback background")):scale_or_crop_background()
-                    end
-                end
-            else
-                self:Load(nil)
-            end
-        end
-    },
-}
+local t = Def.ActorFrame {}
 
 for pn in ivalues(GAMESTATE:GetHumanPlayers()) do
     local PlayerDirection = (pn == PLAYER_2 and 1 or -1)
@@ -98,29 +65,30 @@ for pn in ivalues(GAMESTATE:GetHumanPlayers()) do
             Def.Sprite {
                 Name="Frame",
                 Texture=THEME:GetPathG("", "UI/StepArtist" .. (pn == PLAYER_2 and "R" or "L")),
+		InitCommand=function(self) self:zoom(0.5) end,
             },
 
             Def.Sprite {
                 Name="Ball",
-                Texture=THEME:GetPathG("", "DifficultyDisplay/LargeBall"),
+                Texture=THEME:GetPathG("", "DifficultyDisplay/euv_ball"),
                 InitCommand=function(self)
-                    self:xy(79.25 * PlayerDirection, 0.25):zoom(0.75)
+                    self:xy(79.25 * PlayerDirection, 0.25):zoom(1.1)
                 end
             },
 
             Def.Sprite {
                 Name="BallTrim",
-                Texture=THEME:GetPathG("", "DifficultyDisplay/LargeTrim"),
+                Texture=THEME:GetPathG("", "DifficultyDisplay/ThickTrim"),
                 InitCommand=function(self)
-                    self:xy(79.25 * PlayerDirection, 0.25):zoom(0.75)
+                    self:xy(79.25 * PlayerDirection, 0.25):zoom(0.33)
                 end
             },
 
             Def.BitmapText {
                 Name="Meter",
-                Font="Montserrat numbers 40px",
+                Font="inter extrabold 45px",
                 InitCommand=function(self)
-                    self:xy(79.25 * PlayerDirection, 1.25):zoom(0.88)
+                    self:xy(80.5 * PlayerDirection, 1):zoom(0.9):shadowlength(2)
                 end
             },
 
@@ -133,16 +101,16 @@ for pn in ivalues(GAMESTATE:GetHumanPlayers()) do
             },
             
             Def.BitmapText {
-                Font="Montserrat extrabold 20px",
+                Font="inter medium 25px",
                 Name="Difficulty",
                 InitCommand=function(self)
-                    self:xy(79.25 * PlayerDirection, -21.25):visible(true):zoom(0.7):maxwidth(76):shadowlength(2):skewx(-0.1)
+                    self:xy(79.25 * PlayerDirection, -21.25):visible(true):zoom(0.5):maxwidth(76)
                 end
             },
 
             Def.BitmapText {
                 Name="Credit",
-                Font="Montserrat semibold 20px",
+                Font="inter light 22px",
                 InitCommand=function(self)
                     self:xy(-41 * PlayerDirection, 22.5)
                     :vertspacing(-8)
@@ -152,7 +120,7 @@ for pn in ivalues(GAMESTATE:GetHumanPlayers()) do
                 end
             }
         }
-    }
+   }
 end
 
 -- If the screen is transitioning in attract mode, we don't need to show all of this

@@ -7,12 +7,11 @@ local t = Def.ActorFrame {
             self:easeoutexpo(0.5):xy(SCREEN_CENTER_X, 0)
         end,
         OffCommand=function(self)
-            self:easeoutexpo(0.5):xy(SCREEN_CENTER_X, -128)
+            self:sleep(0.2):easeoutexpo(0.9):xy(SCREEN_CENTER_X, -128)
         end,
 
-        -- Top panel
         Def.Sprite {
-            Texture=THEME:GetPathG("", "UI/PanelTop"),
+            Texture=THEME:GetPathG("", "UI/euv_header_up"),
             InitCommand=function(self)
                 self:scaletofit(0, 0, 1280, 128):xy(0, 0):valign(0)
             end,
@@ -21,57 +20,65 @@ local t = Def.ActorFrame {
         -- Screen name
         Def.BitmapText {
             Name="ScreenName",
-            Font="Montserrat normal 40px",
+            Font="inter extrabold 45px",
             Text=ToUpper(Screen.String("HeaderText")),
             InitCommand=function(self)
-                self:xy(-WideScale(200, 200), 40):halign(1):zoom(0.6)
-                :diffuse(Color.Black):shadowlength(1)
+                self:xy(-WideScale(255, 230), 0):zoom(0.6):sleep(0.2):diffusealpha(0):easeoutexpo(1):xy(-WideScale(200, 165), 45):halign(1):skewy(0.1)
+                :diffuse(Color.White)
 
                 if not IsUsingWideScreen() then
-                    local IsSelectMusic = self:GetText() == "SELECT MUSIC"
+                    local IsSelectMusic = self:GetText() == "SELECTMUSIC"
                     if IsSelectMusic then self:x(-WideScale(170, 170)) end
 
-                    local WidthLimit = (IsSelectMusic and 181 or 160) / self:GetZoom()
-                    self:maxwidth(WidthLimit):wrapwidthpixels(WidthLimit):vertspacing(-16)
+                    local WidthLimit = (IsSelectMusic and 189 or 160) / self:GetZoom()
+                    self:maxwidth(WidthLimit):wrapwidthpixels(WidthLimit):zoom(0.64):vertspacing(2)
                 end
             end,
         },
 
         -- Stage count
         Def.BitmapText {
-            Font="Montserrat normal 40px",
+            Font="inter medium 25px",
             InitCommand=function(self)
+		local PosY = IsUsingWideScreen() and 74 or 74
                 self:visible(Screen.String("HeaderText") == "Select Music" and true or false)
-                self:settext("STAGE "..string.format("%02d", GAMESTATE:GetCurrentStageIndex() + 1))
-                self:xy(-WideScale(200, 200), 60):halign(1):zoom(0.5):diffuse(Color.Black)
+                self:settext("Round "..string.format("%02d", GAMESTATE:GetCurrentStageIndex() + 1))
+                self:diffusealpha(0):xy(-WideScale(150, 150), 60):zoom(0.6):sleep(0.3):easeoutexpo(1):xy(-WideScale(0, 0), PosY):diffuse(Color.White)
             end,
         },
 
         -- Amount of lives left
         Def.ActorFrame {
             InitCommand=function(self)
-                self:xy(WideScale(200, 225), 40)
+                self:xy(WideScale(220, 225), 40):zoom(1.1):skewy(-0.1)
             end,
+	    OnCommand=function(self) self:xy(WideScale(220,300), 0):sleep(0.2):easeoutexpo(1):xy(WideScale(220, 225), 40) end,
 
             Def.Sprite {
-                Texture=THEME:GetPathG("", "UI/Button"),
-                InitCommand=function(self) self:zoom(0.65) end,
-            },
-
-            Def.Sprite {
-                Texture=THEME:GetPathG("", "UI/Heart"),
+                Texture=THEME:GetPathG("", "UI/euv_heartbank"),
                 InitCommand=function(self)
-                    self:x(-21):zoom(0.3)
-                end,
+                    self:cropleft(0.38):zoomx(0.2):zoomy(0.2):y(0):x(-38):diffusealpha(0.8):sleep(0.2):easeoutexpo(1.1):zoomx(0.2):zoomy(0.2):diffusealpha(1)
+                end
             },
 
             Def.BitmapText {
-                Font="Montserrat semibold 40px",
+                Font="inter medium 25px",
                 InitCommand=function(self)
-                    self:x(-6):zoom(0.6):halign(0)
+                    self:x(-5):y(-2):zoom(0):shadowlength(2):halign(0):diffusealpha(0):sleep(0.2):smooth(0.1):zoom(0.9):diffusealpha(1)
 
                     local Hearts = GAMESTATE:GetNumStagesLeft(PLAYER_1) + GAMESTATE:GetNumStagesLeft(PLAYER_2)
-                    self:settext("x " .. (GAMESTATE:IsEventMode() and "∞" or Hearts))
+                    self:settext("" .. (GAMESTATE:IsEventMode() and "∞" or Hearts))
+                end,
+		OffCommand=function(self) self:sleep(0.5):diffusealpha(0) end
+            },
+
+            Def.Sprite {
+                Texture=THEME:GetPathG("", "UI/euv_hbheart"),
+                InitCommand=function(self)
+                    self:zoom(0.2):y(-1):x(5):sleep(0.1):easeoutexpo(1.1):zoom(0.2):x(-26)
+                end,
+                OffCommand=function(self)
+                    self:x(-21):zoom(0.2):easeoutexpo(1.1):x(5)
                 end
             },
         }
@@ -79,20 +86,36 @@ local t = Def.ActorFrame {
 
     -- Bottom panel
     Def.Sprite {
-        Texture=THEME:GetPathG("", "UI/PanelBottom"),
+        Texture=THEME:GetPathG("", "UI/euv_footer_part"),
+        InitCommand=function(self)
+            self:scaletofit(0, 0, 1280, 140)
+            :xy(SCREEN_CENTER_X, SCREEN_BOTTOM + 128):valign(1)
+        end,
+        OnCommand=function(self)
+            self:sleep(0.1):easeoutexpo(0.5)
+            :xy(SCREEN_CENTER_X, SCREEN_BOTTOM)
+        end,
+        OffCommand=function(self)
+            self:sleep(0.2):easeoutexpo(0.9)
+            :xy(SCREEN_CENTER_X, SCREEN_BOTTOM + 128)
+        end,
+    },
+    Def.Sprite {
+        Texture=THEME:GetPathG("", "UI/euv_footer_down"),
         InitCommand=function(self)
             self:scaletofit(0, 0, 1280, 128)
             :xy(SCREEN_CENTER_X, SCREEN_BOTTOM + 128):valign(1)
         end,
         OnCommand=function(self)
             self:easeoutexpo(0.5)
-            :xy(SCREEN_CENTER_X, SCREEN_BOTTOM)
+            :xy(SCREEN_CENTER_X, SCREEN_BOTTOM + 10)
         end,
         OffCommand=function(self)
-            self:easeoutexpo(0.5)
+            self:sleep(0.2):easeoutexpo(0.9)
             :xy(SCREEN_CENTER_X, SCREEN_BOTTOM + 128)
         end,
     },
+
 }
 
 -- Avatar display and info on bottom panel
@@ -100,32 +123,51 @@ for pn in ivalues(GAMESTATE:GetHumanPlayers()) do
     if PROFILEMAN:GetProfile(pn) and (PROFILEMAN:IsPersistentProfile(pn) or PROFILEMAN:ProfileWasLoadedFromMemoryCard(pn)) then
         t[#t+1] = Def.ActorFrame {
             Def.ActorFrame {
-                InitCommand=function(self) self:y(128) end,
-                OnCommand=function(self) self:easeoutexpo(0.5):y(0) end,
-                OffCommand=function(self) self:easeoutexpo(0.5):y(128) end,
+                InitCommand=function(self) 
+			-- very weird aligment, this'll be my fix for now
+			local PosP1 = IsUsingWideScreen() and -670 or -510
+			local PosP2 = IsUsingWideScreen() and -605 or -450
+			self:y(108):x(SCREEN_CENTER_X + (pn == PLAYER_2 and PosP2 or PosP1)) end,
+                OnCommand=function(self) self:easeoutexpo(0.5):y(-7) end,
+                OffCommand=function(self) self:sleep(0.2):easeoutexpo(0.9):y(128) end,
 
                 Def.Sprite {
-                    Texture=THEME:GetPathG("", "UI/AvatarSlotMask"),
+                    Texture=THEME:GetPathG("", "UI/euv_maskslot"),
                     InitCommand=function(self)
-                        self:xy(SCREEN_CENTER_X + (pn == PLAYER_2 and 172 or -172), SCREEN_BOTTOM - 39)
-                        :rotationy(pn == PLAYER_2 and 180 or 0):MaskSource()
+                        self:xy(SCREEN_CENTER_X + (pn == PLAYER_2 and 221 or -221), SCREEN_BOTTOM - 22)
+                        :rotationy(pn == PLAYER_2 and 180 or 0):zoom(1.5):MaskSource()
                     end
                 },
-
-                Def.Sprite {
-                    Texture=THEME:GetPathG("", "UI/NameTag" .. ToEnumShortString(pn)),
+		-- reorder the layering thing of this thing
+		Def.Sprite {
+                    Texture=LoadModule("Options.GetProfileData.lua")(pn)["Image"],
                     InitCommand=function(self)
-                        self:xy(SCREEN_CENTER_X + (pn == PLAYER_2 and 232 or -232), SCREEN_BOTTOM - 32)
-                        :halign(pn == PLAYER_2 and 0 or 1):valign(1):MaskDest()
+                        self:scaletocover(0, 0, 289, 289)
+                        :xy(SCREEN_CENTER_X + (pn == PLAYER_2 and 222 or -222), SCREEN_BOTTOM - 8)
+                        :MaskDest():ztestmode("ZTestMode_WriteOnFail"):diffusealpha(0.6)
                     end
                 },
-
+		Def.Sprite {
+                    Texture=THEME:GetPathG("", "UI/euv_glow_dock"),
+                    InitCommand=function(self)
+                        self:zoomy(1.52):xy(SCREEN_CENTER_X + (pn == PLAYER_2 and 184 or -184), SCREEN_BOTTOM - 20)
+                        :rotationy(pn == PLAYER_2 and 180 or 0):rotationz(-4):queuecommand("Breathe"):diffusecolor(color(pn==PLAYER_2 and ("#EE16FF") or ("#16EEFF")))
+                    end,
+		    BreatheCommand=function(self) self:diffusealpha(0.4):linear(2):diffusealpha(1):linear(2):diffusealpha(0.4):queuecommand("Breathe") end
+                },
+	 	Def.Sprite {
+                    Texture=THEME:GetPathG("", "UI/euv_dock_light"),
+                    InitCommand=function(self)
+                        self:zoomy(1.52):xy(SCREEN_CENTER_X + (pn == PLAYER_2 and 184 or -184), SCREEN_BOTTOM - 20)
+                        :rotationy(pn == PLAYER_2 and 180 or 0):rotationz(-4)
+                    end
+                },
                 Def.BitmapText {
-                    Font="Montserrat semibold 20px",
+                    Font="inter medium 25px",
                     Text=PROFILEMAN:GetProfile(pn):GetDisplayName(),
                     InitCommand=function(self)
-                        self:xy(SCREEN_CENTER_X + (pn == PLAYER_2 and 292 or -292), SCREEN_BOTTOM - 48):zoom(0.9)
-                        :maxwidth(112 / self:GetZoom()):skewx(-0.2):shadowlength(1)
+                        self:xy(SCREEN_CENTER_X + (pn == PLAYER_2 and 130 or -130), SCREEN_BOTTOM - 45):zoom(0.7):halign(pn == PLAYER_2 and 0 or 1):valign(0)
+                        :maxwidth(112 / self:GetZoom())
 
                         if PROFILEMAN:GetProfile(pn):GetDisplayName() == "" then
                             self:settext(THEME:GetString("ProfileStats", "No Profile"))
@@ -133,20 +175,12 @@ for pn in ivalues(GAMESTATE:GetHumanPlayers()) do
                     end
                 },
 
-                Def.Sprite {
-                    Texture=THEME:GetPathG("", "UI/NameTag" .. ToEnumShortString(pn)),
-                    InitCommand=function(self)
-                        self:xy(SCREEN_CENTER_X + (pn == PLAYER_2 and 212 or -212), SCREEN_BOTTOM - 10)
-                        :halign(pn == PLAYER_2 and 0 or 1):valign(1):MaskDest()
-                    end
-                },
-
                 Def.BitmapText {
-                    Font="Montserrat semibold 20px",
+                    Font="inter medium 25px",
                     -- This ingenious level system was made up at 4am
-                    InitCommand=function(self)
-                        self:xy(SCREEN_CENTER_X + (pn == PLAYER_2 and 281 or -281), SCREEN_BOTTOM - 26):zoom(0.9)
-                        :maxwidth(96 / self:GetZoom()):skewx(-0.2):shadowlength(1)
+                        InitCommand=function(self)
+                        self:xy(SCREEN_CENTER_X + (pn == PLAYER_2 and 155 or -155), SCREEN_BOTTOM - 13):zoom(0.7)
+                        :maxwidth(96 / self:GetZoom())
                         lvl = math.floor(math.sqrt(PROFILEMAN:GetProfile(pn):GetTotalDancePoints() / 500)) + 1
                         -- You can check if a number is "nan" by comparing it to itself
                         -- because "nan" is not equal to anything, not even itself
@@ -154,32 +188,6 @@ for pn in ivalues(GAMESTATE:GetHumanPlayers()) do
                         self:settext(THEME:GetString("ProfileStats", "Level") .. " " .. lvl)
                     end
                 },
-
-                Def.Sprite {
-                    Texture=LoadModule("Options.GetProfileData.lua")(pn)["Image"],
-                    InitCommand=function(self)
-                        self:scaletocover(0, 0, 128, 64)
-                        :xy(SCREEN_CENTER_X + (pn == PLAYER_2 and 172 or -172), SCREEN_BOTTOM - 39)
-                        :MaskDest():ztestmode("ZTestMode_WriteOnFail"):diffusealpha(0.5)
-                    end
-                },
-
-                Def.Sprite {
-                    Texture=THEME:GetPathG("", "UI/AvatarSlotOverlay"),
-                    InitCommand=function(self)
-                        self:xy(SCREEN_CENTER_X + (pn == PLAYER_2 and 172 or -172), SCREEN_BOTTOM - 39)
-                        :rotationy(pn == PLAYER_2 and 180 or 0)
-                    end
-                },
-
-                Def.Sprite {
-                    Texture=LoadModule("Options.GetProfileData.lua")(pn)["Image"],
-                    InitCommand=function(self)
-                        self:scaletocover(0, 0, 64, 64)
-                        :xy(SCREEN_CENTER_X + (pn == PLAYER_2 and 172 or -172), SCREEN_BOTTOM - 39)
-                        :MaskDest():ztestmode("ZTestMode_WriteOnFail")
-                    end
-                }
             }
         }
     end

@@ -3,7 +3,7 @@ return Def.ActorFrame{
         InitCommand=function(self)
             self:diffuseshift()
             :effectcolor2(color("#000000"))
-            :effectcolor1(color("#9334BD"))
+            :effectcolor1(color("#16CCEE"))
             :effectperiod(0.75)
             :effectoffset(0.325)
             :zoomto(150,20)

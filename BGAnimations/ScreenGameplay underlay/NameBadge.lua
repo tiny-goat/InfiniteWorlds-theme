@@ -17,17 +17,17 @@ local t = Def.ActorFrame {
     end,
 
     Def.Sprite { 
-        Texture=THEME:GetPathG("", "UI/NameBadge"), 
+        Texture=THEME:GetPathG("", "UI/euv_playername_plate"), 
         OnCommand=function(self)
-            self:visible(PROFILEMAN:IsPersistentProfile(pn)):zoom(0.45) 
+            self:visible(PROFILEMAN:IsPersistentProfile(pn)):zoomy(0.8):zoomx(0):sleep(0.4):easeoutexpo(0.45):zoomx(0.8) 
         end
     },
 
     Def.BitmapText {
-        Font="Montserrat semibold 20px",
+        Font="Inter medium 25px",
         Name="Username",
         OnCommand=function(self) 
-            self:visible(PROFILEMAN:IsPersistentProfile(pn)):shadowlength(1):zoom(0.75)
+            self:visible(PROFILEMAN:IsPersistentProfile(pn)):y(-6):zoom(0):sleep(0.45):easeoutexpo(0.9):zoom(0.7)
         end
     }
 }

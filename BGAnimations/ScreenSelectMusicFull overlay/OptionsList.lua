@@ -97,8 +97,8 @@ for pn in ivalues(GAMESTATE:GetHumanPlayers()) do
         end,
 
         Def.Sprite {
-            Texture=THEME:GetPathG("", "MusicWheel/Options"),
-            InitCommand=function(self) self:zoom(0.7) end
+            Texture=THEME:GetPathG("", "MusicWheel/euv_comm_window"),
+            InitCommand=function(self) self:zoom(1) end
         },
 
         -- Masks that will hide the off limits portion of the list, shhh

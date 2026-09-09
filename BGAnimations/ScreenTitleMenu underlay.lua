@@ -32,53 +32,12 @@ local t = Def.ActorFrame {
             InitCommand=function(self)
                 self:zoom(0.8)
             end
-        },
-
-        Def.Sprite {
-            Texture=THEME:GetPathG("", "Logo/Logo"),
-            OnCommand=function(self)
-                self:diffusealpha(0)
-                :zoom(0.8)
-                :queuecommand("Pulse")
-            end,
-            PulseCommand=function(self)
-                self:sleep(3.4288)
-                :diffusealpha(0.5)
-                :zoom(0.8)
-                :decelerate(1.7144)
-                :zoom(1)
-                :diffusealpha(0)
-                :sleep(1.7144)
-                :queuecommand("Pulse")
-            end,
-        },
-
-        Def.Sprite {
-            Texture=THEME:GetPathG("", "Logo/BlurLogo"),
-            OnCommand=function(self)
-                self:zoom(0.83)
-                :diffusealpha(0)
-                :queuecommand("Flash")
-            end,
-            FlashCommand=function(self)
-                self:accelerate(3.4288)
-                :diffusealpha(0.8)
-                :decelerate(3.4288)
-                :diffusealpha(0)
-                :queuecommand("Flash")
-            end,
-            OffCommand=function(self)
-                self:stoptweening()
-                :diffusealpha(1)
-                :easeoutexpo(1)
-                :zoom(2):diffusealpha(0)
-            end,
         }
-    },
+},
 
     Def.ActorFrame {
         InitCommand=function(self)
-            self:xy(SCREEN_CENTER_X, 20)
+            self:xy(SCREEN_CENTER_X, 20):zoom(0.6)
         end,
 
         OffCommand=function(self)
@@ -86,7 +45,7 @@ local t = Def.ActorFrame {
         end,
 
         Def.BitmapText {
-            Font="Montserrat normal 20px",
+            Font="inter light 22px",
             InitCommand=function(self)
                 local InstalledSongs, Groups, InstalledCourses = 0
                 if SONGMAN:GetRandomSong() then
@@ -103,7 +62,7 @@ local t = Def.ActorFrame {
         },
 
         Def.BitmapText {
-            Font="Montserrat normal 20px",
+            Font="inter light 22px",
             Text=string.format("OutFox %s - %s", ProductVersion(), VersionDate()),
             AltText="OutFox",
             InitCommand=function(self) self:y(20) end
@@ -120,32 +79,34 @@ if not IsHome() and GAMESTATE:EnoughCreditsToJoin() then
 
         LoadActor(THEME:GetPathG("", "PressCenterStep")) .. {
             InitCommand=function(self) self:xy(SCREEN_CENTER_X - SCREEN_WIDTH * 0.3, SCREEN_HEIGHT * 0.75):queuecommand("Refresh") end,
-            OffCommand=function(self) self:stoptweening():easeoutexpo(0.25):zoom(2):diffusealpha(0) end,
+	    OnCommand=function(self) self:diffusealpha(0):zoom(1.8):sleep(0.4):easeoutexpo(0.2):zoom(1):diffusealpha(1) end,
+            OffCommand=function(self) self:stoptweening():easeoutexpo(.5):zoom(0):diffusealpha(0) end,
             StorageDevicesChangedMessageCommand=function(self)self:queuecommand("Refresh")end,
             RefreshCommand=function(self)
     			CardState = MEMCARDMAN:GetCardState(PLAYER_1)
     			if CardState == "MemoryCardState_none" then
-    				self:GetChild("Press"):Load(THEME:GetPathG("", "PressCenterStep/Press"))
+    				self:GetChild("Press"):Load(THEME:GetPathG("", "PressCenterStep/tg_press_step"))
     			elseif CardState == "MemoryCardState_ready" then
-    				self:GetChild("Press"):Load(THEME:GetPathG("", "PressCenterStep/USB"))
+    				self:GetChild("Press"):Load(THEME:GetPathG("", "PressCenterStep/euv_usb1"))
     			elseif CardState == "MemoryCardState_error" then
-    				self:GetChild("Press"):Load(THEME:GetPathG("", "PressCenterStep/Error"))
+    				self:GetChild("Press"):Load(THEME:GetPathG("", "PressCenterStep/euv_usb2"))
     			end
     		end
         },
 
         LoadActor(THEME:GetPathG("", "PressCenterStep")) .. {
             InitCommand=function(self) self:xy(SCREEN_CENTER_X + SCREEN_WIDTH * 0.3, SCREEN_HEIGHT * 0.75):queuecommand("Refresh") end,
-            OffCommand=function(self) self:stoptweening():easeoutexpo(0.25):zoom(2):diffusealpha(0) end,
+            OffCommand=function(self) self:stoptweening():easeoutexpo(.5):zoom(0):diffusealpha(0) end,
+	    OnCommand=function(self) self:diffusealpha(0):zoom(1.8):sleep(0.4):easeoutexpo(0.2):zoom(1):diffusealpha(1) end,
             StorageDevicesChangedMessageCommand=function(self)self:queuecommand("Refresh")end,
             RefreshCommand=function(self)
     			CardState = MEMCARDMAN:GetCardState(PLAYER_2)
     			if CardState == "MemoryCardState_none" then
-    				self:GetChild("Press"):Load(THEME:GetPathG("", "PressCenterStep/Press"))
+    				self:GetChild("Press"):Load(THEME:GetPathG("", "PressCenterStep/tg_press_step"))
     			elseif CardState == "MemoryCardState_ready" then
-    				self:GetChild("Press"):Load(THEME:GetPathG("", "PressCenterStep/USB"))
+    				self:GetChild("Press"):Load(THEME:GetPathG("", "PressCenterStep/euv_usb1"))
     			elseif CardState == "MemoryCardState_error" then
-    				self:GetChild("Press"):Load(THEME:GetPathG("", "PressCenterStep/Error"))
+    				self:GetChild("Press"):Load(THEME:GetPathG("", "PressCenterStep/euv_usb2"))
     			end
     		end
         }

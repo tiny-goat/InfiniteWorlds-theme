@@ -263,7 +263,7 @@ local t = Def.ActorFrame {
     },
 
     Def.Sound {
-        File=THEME:GetPathS("Common", "Start"),
+        File=THEME:GetPathS("", "euv_folder_start"),
         IsAction=true,
         CloseGroupWheelMessageCommand=function(self) self:play() end
     },
@@ -310,26 +310,13 @@ for i = 1, MainWheelSize do
             -- Animate!
             self:xy(xpos + displace, SCREEN_CENTER_Y - 60)
         end,
-        
-        Def.Quad {
-            InitCommand=function(self)
-                self:zoomto(MainWheelSpacing, 40)
-                :diffuse(color("#1d1d1d")):diffusebottomedge(color("#7b7b7b"))
-            end,
-            
-            OnCommand=function(self) self:playcommand("Refresh") end,
-            RefreshHighlightMessageCommand=function(self) self:playcommand("Refresh") end,
-            
-            RefreshCommand=function(self)
-                self:finishtweening():easeoutexpo(0.4):diffusealpha(IsFocusedMain and 1 or 0.5)
-            end,
-        },
+       
         
         Def.BitmapText {
             Name="Text",
-            Font="Montserrat semibold 40px",
+            Font="inter extrabold 45px",
             InitCommand=function(self)
-                self:zoom(0.75):skewx(-0.1):diffusetopedge(0.95,0.95,0.95,0.8):shadowlength(1.5)
+                self:zoom(0.6):diffuse(Color.White):shadowlength(1.5)
                 :maxwidth(MainWheelSpacing / self:GetZoom())
             end,
             
@@ -403,50 +390,33 @@ for i = 1, SubWheelSize do
             elseif tween then
                 self:easeoutexpo(0.4)
             end
-            
-            self:GetChild("Highlight"):playcommand("Refresh")
 
             -- Animate!
+	    -- juust to make it close to the original one from infinity but not enough that we may get copyright issues, if AM still cares? (jkob)
             self:xy(xpos + displace, SCREEN_CENTER_Y + 40)
-            self:rotationy((SCREEN_CENTER_X - xpos - displace) * -WheelRotation)
-            self:z(-math.abs(SCREEN_CENTER_X - xpos - displace) * 0.25)
+            --[[self:rotationy((SCREEN_CENTER_X - xpos - displace) * -WheelRotation)]]--
+            --[[self:z(-math.abs(SCREEN_CENTER_X - xpos - displace) * 0.25)]]--
         end,
         
-        Def.Sprite {
-            Name="Highlight",
-            Texture=THEME:GetPathG("", "MusicWheel/FrameHighlight"),
-            RefreshCommand=function(self)
-                self:stoptweening():easeoutexpo(0.4):diffusealpha(i == SubWheelCenter and 1 or 0)
-            end
-        },
-        
-        Def.Sprite {
-            Texture=THEME:GetPathG("", "MusicWheel/GradientBanner"),
-            InitCommand=function(self) self:scaletoclipped(WheelItem.Width, WheelItem.Height) end
-        },
         
         Def.Banner {
             Name="Banner",
-        },
-
-        Def.Sprite {
-            Texture=THEME:GetPathG("", "MusicWheel/GroupFrame"),
         },
         
         Def.ActorFrame {
             Def.Quad {
                 InitCommand=function(self)
                     self:zoomto(60, 18):addy(-50)
-                    :diffuse(0,0,0,0.6)
+                    :diffuse(0,0,0,0.3)
                     :fadeleft(0.3):faderight(0.3)
                 end
             },
 
             Def.BitmapText {
                 Name="Index",
-                Font="Montserrat semibold 40px",
+                Font="inter medium 25px",
                 InitCommand=function(self)
-                    self:addy(-50):zoom(0.4):skewx(-0.1):diffusetopedge(0.95,0.95,0.95,0.8):shadowlength(1.5)
+                    self:addy(-52):zoom(0.6):diffusetopedge(0.95,0.95,0.95,0.8):shadowlength(1.5)
                 end,
                 RefreshCommand=function(self, params) self:settext(SubTargets[i]) end
             }
@@ -454,14 +424,14 @@ for i = 1, SubWheelSize do
         
         Def.BitmapText {
             Name="GroupInfo",
-            Font="Montserrat semibold 40px",
+            Font="inter medium 32px",
             InitCommand=function(self)
-                self:y(CurMainIndex == OrigGroupIndex and 64 or -8):zoom(0.5):skewx(-0.1):diffusetopedge(0.95,0.95,0.95,0.8):shadowlength(1.5)
-                :maxwidth(420):vertalign(0):wrapwidthpixels(420):vertspacing(-16)
+                self:y(CurMainIndex == OrigGroupIndex and 64 or -8):zoom(CurMainIndex == OrigGroupIndex and 0.6 or 0.8):diffusetopedge(0.95,0.95,0.95,0.8):shadowlength(1.5)
+                :maxwidth(190):vertalign(0):wrapwidthpixels(420):vertspacing(-16)
             end,
             RefreshCommand=function(self, params) 
                 self:settext(GroupsList[CurMainIndex].SubGroups[SubTargets[i]].Name) 
-                :y(CurMainIndex == OrigGroupIndex and 64 or -8)
+                :y(CurMainIndex == OrigGroupIndex and 64 or -8):zoom(CurMainIndex == OrigGroupIndex and 0.4 or 1.2)
             end
         }
     }
@@ -469,7 +439,7 @@ end
 
 t[#t+1] = Def.ActorFrame {
     Def.BitmapText {
-        Font="Montserrat semibold 20px",
+        Font="inter light 22px",
         Name="ExitText",
         InitCommand=function(self)
             self:diffusealpha(0)

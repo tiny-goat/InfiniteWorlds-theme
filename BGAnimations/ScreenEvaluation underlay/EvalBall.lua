@@ -24,6 +24,7 @@ return Def.ActorFrame {
             if ChartMeter == 99 then ChartMeter = "??" end
             
             self:GetChild("Ball"):diffuse(ChartTypeToColor(Chart))
+            self:GetChild("BallTrimGlow"):diffuse(ChartTypeToColor(Chart))
             self:GetChild("Meter"):settext(ChartMeter)
             self:GetChild("Difficulty"):settext(BasicMode and BasicChartLabel(Chart) or FullModeChartLabel(Chart))
             
@@ -41,36 +42,53 @@ return Def.ActorFrame {
             end
         end
     end,
+
+    OnCommand=function(self) self:skewx(pn==PLAYER_1 and 0.2 or -0.2) end,
     
     Def.Sprite {
         Name="Ball",
-        Texture=THEME:GetPathG("", "DifficultyDisplay/LargeBall"),
+        Texture=THEME:GetPathG("", "DifficultyDisplay/euv_ball"),
         InitCommand=function(self) 
-            self:zoom(0.75)
+            self:zoom(1)
         end
     },
     
     Def.Sprite {
-        Name="BallTrim",
-        Texture=THEME:GetPathG("", "DifficultyDisplay/LargeTrim"),
+        Name="BallTrimGlow",
+        Texture=THEME:GetPathG("", "DifficultyDisplay/euv_trim_glow"),
         InitCommand=function(self) 
-            self:zoom(0.75)
+            self:zoom(0.3):spin():effectmagnitude(0,0,pn==PLAYER_1 and 180 or -180):effectperiod(0.4)
+        end
+    },
+
+    Def.Sprite {
+        Name="BallTrim",
+        Texture=THEME:GetPathG("", "DifficultyDisplay/euv_eval_trim"),
+        InitCommand=function(self) 
+            self:zoom(0.3)
         end
     },
     
     Def.BitmapText {
         Name="Meter",
-        Font="Montserrat numbers 40px",
+        Font="Strike Fighter 45px",
         InitCommand=function(self)
-            self:y(1):zoom(0.88)
+            self:zoom(0.73):y(0):x(0):skewx(pn==PLAYER_1 and -0.2 or 0.2)
         end
     },
     
+
+    Def.Quad {
+        Name="DifficultyBG",
+        InitCommand=function(self)
+            self:diffuse(0,0,0,0.6):y(34):x(-3):zoomto(140,13):fadeleft(0.4):faderight(0.4)
+        end
+    },
     Def.BitmapText {
-        Font="Montserrat extrabold 20px",
+        Font="Strike Fighter 45px",
         Name="Difficulty",
         InitCommand=function(self)
-            self:y(-21):visible(true):zoom(0.7):maxwidth(80):shadowlength(2):skewx(-0.1)
+            self:y(34):x(-3):visible(true):zoom(0.3):strokecolor(Color.Black):skewx(pn==PLAYER_1 and -0.2 or 0.2)
         end
     },
     
@@ -78,7 +96,7 @@ return Def.ActorFrame {
         Name="Label",
         Texture=THEME:GetPathG("", "DifficultyDisplay/Labels"),
         InitCommand=function(self)
-            self:y(23):visible(false):animate(false)
+            self:y(24):visible(false):animate(false)
         end
     }
 }

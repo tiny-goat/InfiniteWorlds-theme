@@ -64,7 +64,7 @@ return function(PosX, PosY, BoxWidth, DelayTime, DisplayTime, Title, Body)
 
         Def.BitmapText {
             Name="TitleText",
-            Font="Montserrat semibold 40px",
+            Font="inter extrabold 40px",
             InitCommand=function(self)
                 self:zoom(0.5):skewx(-0.1):halign(0):valign(0):shadowlength(1):diffusealpha(0)
                 :maxwidth(BoxWidth / 0.5 - 5)

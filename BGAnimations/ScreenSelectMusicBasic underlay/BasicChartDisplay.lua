@@ -100,13 +100,10 @@ local t = Def.ActorFrame {
             table.sort(DoubleCharts, SortCharts)
             
             -- Exclude double from two players
-            if GAMESTATE:GetNumSidesJoined() > 1 or #DoubleCharts < 1 then
+            if GAMESTATE:GetNumSidesJoined() > 1 then
                 ChartArray = { SingleCharts[1], SingleCharts[2], SingleCharts[3] }
-			-- Better filter a potential Double chart available, function is located in Scripts/04 Main.lua
-            elseif ChartRange(DoubleCharts[1], 1, 9) then
-                ChartArray = { SingleCharts[1], SingleCharts[2], SingleCharts[3], DoubleCharts[1] }
             else
-                ChartArray = { SingleCharts[1], SingleCharts[2], SingleCharts[3] }
+                ChartArray = { SingleCharts[1], SingleCharts[2], SingleCharts[3], DoubleCharts[1] }
             end
         end
 
@@ -153,13 +150,18 @@ local t = Def.ActorFrame {
                         (ChartIndex[PLAYER_1] == i) and SongIsChosen and GAMESTATE:IsHumanPlayer(PLAYER_1))
                     self:GetChild("")[i]:GetChild("HighlightP2"):visible(
                         (ChartIndex[PLAYER_2] == i) and SongIsChosen and GAMESTATE:IsHumanPlayer(PLAYER_2))
+                    self:GetChild("")[i]:GetChild("RingP1"):visible(
+                        (ChartIndex[PLAYER_1] == i) and SongIsChosen and GAMESTATE:IsHumanPlayer(PLAYER_1))
+                    self:GetChild("")[i]:GetChild("RingP2"):visible(
+                        (ChartIndex[PLAYER_2] == i) and SongIsChosen and GAMESTATE:IsHumanPlayer(PLAYER_2))
                 else
                     self:GetChild("")[i]:GetChild("Icon"):visible(false)
                     self:GetChild("")[i]:GetChild("IconTrim"):visible(false)
                     self:GetChild("")[i]:GetChild("Level"):visible(false)
-					self:GetChild("")[i]:GetChild("Difficulty"):visible(false)
                     self:GetChild("")[i]:GetChild("HighlightP1"):visible(false)
                     self:GetChild("")[i]:GetChild("HighlightP2"):visible(false)
+                    self:GetChild("")[i]:GetChild("RingP1"):visible(false)
+                    self:GetChild("")[i]:GetChild("RingP2"):visible(false)
                 end
             end
         else
@@ -167,9 +169,10 @@ local t = Def.ActorFrame {
                 self:GetChild("")[i]:GetChild("Icon"):visible(false)
                 self:GetChild("")[i]:GetChild("IconTrim"):visible(false)
                 self:GetChild("")[i]:GetChild("Level"):visible(false)
-				self:GetChild("")[i]:GetChild("Difficulty"):visible(false)
                 self:GetChild("")[i]:GetChild("HighlightP1"):visible(false)
                 self:GetChild("")[i]:GetChild("HighlightP2"):visible(false)
+                self:GetChild("")[i]:GetChild("RingP1"):visible(false)
+                self:GetChild("")[i]:GetChild("RingP2"):visible(false)
             end
         end
     end,
@@ -177,61 +180,84 @@ local t = Def.ActorFrame {
 
 for i=1,ItemAmount do
     t[#t+1] = Def.ActorFrame {
-        Def.Sprite {
-            Name="Icon",
-            Texture=THEME:GetPathG("", "DifficultyDisplay/Ball"),
-            InitCommand=function(self)
-                self:xy(FrameX + ItemW * (i - 1), 0)
-            end
-        },
-
+-- reorder these
         Def.Sprite {
             Name="IconTrim",
-            Texture=THEME:GetPathG("", "DifficultyDisplay/Trim"),
+            Texture=THEME:GetPathG("", "DifficultyDisplay/euv_shadow_ball"),
             InitCommand=function(self)
-                self:xy(FrameX + ItemW * (i - 1), 0)
+                self:xy(FrameX + ItemW * (i - 1), 0):zoom(0.56)
+            end
+        },
+
+        Def.Sprite {
+            Name="Icon",
+            Texture=THEME:GetPathG("", "DifficultyDisplay/euv_ball"),
+            InitCommand=function(self)
+                self:xy(FrameX + ItemW * (i - 1), 0):zoom(0.56)
             end
         },
 
         Def.BitmapText {
-            Font="Montserrat numbers 40px",
-            Name="Level",
-            InitCommand=function(self)
-                self:xy(FrameX + ItemW * (i - 1), 0):zoom(0.6):maxwidth(75)
-            end
-        },
-
-        Def.BitmapText {
-            Font="Montserrat extrabold 20px",
+            Font="inter extrabold 40px",
             Name="Difficulty",
             InitCommand=function(self)
-                self:xy(FrameX + ItemW * (i - 1), -15):zoom(0.5):maxwidth(85):shadowlength(2):skewx(-0.1)
+                self:xy(FrameX + ItemW * (i - 1), 11):zoom(0.24):maxwidth(95):diffusealpha(0.7)
             end
+        },
+
+        Def.BitmapText {
+            Font="inter extrabold 40px",
+            Name="Level",
+            InitCommand=function(self)
+                self:xy(FrameX + ItemW * (i - 1), -4):zoom(0.5):maxwidth(75):strokecolor(Color.Black)
+            end
+        },
+
+        Def.Sprite {
+            Name="RingP1",
+            Texture=THEME:GetPathG("", "DifficultyDisplay/Cursor/euv_curP1"),
+            InitCommand=function(self)
+                self:x(FrameX + ItemW * (i - 1))
+                :zoom(0.9)
+                :visible(false)
+		:pulse():effectmagnitude(1,1.09,1):effectperiod(1)
+            end,
+        },
+
+        Def.Sprite {
+            Name="RingP2",
+            Texture=THEME:GetPathG("", "DifficultyDisplay/Cursor/euv_curP2"),
+            InitCommand=function(self)
+                self:x(FrameX + ItemW * (i - 1))
+                :zoom(0.9)
+                :visible(false)
+		:pulse():effectmagnitude(1,1.09,1):effectperiod(1.04)
+            end,
         },
 
         Def.Sprite {
             Name="HighlightP1",
-            Texture=THEME:GetPathG("", "DifficultyDisplay/Cursor/P1"),
+            Texture=THEME:GetPathG("", "DifficultyDisplay/Cursor/euv_labelP1"),
             InitCommand=function(self)
-                self:xy(FrameX + ItemW * (i - 1), -22)
-                :zoom(0.5)
-                :bounce():effectmagnitude(0, -5, 0):effectclock("bgm")
+                self:xy(FrameX + ItemW * (i - 1), -3)
+                :zoom(0.47)
+                :bounce():effectmagnitude(0, -5, 0):effectperiod(1)
                 :visible(false)
             end
         },
 
         Def.Sprite {
             Name="HighlightP2",
-            Texture=THEME:GetPathG("", "DifficultyDisplay/Cursor/P2"),
+            Texture=THEME:GetPathG("", "DifficultyDisplay/Cursor/euv_labelP2"),
             InitCommand=function(self)
-                self:xy(FrameX + ItemW * (i - 1), 22)
-                :zoom(0.5)
-                :bounce():effectmagnitude(0, 5, 0):effectclock("bgm")
+                self:xy(FrameX + ItemW * (i - 1), 3)
+                :zoom(0.47)
+                :bounce():effectmagnitude(0, 5, 0):effectperiod(1.04)
                 :visible(false)
             end
         },
 
-        LoadActor(THEME:GetPathS("Common","value")) .. {}
+        LoadActor(THEME:GetPathS("","euv_change_diff")) .. {}
     }
 end
 
@@ -243,9 +269,15 @@ t[#t+1] = Def.ActorFrame {
     },
 
     Def.Sound {
-        File=THEME:GetPathS("Common", "Start"),
+        File=THEME:GetPathS("", "euv_stepsselect"),
         IsAction=true,
         StepsChosenMessageCommand=function(self) self:play() end
+    },
+
+    Def.Sound {
+        File=THEME:GetPathS("", "euv_reverse_step"),
+        IsAction=true,
+        SongUnchosenMessageCommand=function(self) self:play() end
     }
 }
 

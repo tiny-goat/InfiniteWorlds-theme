@@ -53,9 +53,9 @@ return Def.ActorFrame {
     -- Adds looping dots after the "PLAY" text
     Def.BitmapText {
         Name="PlayText",
-        Font="VCR OSD Mono 40px",
+        Font="VCR OSD Mono 20px",
         InitCommand=function(self)
-            self:settext("PLAY")
+            self:settext("WELCOME")
             :halign(0):valign(0)
             :xy(SCREEN_LEFT + 20, SCREEN_TOP + 20)
             :queuecommand("Dot")
@@ -63,10 +63,10 @@ return Def.ActorFrame {
         DotCommand=function(self)
             self:sleep(0.5)
             text = self:GetText()
-            if text ~= "PLAY..." then
+            if text ~= "WELCOME..." then
                 self:settext(text..".")
             else
-                self:settext("PLAY")
+                self:settext("WELCOME")
             end
             self:queuecommand("Dot")
         end
@@ -77,7 +77,7 @@ return Def.ActorFrame {
         Texture="OutFox",
         InitCommand=function(self)
             self:Center()
-            :cropright(1)
+            :cropright(1):zoom(0.8)
         end,
         OnCommand=function(self)
             self:sleep(0.725)
@@ -90,7 +90,7 @@ return Def.ActorFrame {
         Name="LogoMask",
         Texture="OutFox",
         InitCommand=function(self)
-            self:Center():MaskSource()
+            self:Center():zoom(0.8):MaskSource()
         end
     },
 
@@ -171,9 +171,9 @@ return Def.ActorFrame {
             :easeoutquad(0.2)
             :diffusealpha(1)
             :linear(0.15)
-            :zoomto(SCREEN_WIDTH, 10)
+            :zoomto(SCREEN_WIDTH, 2)
             :easeoutquad(0.15)
-            :zoomto(0, 10)
+            :zoomto(0, 2)
         end
     },
 
