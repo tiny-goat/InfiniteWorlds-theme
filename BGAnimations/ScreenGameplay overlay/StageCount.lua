@@ -19,6 +19,12 @@ return Def.ActorFrame {
         Texture=THEME:GetPathG("", "UI/euv_stageindicator_base"),
         InitCommand=function(self) self:zoom(0.8):y(8) end
     },
+	-- pulse to the beat, i know noteskins already do this, but why not (tiny)
+    Def.Sprite {
+        Texture=THEME:GetPathG("", "UI/euv_glow_stageindicator"),
+        InitCommand=function(self) self:diffusealpha(0):zoom(1):y(8):easeoutexpo(1):diffusealpha(1):zoom(0.8):diffuseramp():effectcolor1(color("1,1,1,0.2"))
+				:effectcolor2(color("1,1,1,0.8")):effectclock('beat') end
+    },
 
     Def.BitmapText {
         Font="Strike Fighter 45px",
