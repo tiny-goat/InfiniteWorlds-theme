@@ -9,7 +9,7 @@ return Def.ActorFrame {
         InitCommand=function(self)
             self:xy(SCREEN_LEFT + 20, SCREEN_BOTTOM - 20)
             :halign(0):valign(1):zoom(0.7)
-            :settext("INFNITEWORLDS \n"..ToUpper(string.format("OutFox %s - %s", ProductVersion(), VersionDate())))
+            :settext("INFINITEWORLDS \n"..ToUpper(string.format("OutFox %s - %s", ProductVersion(), VersionDate())))
         end
     }
 }
