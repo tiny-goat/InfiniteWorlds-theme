@@ -1,13 +1,14 @@
-# Infinitesimal - an Infinity-inspired OutFox theme
+# InfiniteWorlds - a KPump-inspired OutFox theme based on Infinitesimal
+
 ## **This branch is a work-in-progress and requires the latest test builds of OutFox Alpha V to function as intended.**
 ### Make sure to drop by the Project OutFox Discord server and grab the appropriate tester roles to gain access to the latest builds, and remember to properly report bugs and issues while you're at it!
 
-![logo](https://raw.githubusercontent.com/dj505/Infinitesimal/main/Graphics/Logo/Logo%20(doubleres).png)
+![logo](https://github.com/user-attachments/assets/2b48e6c5-02c5-4110-b1da-e3cefcd9b1a3)
 
-## [Discord server is now available for more development insights and discussion!](https://discord.gg/ex6e4jNm6s)
+## [Visit the Infinitesimal Discord server, give the folks the support and love they deserve!](https://discord.gg/ex6e4jNm6s)
 
-## About Infinitesimal
-This theme is inspired by Pump It Up Infinity, an uncommon StepMania-based spin-off developed by Team Infinity and licensed by Andamiro. The current goals are to replicate the look and feel of Infinity while sprinkling in new additions and quality of life improvements, utilizing original assets when possible, bringing high performance + cross-platform support to the table with Project OutFox and widening the idea and accessibility of custom Pump It Up content.
+## About InfiniteWorlds
+This theme is inspired by K-Pump games, From Andamiro's mainline Pump It Up series. The current goals are to replicate the feel of KPump while sprinkling in some additions, better animations, utilizing original assets when possible, bringing high performance + cross-platform support to the table with Project OutFox and widening the idea and accessibility of custom Pump It Up content.
 
 ## Requirements
 * [Project OutFox Alpha 0.5.0-pre042 or newer](https://projectoutfox.com/downloads)
@@ -21,8 +22,8 @@ Since this theme is currently on a rolling release, we highly recommend download
 
 ## Theme Features
 * Accurate asymmetrical timing windows scoring and lifebar mechanics to K-Pump
+* INFWORLDS: Refreshed Animations and familiar K-Pump Interface (Mirrored Lifebars, etc.)
 * Additional timing windows available (StepMania, ITG, Infinity, Pro, Jump)
-* Announcer in the evaluation screen, including support for your own custom announcers
 * Basic Mode can be accessed by starting a game with no profiles present, or by using the "Guest" profile
 * Customizable appearance options and modifiers such as arrow size and rush
 * Exit to title screen in home/event mode (hold down any red arrow while selecting a folder)
@@ -47,17 +48,17 @@ The following features can be configured via the Infinitesimal Options submenu o
 * Wrap Chart List Scrolling: when scrolling past the beginning or end of the chart list, wrap the current selection to the opposite end.
 
 ## Screenshots
-![Title](https://github.com/dj505/Infinitesimal/assets/12992355/ef053e35-70b2-466c-8244-162ae017b61a)
-![Profile](https://github.com/dj505/Infinitesimal/assets/12992355/25847cb5-3e9a-4b58-9177-71dec52e176f)
-![BasicMode](https://github.com/dj505/Infinitesimal/assets/12992355/12dbe987-f561-4f14-9770-124b512ca761)
-![SelectMusic](https://github.com/dj505/Infinitesimal/assets/12992355/67ed99c7-1ef0-4528-8bc2-18cc01daf765)
-![Command](https://github.com/dj505/Infinitesimal/assets/12992355/e241a569-811d-42f4-800f-ddb031978698)
-![Doubles](https://github.com/dj505/Infinitesimal/assets/12992355/9a28709c-28cf-4a53-9529-b01d58ac1904)
-![Eval](https://github.com/dj505/Infinitesimal/assets/7433694/69703018-961c-4546-9259-0ebd23229318)
+![Title](https://github.com/user-attachments/assets/660322a2-ea12-4f33-a787-0befde84f0dc)
+![Profile](https://github.com/user-attachments/assets/e442b086-2e6e-49c0-97a3-7c40571839b1)
+![BasicMode](https://github.com/user-attachments/assets/d9e9f2f1-2416-43fa-bf2f-d25a5d07964f)
+![SelectMusic](https://github.com/user-attachments/assets/b7b86413-0a26-44af-bd53-28c0e08a2a01)
+![Command](https://github.com/user-attachments/assets/dc6a7953-5bc2-43ac-ba6f-72ea447d3b8f)
+![Gameplay_SP](https://github.com/user-attachments/assets/38d20ecc-49c3-4bce-9685-f55f42e68b6e)
+![Eval](https://github.com/user-attachments/assets/1c22736e-827c-477e-baeb-aa0a27ff508c)
 
 
 ## Languages:
-Currently, Infinitesimal supports the following languages:
+Currently, InfiniteWorlds/Infinitesimal supports the following languages:
 * English
 * Brazilian Portuguese
 * Polish
@@ -74,7 +75,7 @@ The theme currently has a few limitations that are beyond our reach. Here is a l
 
 Hopefully all of these should be gone soon with future Project OutFox developments and improvements!
 
-## Special thanks
+## Special thanks (Infinitesimal)
 This theme wouldn't be here if it weren't for the help of the following people:
 * JoseVarelaP (loads of code optimization and refactoring, suggestions and development assistance)
 * Luizsan (creator of PIU Delta / member of Team Infinity and SSC, many notes and examples taken from his work)
@@ -86,5 +87,9 @@ This theme wouldn't be here if it weren't for the help of the following people:
 * CrackItUp group (original home of the theme's development)
 * Team Infinity (setting a landmark in PIU's interface and graphics design)
 * RGAB Community
+
+## Special thanks (InfiniteWorlds)
+* tinygoat (Graphics, Lua animations, Sound Effects)
+* the4kman (Menu music, also, very sick sound design, you should go check their works out!)
 
 And at last, you for trying out our theme!
