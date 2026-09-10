@@ -43,7 +43,6 @@ for pn in ivalues(GAMESTATE:GetHumanPlayers()) do
                     self:GetChild("Ball"):diffuse(ChartTypeToColor(Chart))
                     self:GetChild("Meter"):settext(ChartMeter)
                     self:GetChild("Credit"):settext(ChartAuthor)
-                    self:GetChild("Difficulty"):settext(BasicMode and BasicChartLabel(Chart) or FullModeChartLabel(Chart))
 
                     local ChartLabelIndex = 0
                     for Index, String in pairs(ChartLabels) do
@@ -97,14 +96,6 @@ for pn in ivalues(GAMESTATE:GetHumanPlayers()) do
                 Texture=THEME:GetPathG("", "DifficultyDisplay/Labels"),
                 InitCommand=function(self)
                     self:xy(79.25 * PlayerDirection, 23.25):visible(false):animate(false)
-                end
-            },
-            
-            Def.BitmapText {
-                Font="inter medium 25px",
-                Name="Difficulty",
-                InitCommand=function(self)
-                    self:xy(79.25 * PlayerDirection, -21.25):visible(true):zoom(0.5):maxwidth(76)
                 end
             },
 
