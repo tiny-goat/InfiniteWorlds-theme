@@ -1,5 +1,5 @@
 return Def.ActorFrame {
-    -- simplified ScreenInit, i have plans to further improve this soon (tiny)
+    -- simplified ScreenInit, i have plans to further improve this soon, but when? (tiny)
     -- bro wake up it's 2008
     CodeMessageCommand=function(self, param)
         if param.Name == "Secret" then
