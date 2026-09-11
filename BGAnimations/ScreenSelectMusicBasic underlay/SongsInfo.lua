@@ -46,6 +46,40 @@ t[#t+1] = Def.ActorFrame {
         end
     end,
 
+	-- thing (tiny)
+	
+		Def.BitmapText {
+			Name="NextPrevText",
+			Font="Strike Fighter 45px",
+			Text="",
+			InitCommand=function(self)
+				self:zoom(2):x(0):y(-20)
+				--:shadowcolor(0,0,0)
+			end,
+		
+			ScrollMessageCommand=function(self, params) if params.Direction == 1 then
+				self:stoptweening()
+				:settext("NEXT")
+				:x(90)
+				:diffusealpha(1)
+				:zoom(3)
+				:decelerate(PreviewDelay)
+				:diffusealpha(0)
+				:x(0)
+				else
+				self:stoptweening()
+				:settext("PREV")
+				:x(-90)
+				:diffusealpha(1)
+				:zoom(3)
+				:decelerate(PreviewDelay)
+				:diffusealpha(0)
+				:x(0)
+				end
+			end,
+		
+		},
+		
     Def.Quad {
         InitCommand=function(self)
             self:zoomto(FrameW, 50):y(FrameH / 2):valign(1)
