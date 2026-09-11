@@ -43,6 +43,7 @@ return Def.ActorFrame {
         end
     },]]--
 
+
     Def.Sprite {
         Name="OutFoxLogo",
         Texture="OutFox",
@@ -51,7 +52,7 @@ return Def.ActorFrame {
             :diffusealpha(0):zoom(0.6)
         end,
         OnCommand=function(self)
-            self:sleep(0.3):linear(0.7):diffusealpha(1)
+            self:sleep(0.3):linear(0.7):diffusealpha(1):sleep(4.5):linear(0.7):diffusealpha(0)
         end
     },
 
