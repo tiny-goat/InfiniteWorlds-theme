@@ -7,20 +7,16 @@ local DisplayNotefield = false
 -- Video/background display
 local t = Def.ActorFrame {
     InitCommand=function(self) self:zoom(1):xy(SCREEN_CENTER_X, SCREEN_CENTER_Y) end,
-    OnCommand=function(self)
-        self:zoom(1.8):accelerate(0.5):zoom(1)
-    end,
 
     Def.ActorFrame {
-        Name="Noise",
-
-        Def.Sprite {
-            Texture=THEME:GetPathG("", "Noise"),
+        Name="Back",
+		
+        Def.Quad {
+            Name="Back1",
             InitCommand=function(self)
-                self:zoomto(FrameW, FrameH):diffusebottomedge(color("#16EEFF")):diffusetopedge(color("#EE16FF"))
-                :texcoordvelocity(10,5)
+                self:zoomto(FrameW, FrameH):diffuseleftedge(color("#16EEFF")):diffuserightedge(color("#EE16FF")):fadetop(0.8)
             end
-        }
+        },
 
     },
 

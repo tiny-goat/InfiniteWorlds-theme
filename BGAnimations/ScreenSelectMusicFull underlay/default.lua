@@ -28,7 +28,7 @@ t[#t+1] = Def.Quad {
         :zoomy(SCREEN_HEIGHT)
     end,       
 
-	SongChosenMessageCommand=function(self) self:stoptweening():easeoutexpo(0.7):diffusealpha(0.8) end,
+	SongChosenMessageCommand=function(self) self:stoptweening():easeoutexpo(0.2):diffusealpha(0.8) end,
 	SongUnchosenMessageCommand=function(self) self:stoptweening():easeoutexpo(0.2):diffusealpha(0) end,
 }
 
@@ -41,7 +41,7 @@ t[#t+1] = Def.Quad {
         :zoomy(280):fadetop(0.2)
     end,       
 
-	SongChosenMessageCommand=function(self) self:stoptweening():diffusealpha(0) end,
+	SongChosenMessageCommand=function(self) self:stoptweening():easeoutexpo(0.2):diffusealpha(0) end,
 	SongUnchosenMessageCommand=function(self) self:stoptweening():easeoutexpo(0.2):diffusealpha(0.9) end,
 }
 
