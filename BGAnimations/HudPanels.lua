@@ -144,24 +144,35 @@ for pn in ivalues(GAMESTATE:GetHumanPlayers()) do
                     InitCommand=function(self)
                         self:scaletocover(0, 0, 289, 289)
                         :xy(SCREEN_CENTER_X + (pn == PLAYER_2 and 222 or -222), SCREEN_BOTTOM - 8)
-                        :MaskDest():ztestmode("ZTestMode_WriteOnFail"):diffusealpha(0.6)
+                        :MaskDest():ztestmode("ZTestMode_WriteOnFail"):diffusealpha(0.8)
                     end
                 },
+
+-- what a genius way of making the names and level finally readable /s (tiny)
+		Def.Quad {
+		    InitCommand=function(self) 
+			self:diffuse(Color.Black):diffusealpha(0.6):MaskDest():ztestmode("ZTestMode_WriteOnFail")
+			:xy(SCREEN_CENTER_X + (pn == PLAYER_2 and 60 or -60), SCREEN_BOTTOM - 43)
+			:fadeleft(0.2):faderight(0.2):zoomto(150,44):halign(pn == PLAYER_2 and 0 or 1):valign(0) end
+		},
+
 		Def.Sprite {
                     Texture=THEME:GetPathG("", "UI/euv_glow_dock"),
                     InitCommand=function(self)
                         self:zoomy(1.52):xy(SCREEN_CENTER_X + (pn == PLAYER_2 and 184 or -184), SCREEN_BOTTOM - 20)
-                        :rotationy(pn == PLAYER_2 and 180 or 0):rotationz(-4):queuecommand("Breathe"):diffusecolor(color(pn==PLAYER_2 and ("#EE16FF") or ("#16EEFF")))
+                        :rotationy(pn == PLAYER_2 and 180 or 0):rotationz(-4):queuecommand("Breathe"):diffusecolor(color(pn==PLAYER_2 and ("#EE16FF") or ("#16EEFF"))):fadetop(0.5)
                     end,
 		    BreatheCommand=function(self) self:diffusealpha(0.4):linear(2):diffusealpha(1):linear(2):diffusealpha(0.4):queuecommand("Breathe") end
                 },
+
 	 	Def.Sprite {
                     Texture=THEME:GetPathG("", "UI/euv_dock_light"),
                     InitCommand=function(self)
                         self:zoomy(1.52):xy(SCREEN_CENTER_X + (pn == PLAYER_2 and 184 or -184), SCREEN_BOTTOM - 20)
                         :rotationy(pn == PLAYER_2 and 180 or 0):rotationz(-4)
-                    end
+                    end,
                 },
+
                 Def.BitmapText {
                     Font="inter medium 25px",
                     Text=PROFILEMAN:GetProfile(pn):GetDisplayName(),
