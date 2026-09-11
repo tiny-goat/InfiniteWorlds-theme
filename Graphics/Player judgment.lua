@@ -22,7 +22,7 @@ local DoubleSet = Length*2
 
 local OffbarPos = bHideJudgment and 0 or -32
 
-local AddZoom = string.find(GetTexture(), "Infinitesimal") and 1.25 or 1
+local AddZoom = string.find(GetTexture(), "Infinitesimal") and 1.25 or 1.2
 
 -- Generate Offset Bar
 local OffBar = Def.ActorFrame{ InitCommand=function(self) self:visible(bOffsetBar) end,
