@@ -46,9 +46,9 @@ local t = Def.ActorFrame {
         self:queuecommand("Message1")
     end,
 
-    LoadModule("UI.MessageBox.lua")(SCREEN_CENTER_X - 400, SCREEN_CENTER_Y / 1.75, 290, 2, 14, Title1, Body1),
-    LoadModule("UI.MessageBox.lua")(SCREEN_CENTER_X - 400, SCREEN_CENTER_Y / 1.75, 290, 17, 5, Title2, Body2),
-    LoadModule("UI.MessageBox.lua")(SCREEN_CENTER_X - 400, SCREEN_CENTER_Y / 1.75, 290, 23, 6, Title3, Body3),
+    LoadModule("UI.MessageBox.lua")(SCREEN_CENTER_X - 320, SCREEN_CENTER_Y / 1.75, 290, 2, 14, Title1, Body1),
+    LoadModule("UI.MessageBox.lua")(SCREEN_CENTER_X - 320, SCREEN_CENTER_Y / 1.75, 290, 17, 5, Title2, Body2),
+    LoadModule("UI.MessageBox.lua")(SCREEN_CENTER_X - 320, SCREEN_CENTER_Y / 1.75, 290, 23, 6, Title3, Body3),
 
     Message1Command=function(self)
 
