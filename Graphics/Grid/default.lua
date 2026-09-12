@@ -5,13 +5,13 @@ return Def.ActorFrame {
     FOV=90,
     Def.Sprite {
         Name="GridTop",
-        Texture="_hexga",
+        Texture="_carbonline",
         InitCommand=function(self)
             self:xy(SCREEN_CENTER_X, 0)
-            :zoomx(2.6)
+            :zoomx(-2.6)
             :halign(0.5):valign(0)
             :rotationx(84)
-            :texcoordvelocity(0, 0.7)
+            :texcoordvelocity(0, 0.34)
             :diffuse(color("#FFFFFF"))
             :diffusealpha(0.5)
             :fadebottom(1)
@@ -30,14 +30,14 @@ return Def.ActorFrame {
 
     Def.Sprite {
         Name="GridBottom",
-        Texture="_hexga",
+        Texture="_carbonline",
         InitCommand=function(self)
             self:xy(SCREEN_CENTER_X, SCREEN_BOTTOM)
             :zoomx(2.6)
             :halign(0.5):valign(0)
             :rotationx(98)
-            :texcoordvelocity(0, 0.7)
-            :diffuse(color("#150F34"))
+            :texcoordvelocity(0, 0.34)
+            :diffuse(color("#FFFFFF"))
             :diffusealpha(0.5)
             :fadebottom(1)
             if IsAnniversary() then self:queuecommand("Rainbow") else self:queuecommand("Refresh") end

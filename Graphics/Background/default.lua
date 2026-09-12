@@ -6,7 +6,7 @@ t[#t+1] = Def.Quad {
     InitCommand=function(self)
         self:Center()
         :zoomto(SCREEN_WIDTH, SCREEN_HEIGHT)
-        :diffuse(color("#000000"))
+        :diffuse(color("#CECEFF"))
     end
 }
 

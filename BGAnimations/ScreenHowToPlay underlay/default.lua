@@ -25,7 +25,7 @@ local t = Def.ActorFrame {
         InitCommand=function(self)
             self:diffuse(0,0,0,1):zoomto(SCREEN_WIDTH, SCREEN_HEIGHT):Center()
             :sleep(2)
-            :linear(0.5):diffuse(1,1,1,0.9)
+            :linear(0.5):fadetop(0.67):diffuseleftedge(color("#16CCEE")):diffuserightedge(color("#CC16EE"))
         end
     },
 
