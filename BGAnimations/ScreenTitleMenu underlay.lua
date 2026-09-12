@@ -8,6 +8,13 @@ local t = Def.ActorFrame {
         GAMESTATE:UpdateDiscordScreenInfo("Title Menu", "", 1)
     end,
 
+    
+	-- woah suspense bg
+    Def.Quad {
+		InitCommand=function(self) self:FullScreen():diffuse(Color.Black) end,
+		OnCommand=function(self) self:diffusealpha(1):sleep(1.45):easeoutexpo(0.9):diffusealpha(0) end
+	},
+	
     Def.ActorFrame {
         OnCommand=function(self)
             self:xy(SCREEN_CENTER_X, SCREENMAN:GetTopScreen():GetName() == "ScreenLogo" and SCREEN_CENTER_Y or SCREEN_CENTER_Y - 20)
