@@ -263,7 +263,7 @@ end
 
 t[#t+1] = Def.ActorFrame {
     Def.Sound {
-        File=THEME:GetPathS("Common", "value"),
+        File=THEME:GetPathS("", "euv_change_diff"),
         IsAction=true,
         UpdateChartDisplayMessageCommand=function(self) self:play() end
     },

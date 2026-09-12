@@ -254,7 +254,7 @@ for i = 1, WheelSize do
             -- Animate!
             self:xy(xpos + displace, SCREEN_CENTER_Y)
             self:rotationy((SCREEN_CENTER_X - xpos - displace) * -WheelRotation)
-            self:z(-math.abs(SCREEN_CENTER_X - xpos - displace) * 0.25)
+            self:z(-math.abs(SCREEN_CENTER_X - xpos - displace) * 0.12)
             self:GetChild(""):GetChild("Index"):playcommand("Refresh")
         end,
 
@@ -263,24 +263,17 @@ for i = 1, WheelSize do
         },
 
         Def.Sprite {
-            Texture=THEME:GetPathG("", "MusicWheel/euv_wheelitem_music"),
+            Texture=THEME:GetPathG("", "MusicWheel/tg_wheelitem_music"),
 	    InitCommand=function(self) self:x(1.8):zoomx(0.73):zoomy(0.73) end
         },
 
         Def.ActorFrame {
-            Def.Quad {
-                InitCommand=function(self)
-                    self:zoomto(60, 18):addy(-50)
-                    :diffuse(0,0,0,0.6)
-                    :fadeleft(0.3):faderight(0.3)
-                end
-            },
 
             Def.BitmapText {
                 Name="Index",
                 Font="inter medium 25px",
                 InitCommand=function(self)
-                    self:addy(-52):zoom(0.6):diffusetopedge(0.95,0.95,0.95,0.8):shadowlength(1.5)
+                    self:addy(55):zoom(0.5):diffusetopedge(0.95,0.95,0.95,0.8)
                 end,
                 RefreshCommand=function(self,param) self:settext(Targets[i]) end
             }

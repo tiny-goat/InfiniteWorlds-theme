@@ -131,7 +131,7 @@ for pn in ivalues(GAMESTATE:GetEnabledPlayers()) do
         end,
 
         Def.ActorFrame {
-            InitCommand=function(self) self:y(85):diffusealpha(0):zoom(1) end,
+            InitCommand=function(self) self:y(160):diffusealpha(0):zoom(1) end,
 
             StepsChosenMessageCommand=function(self, params)
                 if params.Player == pn then
@@ -140,14 +140,14 @@ for pn in ivalues(GAMESTATE:GetEnabledPlayers()) do
                 end
             end,
             UpdateChartDisplayMessageCommand=function(self, params) if params.Player == pn then
-                self:finishtweening():easeoutexpo(0.3):x(0):diffusealpha(0) end
+                self:finishtweening():easeoutexpo(0.3):diffusealpha(0) end
             end,
 
             SongChosenMessageCommand=function(self)
                 self:finishtweening():easeoutexpo(0.3):y(160):zoom(2):diffusealpha(0)
             end,
             SongUnchosenMessageCommand=function(self)
-                self:finishtweening():easeoutexpo(0.3):xy(0, 85):zoom(1):diffusealpha(0)
+                self:finishtweening():diffusealpha(0)
             end,
 
             Def.Quad {
