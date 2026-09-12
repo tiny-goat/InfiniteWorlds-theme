@@ -130,7 +130,7 @@ local t = Def.ActorFrame {
 			else
 				-- Normal lifebar shenanigans
 				if LifeAmount >= 1 and not MeterHot then
-					self:GetChild("RainbowMeter"):stoptweening():linear(0.5):diffusealpha(1)
+					self:GetChild("RainbowMeter"):stoptweening():linear(0.3):diffusealpha(1)
 					MeterHot = true
 				elseif LifeAmount < 1 and MeterHot then
 					self:GetChild("RainbowMeter"):diffusealpha(0)
@@ -148,9 +148,11 @@ local t = Def.ActorFrame {
 			-- extra tweening despite lifebar being capped out is just to ensure less jank when the lifebar exits a 'hot' state
 			if LifeAmount >=1 and MeterHot and not MeterFail then
 				self:GetChild("Tip"):finishtweening():linear(0.1):x(-(((BarW - 12) / 2) - ((BarW - 12) * 1)))
+				self:GetChild("Pulse"):finishtweening():visible(false)
 				self:GetChild("Tip"):visible(0)
 		    elseif LifeAmount > 0.33 and not MeterDanger and not MeterFail then
 				self:GetChild("Tip"):visible(1)
+				self:GetChild("Pulse"):visible(true)
 			end
 			
 			-- gdi i forgot about the danger/fail tip fleeing too if you lose it when failing
@@ -235,7 +237,7 @@ local t = Def.ActorFrame {
         end
     },
 
-	Def.Quad {
+    Def.Quad {
         Name="ProMeter",
         InitCommand=function(self)
             self:zoomto(BarW - 12, BarH - 12):x(-20):cropright(1)
@@ -274,11 +276,12 @@ local t = Def.ActorFrame {
         end
     },
 
+	-- was the oddly specifiic cropping even necessary? i dont know (tiny)
     Def.Sprite {
         Name="Tip",
         Texture=THEME:GetPathG("", "UI/LifeBarTip/normal-tip"),
         InitCommand=function(self)
-            self:zoomto(60, 85)
+            self:zoomto(50, 57):croptop(0.275):cropbottom(0.275)
         end
     },
 
@@ -287,7 +290,7 @@ local t = Def.ActorFrame {
         Texture=THEME:GetPathG("", "UI/LifebarTip/danger-tip"),
         InitCommand=function(self)
 			self:visible(0)
-            self:zoomto(60, 85)
+            self:zoomto(50, 57):croptop(0.275):cropbottom(0.275)
 		end
     },
 	
@@ -296,7 +299,7 @@ local t = Def.ActorFrame {
         Texture=THEME:GetPathG("", "UI/LifebarTip/pro-tip"),
         InitCommand=function(self)
 			self:visible(0)
-            self:zoomto(60, 85)
+            self:zoomto(50, 57):croptop(0.275):cropbottom(0.275)
 		end
     },
 
