@@ -81,14 +81,14 @@ return Def.ActorFrame {
     Def.Quad {
         Name="DifficultyBG",
         InitCommand=function(self)
-            self:diffuse(0,0,0,0.6):y(34):x(-3):zoomto(140,13):fadeleft(0.4):faderight(0.4)
+            self:diffuse(0,0,0,0.6):y(-25):x(0):zoomto(95,13):fadeleft(0.2):faderight(0.2)
         end
     },
     Def.BitmapText {
         Font="Strike Fighter 45px",
         Name="Difficulty",
         InitCommand=function(self)
-            self:y(34):x(-3):visible(true):zoom(0.3):strokecolor(Color.Black):skewx(pn==PLAYER_1 and -0.2 or 0.2)
+            self:y(-25):x(0):visible(true):zoom(0.3):strokecolor(Color.Black):skewx(pn==PLAYER_1 and -0.2 or 0.2)
         end
     },
     
@@ -96,7 +96,7 @@ return Def.ActorFrame {
         Name="Label",
         Texture=THEME:GetPathG("", "DifficultyDisplay/Labels"),
         InitCommand=function(self)
-            self:y(24):visible(false):animate(false)
+            self:y(24):visible(false):animate(false):skewx(pn==PLAYER_1 and -0.2 or 0.2)
         end
     }
 }

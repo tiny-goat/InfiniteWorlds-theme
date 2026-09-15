@@ -18,10 +18,15 @@ for pn in ivalues(GAMESTATE:GetHumanPlayers()) do
         local Chart = GAMESTATE:GetCurrentSteps(pn)
         local ChartMeter = Chart:GetMeter()
         if ChartMeter == 99 then ChartMeter = "??" end
+
+        local ChartAuthor = Chart:GetAuthorCredit()
+        if ChartAuthor == "" then ChartAuthor = "Unknown" end
+
         self:GetChild("BigPreviewBallContainer_"..pn):GetChild("BigPreviewBall"):diffuse(ChartTypeToColor(Chart))
         self:GetChild("BigPreviewBallContainer_"..pn):GetChild("BallGlow"):diffuse(ChartTypeToColor(Chart))
         self:GetChild("BigPreviewBallContainer_"..pn):GetChild("MeterText"):settext(ChartMeter)
         self:GetChild("BigPreviewBallContainer_"..pn):GetChild("Difficulty"):settext(FullModeChartLabel(Chart))
+        self:GetChild("BigPreviewBallContainer_"..pn):GetChild("Credit"):settext(ChartAuthor)
       end
     end,
 
@@ -73,14 +78,29 @@ for pn in ivalues(GAMESTATE:GetHumanPlayers()) do
       Def.Quad {
         Name="DifficultyBG",
         InitCommand=function(self)
-            self:diffuse(0,0,0,0.6):x(-3):y(20):zoomto(90,11):fadeleft(0.2):faderight(0.2)
+            self:diffuse(0,0,0,0.5):x(0):y(-17):zoomto(90,11):fadeleft(0.2):faderight(0.2)
         end
       },
       Def.BitmapText {
         Font="strike fighter 45px",
         Name="Difficulty",
         InitCommand=function(self) -- to counter the skew, we must skew the skew that skewed the skew (jkob)
-          self:zoom(0.2):x(-3):y(20):skewx(pn==PLAYER_1 and -0.2 or 0.2)
+          self:zoom(0.2):x(0):y(-17):skewx(pn==PLAYER_1 and -0.2 or 0.2)
+        end
+      },
+
+      Def.Quad {
+        Name="CreditBG",
+        InitCommand=function(self)
+            self:diffuse(0,0,0,0.6):x(0):y(17):zoomto(60,10):fadeleft(0.2):faderight(0.2)
+        end
+      },
+
+      Def.BitmapText {
+        Font="strike fighter 45px",
+        Name="Credit",
+        InitCommand=function(self) -- to counter the skew, we must skew the skew that skewed the skew (jkob)
+          self:zoom(0.15):x(0):y(17):skewx(pn==PLAYER_1 and -0.2 or 0.2)
         end
       },
 
@@ -91,6 +111,7 @@ for pn in ivalues(GAMESTATE:GetHumanPlayers()) do
           self:zoom(0.58):shadowlength(1):skewx(pn==PLAYER_1 and -0.2 or 0.2)
         end
       }
+
     }
     }
 
