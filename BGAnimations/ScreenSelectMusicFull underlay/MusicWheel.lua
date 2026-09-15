@@ -1,4 +1,4 @@
-local WheelSize = 15
+local WheelSize = 13
 local WheelCenter = math.ceil( WheelSize * 0.5 )
 local WheelItem = { Width = 212, Height = 120 }
 local WheelSpacing = 230

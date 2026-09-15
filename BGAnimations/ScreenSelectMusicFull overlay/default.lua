@@ -57,7 +57,8 @@ end
 t[#t+1] = Def. ActorFrame {
 	Def.ActorFrame {
         InitCommand=function(self)
-            self:diffusealpha(0):xy(SCREEN_CENTER_X, SCREEN_BOTTOM-164)
+		-- offset the damn thing because its somehow not centered (tiny)
+            self:diffusealpha(0):xy(SCREEN_CENTER_X+2, SCREEN_BOTTOM-164)
             :zoomx(1):zoomy(1.35)
         end,
 	OnCommand=function(self) self:diffusealpha(0):zoomx(1):zoomy(1):sleep(0.4):linear(0.2):diffusealpha(1):zoomx(0.8):zoomy(0.8):pulse():effectmagnitude(1,1.05,1) end,
