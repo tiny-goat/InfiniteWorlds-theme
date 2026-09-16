@@ -352,7 +352,7 @@ for i=1,ItemAmount do
             Texture=THEME:GetPathG("", "DifficultyDisplay/Cursor/euv_curP1"),
             InitCommand=function(self)
                 self:x(FrameX + ItemW * (i - 1))
-                :zoom(0.4)
+                :zoom(0.4):croptop(0.1):fadetop(0.4)
                 :visible(false)
 		:queuecommand("Bounce")
             end,
@@ -364,7 +364,7 @@ for i=1,ItemAmount do
             Texture=THEME:GetPathG("", "DifficultyDisplay/Cursor/euv_curP2"),
             InitCommand=function(self)
                 self:x(FrameX + ItemW * (i - 1))
-                :zoom(1.1)
+                :zoom(1.1):cropbottom(0.1):fadebottom(0.4)
                 :visible(false)
 		:queuecommand("Bounce")
             end,
@@ -375,7 +375,7 @@ for i=1,ItemAmount do
             Name="HighlightP1",
             Texture=THEME:GetPathG("", "DifficultyDisplay/Cursor/euv_labelP1"),
             InitCommand=function(self)
-                self:xy(FrameX + ItemW * (i - 1), 1)
+                self:xy(FrameX + ItemW * (i - 1), -1)
                 :zoom(0.53)
                 :visible(false)
             end
