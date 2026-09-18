@@ -24,37 +24,37 @@ return Def.ActorFrame {
           :diffuse(Color.White)
       end
     },
-
-    --[[Def.Sound {
-        Name="BackgroundHum",
-        File="BackgroundHum",
-        OnCommand=function(self) self:play() end
-    },]]--
-
-    --[[Def.Sound {
-        Name="TVOff",
-        File="TVOff",
-        OnCommand=function(self)
-            self:sleep(4.5)
-            self:queuecommand("Play")
-        end,
-        PlayCommand=function(self)
-            self:play()
-        end
-    },]]--
-
-
-    Def.Sprite {
-        Name="OutFoxLogo",
-        Texture="OutFox",
-        InitCommand=function(self)
-            self:Center()
-            :diffusealpha(0):zoom(0.6)
-        end,
-        OnCommand=function(self)
-            self:sleep(0.3):linear(0.7):diffusealpha(1):sleep(4.5):linear(0.7):diffusealpha(0)
-        end
-    },
+	
+	Def.ActorFrame {
+		-- AM Style OutFox intro by tiny
+		Name="LogoMain",
+		OnCommand=function(self) self:sleep(6):linear(0.7):diffusealpha(0) end,
+		
+		Def.Sprite {
+			Name="OutFoxLogo0",
+			Texture="OutFox",
+			InitCommand=function(self)
+				self:Center()
+				:diffusealpha(0):zoom(0.6):cropleft(0.29)
+			end,
+			OnCommand=function(self)
+				self:sleep(2.7):linear(0.7):diffusealpha(1)
+			end
+		},
+	
+		Def.Sprite {
+			Name="OutFoxLogo1",
+			Texture="Fox",
+			InitCommand=function(self)
+				self:Center()
+				:diffusealpha(1):zoom(0.4)
+			end,
+			OnCommand=function(self)
+				self:sleep(0.3):linear(0.7):diffusealpha(1):sleep(0.4):linear(1):zoom(0.18):addx(-190)
+			end
+		}
+		
+	},
 
     Def.Quad {
         Name="ShutdownDark",

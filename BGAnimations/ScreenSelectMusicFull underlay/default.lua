@@ -115,10 +115,12 @@ for pn in ivalues(GAMESTATE:GetHumanPlayers()) do
                 end
             },
 
-            Def.Sprite {
-                Texture=THEME:GetPathG("", "UI/Ready" .. ToEnumShortString(pn)),
-                InitCommand=function(self) self:y(1) end
-            }
+			Def.BitmapText {
+				Name="ReadyText",
+				Font="inter medium 32px",
+				Text="Ready?",
+				InitCommand=function(self) self:zoom(0.9):y(-3):skewx(-0.1):diffuse(Color.Black) end
+			}
         }
   }
 end

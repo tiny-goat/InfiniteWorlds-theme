@@ -218,7 +218,7 @@ for i=1,ItemAmount do
             Texture=THEME:GetPathG("", "DifficultyDisplay/Cursor/euv_curP1"),
             InitCommand=function(self)
                 self:x(FrameX + ItemW * (i - 1))
-                :zoom(0.9)
+                :zoom(0.9):fadetop(0.3):croptop(0.1)
                 :visible(false)
 		:pulse():effectmagnitude(1,1.09,1):effectperiod(1)
             end,
@@ -229,7 +229,7 @@ for i=1,ItemAmount do
             Texture=THEME:GetPathG("", "DifficultyDisplay/Cursor/euv_curP2"),
             InitCommand=function(self)
                 self:x(FrameX + ItemW * (i - 1))
-                :zoom(0.9)
+                :zoom(0.9):fadebottom(0.3):cropbottom(0.1)
                 :visible(false)
 		:pulse():effectmagnitude(1,1.09,1):effectperiod(1.04)
             end,

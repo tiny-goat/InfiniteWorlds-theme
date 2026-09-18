@@ -44,11 +44,11 @@ local t = Def.ActorFrame {
 
     Def.ActorFrame {
         InitCommand=function(self)
-            self:xy(SCREEN_CENTER_X, 20):zoom(0.6)
+            self:xy(SCREEN_RIGHT-20, 20):zoom(0.6)
         end,
 
         OffCommand=function(self)
-            self:stoptweening():easeoutexpo(1):xy(SCREEN_CENTER_X, -80)
+            self:stoptweening():diffusealpha(0)
         end,
 
         Def.BitmapText {
@@ -64,7 +64,7 @@ local t = Def.ActorFrame {
                     return
                 end
 
-                self:settextf(THEME:GetString("ScreenTitleMenu", "%i Songs (%i Groups), %i Courses"), InstalledSongs, Groups, InstalledCourses)
+                self:settextf(THEME:GetString("ScreenTitleMenu", "%i Songs (%i Groups), %i Courses"), InstalledSongs, Groups, InstalledCourses):halign(1)
             end
         },
 
@@ -72,7 +72,7 @@ local t = Def.ActorFrame {
             Font="inter light 22px",
             Text=string.format("OutFox %s - %s", ProductVersion(), VersionDate()),
             AltText="OutFox",
-            InitCommand=function(self) self:y(20) end
+            InitCommand=function(self) self:y(20):halign(1) end
         }
     }
 }
