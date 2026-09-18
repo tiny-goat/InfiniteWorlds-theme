@@ -264,7 +264,7 @@ for i = 1, WheelSize do
 
         Def.Sprite {
             Texture=THEME:GetPathG("", "MusicWheel/tg_wheelitem_music"),
-	    InitCommand=function(self) self:x(1.8):zoomx(0.73):zoomy(0.73) end
+	    InitCommand=function(self) self:zoomx(0.73):zoomy(0.73) end
         },
 
         Def.ActorFrame {
