@@ -12,7 +12,7 @@ local t = Def.ActorFrame {
     Def.BitmapText {
         Font="Common normal",
         InitCommand=function(self)
-            self:xy(SCREEN_CENTER_X, SCREEN_BOTTOM - 22):zoom(0.8):queuecommand('Refresh')
+            self:xy(SCREEN_CENTER_X, SCREEN_BOTTOM - 22):zoom(0.8):shadowlength(1):queuecommand('Refresh')
         end,
         
         ScreenChangedMessageCommand=function(self)
@@ -40,7 +40,7 @@ local t = Def.ActorFrame {
             if CoinMode == "CoinMode_Home" then
                 self:visible(false)
             elseif EventMode then
-                self:visible(true):settext("EVENT MODE")
+                self:visible(true):settext("EVENT")
             elseif CoinMode == 'CoinMode_Free' then
                 self:visible(true):settext("FREE PLAY")
             elseif CoinMode == 'CoinMode_Pay' then

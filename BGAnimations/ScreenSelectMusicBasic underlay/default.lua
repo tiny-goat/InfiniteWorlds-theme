@@ -107,14 +107,14 @@ t[#t+1] = Def. ActorFrame {
 	LoadActor(THEME:GetPathB("", "ScreenSelectMusicFull overlay/tg_pointerwheel_music")) .. {
 		InitCommand=function(self) self:cropleft(0.5) end,
 		ScrollMessageCommand=function(self, params) if params.Direction == 1 then
-		self:stoptweening():x(0):linear(0.2):x(50):decelerate(0.3):x(0) end
+		self:stoptweening():x(0):linear(0.1):x(60):decelerate(0.3):x(0) end
 		end,
 	},
 	-- right
 	LoadActor(THEME:GetPathB("", "ScreenSelectMusicFull overlay/tg_pointerwheel_music")) .. {
 		InitCommand=function(self) self:cropright(0.5) end,
 		ScrollMessageCommand=function(self, params) if params.Direction == -1 then
-		self:stoptweening():x(0):linear(0.2):x(-50):decelerate(0.3):x(0) end
+		self:stoptweening():x(0):linear(0.1):x(-60):decelerate(0.3):x(0) end
 		end,
 	},
 	
@@ -174,13 +174,18 @@ for pn in ivalues(GAMESTATE:GetEnabledPlayers()) do
                     end
                 end
             },
-
+			
 			Def.BitmapText {
 				Name="ReadyText",
 				Font="inter medium 32px",
-				Text="Ready?",
-				InitCommand=function(self) self:zoom(0.9):y(-3):skewx(-0.1):diffuse(Color.Black) end
-			}
+				Text="Press a 2nd time to start!",
+				InitCommand=function(self) self:zoom(0.3):y(-35):skewx(-0.1):diffuse(Color.White) end
+			},
+			
+			Def.Sprite {
+                Texture=THEME:GetPathG("", "UI/Ready" .. ToEnumShortString(pn)),
+                InitCommand=function(self) self:y(1) end
+            }
 			
         }
     }

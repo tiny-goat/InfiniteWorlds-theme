@@ -7,7 +7,9 @@ local t = Def.ActorFrame {}
 for pn in ivalues(GAMESTATE:GetHumanPlayers()) do
     -- Player 2's panel is slightly adjusted, so we need to correct
     -- the positioning of actors so that they fit in properly
-    local CorrectionX = pn == PLAYER_2 and -15 or 0
+	
+	-- for INFWORLDs, since this replicates KPump and doesnt use 2 unique background panels and only uses 1 instead, we really dont need this here (tiny)
+    local CorrectionX = -5
     
     t[#t+1] = Def.ActorFrame {
         Def.ActorFrame {
@@ -15,13 +17,13 @@ for pn in ivalues(GAMESTATE:GetHumanPlayers()) do
             
             SongChosenMessageCommand=function(self)
                 SongIsChosen = true
-                self:stoptweening():easeoutexpo(0.5)
+                self:stoptweening():easeoutexpo(0.3)
                 :x(358 * (pn == PLAYER_2 and 1 or -1))
                 self:playcommand("Refresh")
             end,
             SongUnchosenMessageCommand=function(self)
                 SongIsChosen = false
-                self:stoptweening():easeoutexpo(0.5):x(0)
+                self:stoptweening():easeoutexpo(0.3):x(258 * (pn == PLAYER_2 and 1 or -1))
             end,
 
             RefreshCommand=function(self)
@@ -65,9 +67,9 @@ for pn in ivalues(GAMESTATE:GetHumanPlayers()) do
             end,
 
             Def.Sprite {
-                -- Texture=THEME:GetPathG("", "UI/ScoreDisplay"),
+                -- Texture=THEME:GetPathG("", "UI/ScoreDisplay"  .. ToEnumShortString(pn))),
                 InitCommand=function(self)
-                    self:Load(THEME:GetPathG("", "UI/ScoreDisplay" .. ToEnumShortString(pn)))
+                    self:Load(THEME:GetPathG("", "UI/tg_scoredisplay"))
                     :xy(0, 0):zoom(0.75)
                 end,
             },

@@ -39,21 +39,21 @@ for pn in ivalues(GAMESTATE:GetHumanPlayers()) do
       end,
 
       OnCommand=function(self)
-        self:diffusealpha(0):xy(0, 105):skewx(pn==PLAYER_1 and 0.2 or -0.2)
+        self:diffusealpha(0):xy(pn == PLAYER_1 and -65 or 65, 120):zoom(2):skewx(pn==PLAYER_1 and 0.2 or -0.2)
       end,
 
       SongChosenMessageCommand=function(self)
         self:stoptweening()
-        :easeoutexpo(0.5)
+        :easeoutexpo(0.28)
         :diffusealpha(1)
-        :x(pn == PLAYER_1 and -95 or 95):zoom(2)
+        :x(pn == PLAYER_1 and -95 or 95)
       end,
 
       SongUnchosenMessageCommand=function(self)
         self:stoptweening()
-        :easeoutexpo(0.25)
+        :easeoutexpo(0.28)
         :diffusealpha(0)
-        :x(0):zoom(0)
+        :x(pn == PLAYER_1 and -65 or 65)
       end,
 
       Def.Sprite {

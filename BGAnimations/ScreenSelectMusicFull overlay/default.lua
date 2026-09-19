@@ -19,7 +19,7 @@ if GAMESTATE:GetNumSidesJoined() < 2 then
 
     t[#t+1] = Def.ActorFrame {
         InitCommand=function(self)
-            self:xy((IsUsingWideScreen() and PosX or (PosX * 1.045)), PosY)
+            self:xy((IsUsingWideScreen() and PosX or (PosX * 1)), PosY):zoom(IsUsingWideScreen() and 1 or 0.8)
             :playcommand('Refresh')
         end,
 
@@ -61,7 +61,7 @@ t[#t+1] = Def. ActorFrame {
             self:diffusealpha(0):xy(SCREEN_CENTER_X, SCREEN_BOTTOM-164)
             :zoomx(1):zoomy(1.35)
         end,
-	OnCommand=function(self) self:diffusealpha(0):zoomx(1):zoomy(1):sleep(0.4):linear(0.2):diffusealpha(1):zoomx(0.8):zoomy(0.8):pulse():effectmagnitude(1,1.05,0) end,
+	OnCommand=function(self) self:diffusealpha(0):zoomx(1):zoomy(0.8):sleep(0.45):decelerate(0.2):diffusealpha(1):zoomx(0.8):zoomy(0.8):pulse():effectmagnitude(1,1.05,0) end,
  	SongChosenMessageCommand=function(self)
             self:stoptweening():easeoutquad(0.2):zoomx(1.2):zoomy(0.8):diffusealpha(0)
         end,
@@ -74,14 +74,14 @@ t[#t+1] = Def. ActorFrame {
 	LoadActor("tg_pointerwheel_music") .. {
 		InitCommand=function(self) self:cropleft(0.5) end,
 		ScrollMessageCommand=function(self, params) if params.Direction == 1 then
-		self:stoptweening():x(0):linear(0.2):x(50):decelerate(0.3):x(0) end
+		self:stoptweening():x(0):linear(0.1):x(60):decelerate(0.3):x(0) end
 		end,
 	},
 	-- right
 	LoadActor("tg_pointerwheel_music") .. {
 		InitCommand=function(self) self:cropright(0.5) end,
 		ScrollMessageCommand=function(self, params) if params.Direction == -1 then
-		self:stoptweening():x(0):linear(0.2):x(-50):decelerate(0.3):x(0) end
+		self:stoptweening():x(0):linear(0.1):x(-60):decelerate(0.3):x(0) end
 		end,
 	},
 	

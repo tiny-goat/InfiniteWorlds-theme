@@ -3,7 +3,7 @@ return Def.ActorFrame {
     Def.Sprite {
         Name="PlainLoop",
         Texture="iw_logo_4",
-	InitCommand=function(self) self:zoom(1.3):croptop(1):diffuse(1,1,1,1):smooth(0.5):croptop(0):sleep(0.2)
+	InitCommand=function(self) self:zoom(1.3):croptop(1):diffuse(1,1,1,1):linear(0.5):croptop(0):sleep(0.2)
 	:easeoutexpo(1):diffusetopedge(color("#16EEFF")):diffusebottomedge(color("#FF16EE")):zoom(1) end
     },
 

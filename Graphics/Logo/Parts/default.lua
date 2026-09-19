@@ -1,5 +1,48 @@
 return Def.ActorFrame {
 
+-- literally the same reused animation from the game over screen
+	Def.Sprite{
+        Texture=THEME:GetPathG("", "ParticlesAndEffects/Stars1"),
+		InitCommand=function(self) self:xy(0,0) end,
+		OnCommand=function(self)
+            self:zoom(0.1)
+            :diffusealpha(0)
+            :sleep(0.85)
+            :diffusealpha(0.5)
+            :decelerate(1)
+            :zoom(0.4)
+            :diffusealpha(0)
+        end
+    },
+	
+	Def.Sprite{
+        Texture=THEME:GetPathG("", "ParticlesAndEffects/Stars2"),
+		InitCommand=function(self) self:xy(0,0) end,
+		OnCommand=function(self)
+            self:zoom(0.1)
+            :diffusealpha(0)
+            :sleep(0.85)
+            :diffusealpha(0.5)
+            :decelerate(1)
+            :zoom(0.4)
+            :diffusealpha(0)
+        end
+    },
+	
+	Def.Sprite{
+        Texture=THEME:GetPathG("", "ParticlesAndEffects/Stars3"),
+		InitCommand=function(self) self:xy(0,0) end,
+		OnCommand=function(self)
+            self:zoom(0.1)
+            :diffusealpha(0)
+            :sleep(1.1)
+            :diffusealpha(0.5)
+            :decelerate(1)
+            :zoom(0.4)
+            :diffusealpha(0)
+        end
+    },
+	
     LoadActor("AnimatedLoop")..{
         Name="Loop",
         OnCommand=function(self)
@@ -79,5 +122,6 @@ return Def.ActorFrame {
             :glow(1,1,1,0)
         end
     },
+	
 
 }

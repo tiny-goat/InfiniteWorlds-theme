@@ -339,24 +339,16 @@ for i=1,ItemAmount do
             end
         },
 
-        Def.Sprite {
-            Name="Label",
-            Texture=THEME:GetPathG("", "DifficultyDisplay/Labels"),
-            InitCommand=function(self)
-                self:xy(FrameX + ItemW * (i - 1), 16):animate(false)
-            end
-        },
-
-	Def.Sprite {
+		Def.Sprite {
             Name="RingP1",
             Texture=THEME:GetPathG("", "DifficultyDisplay/Cursor/euv_curP1"),
             InitCommand=function(self)
                 self:x(FrameX + ItemW * (i - 1))
                 :zoom(0.4):croptop(0.1):fadetop(0.4)
                 :visible(false)
-		:queuecommand("Bounce")
+				:queuecommand("Bounce")
             end,
-	    BounceCommand=function(self) self:zoom(1):accelerate(0.4):zoom(0.9):decelerate(0.4):zoom(1):queuecommand("Bounce") end
+			BounceCommand=function(self) self:zoom(1):accelerate(0.4):zoom(0.9):decelerate(0.4):zoom(1):queuecommand("Bounce") end
         },
 
         Def.Sprite {
@@ -366,9 +358,9 @@ for i=1,ItemAmount do
                 self:x(FrameX + ItemW * (i - 1))
                 :zoom(1.1):cropbottom(0.1):fadebottom(0.4)
                 :visible(false)
-		:queuecommand("Bounce")
+				:queuecommand("Bounce")
             end,
-	    BounceCommand=function(self) self:zoom(1):accelerate(0.43):zoom(0.9):decelerate(0.45):zoom(1):queuecommand("Bounce") end
+			BounceCommand=function(self) self:zoom(1):accelerate(0.43):zoom(0.9):decelerate(0.45):zoom(1):queuecommand("Bounce") end
         },
 
         Def.Sprite {
@@ -388,6 +380,15 @@ for i=1,ItemAmount do
                 self:xy(FrameX + ItemW * (i - 1), 1)
                 :zoom(0.53)
                 :visible(false)
+            end
+        },
+		
+		-- put this in front so the thing is actually readable instead of being behind the ring/cursor
+		Def.Sprite {
+            Name="Label",
+            Texture=THEME:GetPathG("", "DifficultyDisplay/Labels"),
+            InitCommand=function(self)
+                self:xy(FrameX + ItemW * (i - 1), 16):animate(false)
             end
         },
 

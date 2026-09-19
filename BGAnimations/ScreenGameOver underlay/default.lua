@@ -34,20 +34,7 @@ return Def.ActorFrame {
             :queuecommand("Expand")
         end
     },
-    --[[Def.Sprite{
-        Texture="glass-break",
-        InitCommand=function(self)
-            self:rotationz(90):xy(SCREEN_CENTER_X, SCREEN_CENTER_Y)
-            :diffusealpha(0):zoom(1.35)
-            :sleep(1)
-	    :linear(0.05)
-            :diffusealpha(0.7)
-	    :zoom(1.33)
-            :sleep(2.5)
-            :accelerate(0.5)
-            :diffusealpha(0)
-        end
-    },]]--
+	
     Def.Sprite{
         Texture="tg_gameover",
         InitCommand=function(self)
