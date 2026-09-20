@@ -169,10 +169,10 @@ t[#t+1] = Def.ActorFrame {
         end,
 
         SongChosenMessageCommand=function(self)
-            self:stoptweening():easeoutexpo(0.5):zoom(0.89)
+            self:stoptweening():easeoutexpo(0.7):zoom(0.89)
         end,
         SongUnchosenMessageCommand=function(self)
-            self:stoptweening():easeoutexpo(0.5):zoom(1)
+            self:stoptweening():easeoutexpo(0.7):zoom(1)
         end,
         
         LoadActor("PadIcons") .. {
@@ -188,10 +188,10 @@ t[#t+1] = Def.ActorFrame {
         },
         
         Def.ActorFrame {
-            InitCommand=function(self) self:diffusealpha(0):y(92):zoom(1.4):sleep(0.1):easeoutexpo(1):zoom(0.77):diffusealpha(1) end,
+            InitCommand=function(self) self:diffusealpha(0):y(96):zoom(ZoomChAdj):sleep(0.1):easeoutexpo(1):zoom(0.77):diffusealpha(1) end,
 
             SongChosenMessageCommand=function(self)
-                self:stoptweening():easeoutexpo(0.28):y(89):zoom(ZoomChAdj)
+                self:stoptweening():easeoutexpo(0.28):y(96):zoom(ZoomChAdj)
             end,
             SongUnchosenMessageCommand=function(self)
                 self:stoptweening():easeoutexpo(0.28):y(92):zoom(0.77)
