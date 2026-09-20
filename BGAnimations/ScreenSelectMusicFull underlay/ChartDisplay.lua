@@ -388,7 +388,7 @@ for i=1,ItemAmount do
             Name="Label",
             Texture=THEME:GetPathG("", "DifficultyDisplay/Labels"),
             InitCommand=function(self)
-                self:xy(FrameX + ItemW * (i - 1), 16):animate(false)
+                self:xy(FrameX + ItemW * (i - 1), 16):zoom(0.8):animate(false)
             end
         },
 
