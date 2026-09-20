@@ -15,6 +15,19 @@ local t = Def.ActorFrame {
 		OnCommand=function(self) self:diffusealpha(1):sleep(1.45):easeoutexpo(0.9):diffusealpha(0) end
 	},
 	
+	Def.Quad {
+		InitCommand=function(self) self:FullScreen():diffuse(Color.Black):diffusealpha(0) end,
+		OnCommand=function(self) self:sleep(1.8):queuecommand("Flash") end,
+		
+		FlashCommand=function(self)
+			self:sleep(3.4288)
+            :accelerate(0.4):diffuse(Color.Black):diffusealpha(1)
+            :sleep(3.4288)
+            :decelerate(0.1):diffuse(Color.White):accelerate(0.4):diffusealpha(0)
+            :queuecommand("Flash")
+        end,
+	},
+	
     Def.ActorFrame {
         OnCommand=function(self)
             self:xy(SCREEN_CENTER_X, SCREENMAN:GetTopScreen():GetName() == "ScreenLogo" and SCREEN_CENTER_Y or SCREEN_CENTER_Y - 20)
