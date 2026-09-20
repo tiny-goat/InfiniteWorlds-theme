@@ -50,7 +50,7 @@ return Def.ActorFrame {
 				:diffusealpha(1):zoom(0.4)
 			end,
 			OnCommand=function(self)
-				self:sleep(0.3):linear(0.7):diffusealpha(1):sleep(0.4):linear(1):zoom(0.18):addx(-190)
+				self:diffusealpha(0):sleep(0.5):linear(0.7):diffusealpha(1):sleep(0.4):linear(1):zoom(0.18):addx(-190)
 			end
 		}
 		
