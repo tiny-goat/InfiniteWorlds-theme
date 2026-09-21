@@ -11,7 +11,7 @@ return Def.ActorFrame {
     Def.Sprite {
         Texture=THEME:GetPathG("", "Gradient background"),
         OnCommand=function(self)
-            self:Center():scaletocover(0, 0, SCREEN_RIGHT, SCREEN_BOTTOM):diffusealpha(0.8)
+            self:Center():scaletocover(0, 0, SCREEN_RIGHT, SCREEN_BOTTOM):diffusealpha(0.6)
         end
     },
 
