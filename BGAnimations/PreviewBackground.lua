@@ -14,10 +14,10 @@ local t = Def.ActorFrame {
         Def.Quad {
             Name="Back1",
             InitCommand=function(self)
-                self:zoomto(FrameW, FrameH):diffuseleftedge(color("#16EEFF")):diffuserightedge(color("#EE16FF")):fadetop(0.8):diffusealpha(0)
+                self:zoomto(FrameW, FrameH):diffuseleftedge(color("#16EEFF")):diffuserightedge(color("#EE16FF")):fadetop(0.9):diffusealpha(0)
             end,
 			ScrollMessageCommand=function(self)
-				self:stoptweening():diffusealpha(1):sleep(PreviewDelay):diffusealpha(0) end
+				self:stoptweening():diffusealpha(0.7):sleep(PreviewDelay):diffusealpha(0) end
         },
 
     },
@@ -42,10 +42,10 @@ local t = Def.ActorFrame {
             local Path = Song:GetBackgroundPath()
             if Path and FILEMAN:DoesFileExist(Path) then
                 self:LoadFromCached("Background", Path):zoomto(FrameW, FrameH)
-                :diffusealpha(0):decelerate(PreviewDelay):diffusealpha(1)
+                :diffusealpha(0):linear(PreviewDelay):diffusealpha(1)
             else
                 self:LoadFromCached("Banner", Song:GetBannerPath()):zoomto(FrameW, FrameH)
-                :diffusealpha(0):decelerate(PreviewDelay):diffusealpha(1)
+                :diffusealpha(0):linear(PreviewDelay):diffusealpha(1)
             end
         end,
 
@@ -53,7 +53,7 @@ local t = Def.ActorFrame {
             local Path = Song:GetPreviewVidPath()
             if Path and FILEMAN:DoesFileExist(Path) then
                 self:Load(Path):zoomto(FrameW, FrameH)
-                :diffusealpha(0):decelerate(PreviewDelay):diffusealpha(1)
+                :diffusealpha(0):linear(PreviewDelay):diffusealpha(1)
             else
                 self:queuecommand("LoadBG")
             end

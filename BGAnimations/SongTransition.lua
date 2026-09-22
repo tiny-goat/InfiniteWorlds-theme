@@ -87,7 +87,7 @@ for pn in ivalues(GAMESTATE:GetHumanPlayers()) do
                 Name="Meter",
                 Font="inter extrabold 45px",
                 InitCommand=function(self)
-                    self:xy(80.5 * PlayerDirection, 1):zoom(0.9):shadowlength(2)
+                    self:xy(80.5 * PlayerDirection, 1):zoom(0.9):strokecolor(Color.Black)
                 end
             },
 

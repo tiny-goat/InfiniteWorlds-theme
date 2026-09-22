@@ -85,7 +85,7 @@ for pn in ivalues(GAMESTATE:GetHumanPlayers()) do
         Font="strike fighter 45px",
         Name="Difficulty",
         InitCommand=function(self) -- to counter the skew, we must skew the skew that skewed the skew (jkob)
-          self:zoom(0.2):x(0):y(-17):skewx(pn==PLAYER_1 and -0.2 or 0.2)
+          self:zoom(0.2):x(0):y(-17):strokecolor(color("#000000EE")):skewx(pn==PLAYER_1 and -0.2 or 0.2)
         end
       },
 
@@ -100,7 +100,7 @@ for pn in ivalues(GAMESTATE:GetHumanPlayers()) do
         Font="strike fighter 45px",
         Name="Credit",
         InitCommand=function(self) -- to counter the skew, we must skew the skew that skewed the skew (jkob)
-          self:zoom(0.15):x(0):y(17):skewx(pn==PLAYER_1 and -0.2 or 0.2)
+          self:zoom(0.15):x(0):y(17):strokecolor(color("#000000EE")):skewx(pn==PLAYER_1 and -0.2 or 0.2)
         end
       },
 
@@ -108,7 +108,7 @@ for pn in ivalues(GAMESTATE:GetHumanPlayers()) do
         Font="Strike Fighter 45px",
         Name="MeterText",
         InitCommand=function(self) -- to counter the skew, we must skew the skew that skewed the skew (jkob)
-          self:zoom(0.58):shadowlength(1):skewx(pn==PLAYER_1 and -0.2 or 0.2)
+          self:zoom(0.58):strokecolor(color("#000000CC")):skewx(pn==PLAYER_1 and -0.2 or 0.2)
         end
       }
 

@@ -177,7 +177,7 @@ for pn in ivalues(GAMESTATE:GetHumanPlayers()) do
                     Font="inter medium 25px",
                     Text=PROFILEMAN:GetProfile(pn):GetDisplayName(),
                     InitCommand=function(self)
-                        self:xy(SCREEN_CENTER_X + (pn == PLAYER_2 and 130 or -130), SCREEN_BOTTOM - 45):zoom(0.7):halign(pn == PLAYER_2 and 0 or 1):valign(0)
+                        self:xy(SCREEN_CENTER_X + (pn == PLAYER_2 and 130 or -130), SCREEN_BOTTOM - 45):strokecolor(Color.Black):zoom(0.7):halign(pn == PLAYER_2 and 0 or 1):valign(0)
                         :maxwidth(112 / self:GetZoom())
 
                         if PROFILEMAN:GetProfile(pn):GetDisplayName() == "" then
@@ -190,7 +190,7 @@ for pn in ivalues(GAMESTATE:GetHumanPlayers()) do
                     Font="inter medium 25px",
                     -- This ingenious level system was made up at 4am
                         InitCommand=function(self)
-                        self:xy(SCREEN_CENTER_X + (pn == PLAYER_2 and 155 or -155), SCREEN_BOTTOM - 13):zoom(0.7)
+                        self:xy(SCREEN_CENTER_X + (pn == PLAYER_2 and 155 or -155), SCREEN_BOTTOM - 13):strokecolor(Color.Black):zoom(0.7)
                         :maxwidth(96 / self:GetZoom())
                         lvl = math.floor(math.sqrt(PROFILEMAN:GetProfile(pn):GetTotalDancePoints() / 500)) + 1
                         -- You can check if a number is "nan" by comparing it to itself

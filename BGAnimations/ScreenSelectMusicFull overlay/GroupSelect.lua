@@ -316,7 +316,7 @@ for i = 1, MainWheelSize do
             Name="Text",
             Font="inter extrabold 45px",
             InitCommand=function(self)
-                self:zoom(0.6):diffuse(Color.White):shadowlength(1.5)
+                self:zoom(0.6):diffuse(Color.White):strokecolor(Color.Black):shadowlength(1.5)
                 :maxwidth(MainWheelSpacing / self:GetZoom())
             end,
             

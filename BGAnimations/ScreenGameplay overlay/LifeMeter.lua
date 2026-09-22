@@ -307,7 +307,7 @@ local t = Def.ActorFrame {
         Font="inter medium 25px",
         InitCommand=function(self)
             self:y(-2.5):x(BarW / 2 - 15):rotationy(pn==PLAYER_1 and 0 or -180):zoom(0.8):halign(pn==PLAYER_1 and 1 or 0)
-            :diffuse(Color.Yellow):shadowlength(1):playcommand("Refresh")
+            :diffuse(Color.Yellow):strokecolor(Color.Black):playcommand("Refresh")
         end,
         JudgmentMessageCommand=function(self, params)
             if pn == params.Player and ScoreDisplay == "Percent" then

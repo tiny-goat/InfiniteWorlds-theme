@@ -1,5 +1,9 @@
 return Def.ActorFrame {
-
+	
+	Def.Quad {
+		InitCommand=function(self) self:FullScreen():diffusecolor(Color.Black) end,
+	},
+	
     LoadActor("LoadingIcon")..{
         InitCommand=function(self)
             self:GetChild("Text"):settext("LOAD PROFILE DATA...")

@@ -335,7 +335,7 @@ for i=1,ItemAmount do
             Font="inter extrabold 40px",
             Name="Level",
             InitCommand=function(self)
-                self:xy(FrameX + ItemW * (i - 1), 0):zoom(0.5):maxwidth(75):strokecolor(Color.Black)
+                self:xy(FrameX + ItemW * (i - 1), 0):strokecolor(Color.Black):shadowlength(0.5):zoom(0.5):maxwidth(75)
             end
         },
 

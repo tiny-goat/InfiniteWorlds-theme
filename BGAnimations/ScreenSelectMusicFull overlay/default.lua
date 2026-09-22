@@ -93,10 +93,10 @@ t[#t+1] = Def.ActorFrame {
     -- Background for the group select wheel
     Def.Quad {
         InitCommand=function(self)
-            self:FullScreen():diffusetopedge(Color.Black):diffusebottomedge(color("#00BBDD")):diffusealpha(0)
+            self:FullScreen():diffusetopedge(Color.Black):diffusealpha(0)
         end,
         CloseGroupWheelMessageCommand=function(self) self:stoptweening():sleep(0.25):diffusealpha(0) end,
-        OpenGroupWheelMessageCommand=function(self) self:stoptweening():easeoutexpo(0.4):diffusealpha(1) end,
+        OpenGroupWheelMessageCommand=function(self) self:stoptweening():linear(0.3):diffusealpha(0.96) end,
     },
 
     Def.BitmapText {
@@ -105,7 +105,7 @@ t[#t+1] = Def.ActorFrame {
         InitCommand=function(self)
             self:diffusealpha(0)
             :xy(SCREEN_CENTER_X, SCREEN_CENTER_Y - 200):zoom(0.7)
-            :settext("CHANNEL SELECT")
+            :strokecolor(Color.Black):settext("CHANNEL SELECT")
         end,
         CloseGroupWheelMessageCommand=function(self) self:stoptweening():sleep(0.25):diffusealpha(0) end,
         OpenGroupWheelMessageCommand=function(self) self:stoptweening():easeoutexpo(0.4):diffusealpha(1) end

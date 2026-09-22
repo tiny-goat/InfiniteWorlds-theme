@@ -79,7 +79,7 @@ local Selections = Def.ActorFrame{
         Def.BitmapText {
                 Font="inter extrabold 45px",
                 InitCommand=function(self)
-                        self:skewx(-0.2):settext("PAUSED")
+                        self:skewx(-0.2):strokecolor(color("#16CCEE55")):settext("PAUSED")
                         :y(-120)
                 end
         }

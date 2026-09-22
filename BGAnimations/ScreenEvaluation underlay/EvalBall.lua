@@ -73,7 +73,7 @@ return Def.ActorFrame {
         Name="Meter",
         Font="Strike Fighter 45px",
         InitCommand=function(self)
-            self:zoom(0.73):y(0):x(0):skewx(pn==PLAYER_1 and -0.2 or 0.2)
+            self:zoom(0.73):y(0):x(0):strokecolor(color("#000000CC")):skewx(pn==PLAYER_1 and -0.2 or 0.2)
         end
     },
     

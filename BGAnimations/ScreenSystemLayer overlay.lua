@@ -12,7 +12,7 @@ local t = Def.ActorFrame {
     Def.BitmapText {
         Font="Common normal",
         InitCommand=function(self)
-            self:xy(SCREEN_CENTER_X, SCREEN_BOTTOM - 22):zoom(0.8):shadowlength(1):queuecommand('Refresh')
+            self:xy(SCREEN_CENTER_X, SCREEN_BOTTOM - 15):zoom(0.8):strokecolor(Color.Black):queuecommand('Refresh')
         end,
         
         ScreenChangedMessageCommand=function(self)
@@ -35,17 +35,20 @@ local t = Def.ActorFrame {
         RefreshCommand=function(self)
             local CoinMode = GAMESTATE:GetCoinMode()
             local EventMode = GAMESTATE:IsEventMode()
+			
+			
+			local totalCredits = math.floor(GAMESTATE:GetCoins() / GAMESTATE:GetCoinsNeededToJoin())
             
             -- no one wants screen burn-in at home!
             if CoinMode == "CoinMode_Home" then
                 self:visible(false)
             elseif EventMode then
-                self:visible(true):settext("EVENT")
+                self:visible(true):diffuse(color("#FFFFFF")):settext("EVENT")
             elseif CoinMode == 'CoinMode_Free' then
-                self:visible(true):settext("FREE PLAY")
+                self:visible(true):diffuse(color("#FFFFFF")):settext("FREE PLAY")
             elseif CoinMode == 'CoinMode_Pay' then
-                local CreditText = "CREDIT(S) " .. GAMESTATE:GetCoins() .. "/" .. GAMESTATE:GetCoinsNeededToJoin()
-                self:visible(true):settext(CreditText)
+                local CreditText = "CREDIT(S) " .. totalCredits .. " [" .. GAMESTATE:GetCoinsNeededToJoin() .. "/" .. GAMESTATE:GetCoins() .. "]"
+                self:visible(true):settext(CreditText):diffusebottomedge(color("#EECC33")):diffusetopedge(color("#DDFF33"))
             end
         end
     }

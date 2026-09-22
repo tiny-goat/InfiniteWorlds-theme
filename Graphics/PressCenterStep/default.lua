@@ -30,7 +30,19 @@ if IsGame("pump") or IsGame("piu") then
                 :effectmagnitude(0, -25, 0)
                 :effectperiod(0.5286)
             end
-        }
+        },
+		
+		--[[Def.Sprite {
+            Name="USBPress",
+            Texture="tg_press_step",
+            InitCommand=function(self) self:zoom(0.45):y(14) end,
+            OnCommand=function(self)
+                self:bounce():sleep(1.1)
+                :effectmagnitude(0, -10, 0)
+                :effectperiod(2)
+            end
+        },]]--
+		
     }
 else
     return LoadActor("ButtonPress 5x2") .. {

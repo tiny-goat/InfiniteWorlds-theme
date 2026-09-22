@@ -2,7 +2,7 @@ return Def.ActorFrame {
     OnCommand=function(self)
         self:bounce():sleep(1.1)
         :effectmagnitude(0, -8, 0)
-        :effectperiod(0.4286)
+        :effectperiod(1)
     end,
             
     Def.Sprite {
@@ -18,7 +18,7 @@ return Def.ActorFrame {
         FadeEffectCommand=function(self)
             self:stoptweening()
             :zoom(1):diffusealpha(0.75)
-            :decelerate(0.8572)
+            :decelerate(2)
             :zoom(1.25):diffusealpha(0)
             :queuecommand("FadeEffect")
         end
