@@ -130,7 +130,7 @@ local t = Def.ActorFrame {
 			else
 				-- Normal lifebar shenanigans
 				if LifeAmount >= 1 and not MeterHot then
-					self:GetChild("RainbowMeter"):stoptweening():linear(0.3):diffusealpha(1)
+					self:GetChild("RainbowMeter"):stoptweening():linear(0.1):diffusealpha(1)
 					MeterHot = true
 				elseif LifeAmount < 1 and MeterHot then
 					self:GetChild("RainbowMeter"):diffusealpha(0)
@@ -240,7 +240,7 @@ local t = Def.ActorFrame {
     Def.Quad {
         Name="ProMeter",
         InitCommand=function(self)
-            self:zoomto(BarW - 12, BarH - 12):x(-20):cropright(1)
+            self:zoomto(BarW - 10, BarH - 16):x(-20):cropright(1)
             :diffuse(pn == PLAYER_1 and color("#f7931e") or color("#ab78f5"))
             :diffusebottomedge(Color.White)
             :MaskDest():ztestmode("ZTestMode_WriteOnFail")
@@ -250,7 +250,7 @@ local t = Def.ActorFrame {
     Def.Quad {
         Name="ProPulse",
         InitCommand=function(self)
-            self:zoomto(20, BarH - 12):halign(0):x(-20 - BarW / 2)
+            self:zoomto(20, BarH - 16):halign(0):x(-20 - BarW / 2)
             :diffuse(pn == PLAYER_1 and color("#f7931e") or color("#ab78f5"))
             :diffusebottomedge(Color.White)
             self:bounce():effectmagnitude(-20,0,0):effectclock("bgm"):effecttiming(1,0,0,0)
@@ -262,7 +262,7 @@ local t = Def.ActorFrame {
         Name="RainbowMeter",
         Texture=THEME:GetPathG("", "UI/RainbowBar"),
         InitCommand=function(self)
-            self:zoomto(BarW - 10.5, BarH - 16)
+            self:zoomto(BarW - 11, BarH - 16)
             :texcoordvelocity(-0.9, 0)
             :diffusealpha(0):diffuseblink():effectcolor1(color("#FFFFFF")):effectcolor2(color("#bbbbbb")):effectperiod(0.09)
         end
@@ -272,7 +272,7 @@ local t = Def.ActorFrame {
         Name="BarBodyShine",
         Texture=THEME:GetPathG("", "UI/euv_shine_lifebars"),
         InitCommand=function(self)
-            self:setsize(BarW - 5, BarH):diffusealpha(0.5)
+            self:setsize(BarW - 12, BarH):diffusealpha(0.5)
         end
     },
 
@@ -306,7 +306,7 @@ local t = Def.ActorFrame {
     Def.BitmapText{
         Font="inter medium 25px",
         InitCommand=function(self)
-            self:y(-2.5):x(BarW / 2 - 15):rotationy(pn==PLAYER_1 and 0 or -180):zoom(0.8):halign(pn==PLAYER_1 and 1 or 0)
+            self:y(-1.7):x(BarW / 2 - 10):rotationy(pn==PLAYER_1 and 0 or -180):zoom(0.8):halign(pn==PLAYER_1 and 1 or 0)
             :diffuse(Color.Yellow):strokecolor(Color.Black):playcommand("Refresh")
         end,
         JudgmentMessageCommand=function(self, params)

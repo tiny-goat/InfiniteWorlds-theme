@@ -273,7 +273,7 @@ for i = 1, WheelSize do
                 Name="Index",
                 Font="inter medium 25px",
                 InitCommand=function(self)
-                    self:addy(55):zoom(0.5):diffusetopedge(0.95,0.95,0.95,0.8)
+                    self:addy(55):zoom(0.5):rotationx(-30):diffusetopedge(0.6,0.5,0,0.5):diffusebottomedge(1,0.95,0.05,1)
                 end,
                 RefreshCommand=function(self,param) self:settext(Targets[i]) end
             }

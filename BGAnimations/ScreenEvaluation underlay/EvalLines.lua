@@ -101,12 +101,12 @@ for i = 1, RowAmount do
     t[#t+1] = Def.ActorFrame {
             InitCommand=function(self)
             self:xy(SCREEN_CENTER_X, RowY + RowH * (i - 1) + 26)
-            :zoomy(0):zoomx(1):rotationz(20):diffusealpha(0):sleep(0.5 + i * 0.1):easeoutexpo(0.2):rotationz(0):zoomx(0.68):zoomy(0.68):diffusealpha(1)
+            :zoomy(0):zoomx(1):diffusealpha(0):sleep(0.5 + i * 0.1):easeoutexpo(0.2):zoomx(0.68):zoomy(0.68):diffusealpha(1)
         end,
         Def.BitmapText {
             Font="Strike Fighter 45px",
             InitCommand=function(self)
-                self:maxwidth(360):zoom(0.7):visible(true):y(-3)
+                self:maxwidth(360):zoom(0.7):shadowlength(0.6):visible(true):y(-3)
 
                 if Name[i] == "Accuracy" or Name[i] == "Score" then
                     self:settext(ToUpper(THEME:GetString("EvaluationLabel", Name[i])))

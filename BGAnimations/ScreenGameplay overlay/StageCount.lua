@@ -30,7 +30,7 @@ return Def.ActorFrame {
         Font="Strike Fighter 45px",
         Text=string.format("%02d", GAMESTATE:GetCurrentStageIndex() + 1),
         InitCommand=function(self)
-            self:y(14):zoom(0.56)
+            self:y(14):zoom(0.6)
         end
     }
 }

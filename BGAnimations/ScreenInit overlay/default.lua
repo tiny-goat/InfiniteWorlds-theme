@@ -38,7 +38,7 @@ return Def.ActorFrame {
 				:diffusealpha(0):zoom(0.6):cropleft(0.29)
 			end,
 			OnCommand=function(self)
-				self:sleep(2.7):linear(0.7):diffusealpha(1)
+				self:sleep(2.9):linear(0.7):diffusealpha(1)
 			end
 		},
 	
@@ -50,7 +50,7 @@ return Def.ActorFrame {
 				:diffusealpha(1):zoom(0.4)
 			end,
 			OnCommand=function(self)
-				self:diffusealpha(0):sleep(0.5):linear(0.7):diffusealpha(1):sleep(0.4):linear(1):zoom(0.18):addx(-190)
+				self:diffusealpha(0):sleep(0.5):linear(0.7):diffusealpha(1):sleep(0.6):linear(1):zoom(0.18):addx(-190)
 			end
 		}
 		
@@ -64,16 +64,15 @@ return Def.ActorFrame {
             :queuecommand("Shutdown")
         end,
         ShutdownCommand=function(self)
-            self:sleep(6.55)
-            :linear(0.7):diffuse(0,0,0,1)
+            self:sleep(7):linear(0.7):diffuse(0,0,0,1)
         end
     },
 
-    -- Transitions to the next screen after 7 seconds
+    -- Transitions to the next screen after n seconds
     Def.Quad {
         Name="ScreenTransferActor",
         InitCommand=function(self)
-               self:diffuse(0,0,0,0):sleep(7):queuecommand("Transfer")
+               self:diffuse(0,0,0,0):sleep(8):queuecommand("Transfer")
         end,
         TransferCommand=function(self)
                SCREENMAN:GetTopScreen():StartTransitioningScreen("SM_GoToNextScreen")
