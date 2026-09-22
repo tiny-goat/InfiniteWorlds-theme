@@ -414,7 +414,7 @@ function AssembleGroupSorting()
     
     for i, v in PairsByKeys(LevelGroups) do
         MasterGroupsList[#MasterGroupsList].SubGroups[#MasterGroupsList[#MasterGroupsList].SubGroups + 1] = {
-            Name = "Half-Double " .. i,
+            Name = "H.Double " .. i,
             Banner = THEME:GetPathG("", "Common fallback banner"), -- something appending v at the end
             Songs = v,
         }

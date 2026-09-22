@@ -202,21 +202,21 @@ t[#t+1] = Def.ActorFrame {
         end,
 
         SongChosenMessageCommand=function(self)
-            self:stoptweening():easeoutexpo(0.5):y(SCREEN_CENTER_Y-23):zoom(0.89)
+            self:stoptweening():easeoutexpo(0.5):y(SCREEN_CENTER_Y):zoom(0.9)
         end,
         SongUnchosenMessageCommand=function(self)
             self:stoptweening():easeoutexpo(0.5):y(SCREEN_CENTER_Y):zoom(1)
         end,
 
         LoadActor("SongsInfo") .. {
-            InitCommand=function(self) self:zoom(2):y(-110):easeoutexpo(1):zoom(0.8) end
+            InitCommand=function(self) self:zoom(0.9):y(-110):easeoutexpo(1):zoom(0.8) end
         },
 
         Def.ActorFrame {
             InitCommand=function(self) self:y(210):zoom(2):easeoutexpo(1):zoom(1):y(85) end,
 
             SongChosenMessageCommand=function(self)
-                self:finishtweening():easeoutexpo(0.28):y(205):zoom(2)
+                self:finishtweening():easeoutexpo(0.28):y(176):zoom(2)
             end,
             SongUnchosenMessageCommand=function(self)
                 self:finishtweening():easeoutexpo(0.28):y(85):zoom(1)

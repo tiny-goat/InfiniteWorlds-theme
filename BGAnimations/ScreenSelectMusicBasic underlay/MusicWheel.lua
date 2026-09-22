@@ -1,8 +1,8 @@
-local WheelSize = 15
+local WheelSize = 16
 local WheelCenter = math.ceil( WheelSize * 0.5 )
 local WheelItem = { Width = 212, Height = 120 }
-local WheelSpacing = 230
-local WheelRotation = 0.14
+local WheelSpacing = 203
+local WheelRotation = -0.014
 
 local Songs = {}
 local Targets = {}
@@ -248,13 +248,13 @@ for i = 1, WheelSize do
             if i == 1 or i == WheelSize then
 				UpdateBanner(self:GetChild("Banner"), Songs[Targets[i]])
             elseif tween then
-                self:easeoutexpo(0.3)
+                self:easeoutexpo(0.4)
             end
 
             -- Animate!
             self:xy(xpos + displace, SCREEN_CENTER_Y)
             self:rotationy((SCREEN_CENTER_X - xpos - displace) * -WheelRotation)
-            self:z(-math.abs(SCREEN_CENTER_X - xpos - displace) * 0.12)
+            self:z(-math.abs(SCREEN_CENTER_X - xpos - displace) * 0.4)
             self:GetChild(""):GetChild("Index"):playcommand("Refresh")
         end,
 

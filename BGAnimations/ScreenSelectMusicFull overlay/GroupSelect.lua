@@ -6,7 +6,7 @@ local SubWheelSize = 13
 local SubWheelCenter = math.ceil( SubWheelSize * 0.5 )
 local SubWheelSpacing = 250
 
-local WheelItem = { Width = 212, Height = 120 }
+local WheelItem = { Width = 252, Height = 160 }
 local WheelRotation = 0.1
 
 local MenuButtonsOnly = PREFSMAN:GetPreference("OnlyDedicatedMenuButtons")
@@ -302,13 +302,13 @@ for i = 1, MainWheelSize do
             if i == 2 or i == MainWheelSize - 1 then
 				self:GetChild("Text"):settext(GroupsList[MainTargets[i]].Name)
             elseif tween then
-                self:easeoutexpo(0.4)
+                self:easeoutexpo(0.3)
             end
 			
 			self:GetChild("Text"):playcommand("Refresh")
 
             -- Animate!
-            self:xy(xpos + displace, SCREEN_CENTER_Y - 60)
+            self:xy(xpos + displace, SCREEN_CENTER_Y - 98)
         end,
        
         
@@ -342,6 +342,7 @@ for i = 1, SubWheelSize do
             end
             
             self:GetChild("GroupInfo"):playcommand("Refresh")
+			self:GetChild("GroupInfoBack"):playcommand("Refresh")
             self:GetChild(""):GetChild("Index"):playcommand("Refresh")
             
             -- Ensure the wheel is highlighted or not at the beginning
@@ -392,10 +393,10 @@ for i = 1, SubWheelSize do
             end
 
             -- Animate!
-	    -- juust to make it close to the original one from infinity but not enough that we may get copyright issues, if AM still cares? (jkob)
-            self:xy(xpos + displace, SCREEN_CENTER_Y + 40)
+	    -- juust to make it close to the original one from infinity but not enough that we may get copyright issues, if AM still cares?
+            self:xy(xpos + displace, SCREEN_CENTER_Y)
             --[[self:rotationy((SCREEN_CENTER_X - xpos - displace) * -WheelRotation)]]--
-            --[[self:z(-math.abs(SCREEN_CENTER_X - xpos - displace) * 0.25)]]--
+            --[[self:z(-math.abs(SCREEN_CENTER_X - xpos - displace) * 0.5)]]--
         end,
         
         
@@ -406,7 +407,7 @@ for i = 1, SubWheelSize do
         Def.ActorFrame {
             Def.Quad {
                 InitCommand=function(self)
-                    self:zoomto(60, 18):addy(-50)
+                    self:zoomto(60, 18):addy(90)
                     :diffuse(0,0,0,0.3)
                     :fadeleft(0.3):faderight(0.3)
                 end
@@ -416,22 +417,31 @@ for i = 1, SubWheelSize do
                 Name="Index",
                 Font="inter medium 25px",
                 InitCommand=function(self)
-                    self:addy(-52):zoom(0.6):diffusetopedge(0.95,0.95,0.95,0.8):shadowlength(1.5)
+                    self:addy(89):zoom(0.6):strokecolor(Color.Black)
                 end,
                 RefreshCommand=function(self, params) self:settext(SubTargets[i]) end
             }
         },
+		
+		Def.Quad {
+			Name="GroupInfoBack",
+			InitCommand=function(self)
+                    self:zoomto(232, 50):y(20)
+                    :diffuse(0,0,0,0):fadeleft(0.05):faderight(0.05)
+            end,
+			RefreshCommand=function(self) self:diffusealpha(CurMainIndex == OrigGroupIndex and 0 or 0.6) end
+		},
         
         Def.BitmapText {
             Name="GroupInfo",
             Font="inter medium 32px",
             InitCommand=function(self)
-                self:y(CurMainIndex == OrigGroupIndex and 64 or -8):zoom(CurMainIndex == OrigGroupIndex and 0.6 or 0.8):diffusetopedge(0.95,0.95,0.95,0.8):shadowlength(1.5)
+                self:y(CurMainIndex == OrigGroupIndex and 64 or -8):zoom(CurMainIndex == OrigGroupIndex and 0.6 or 0.8):strokecolor(Color.Black):shadowlength(1.5)
                 :maxwidth(190):vertalign(0):wrapwidthpixels(420):vertspacing(-16)
             end,
             RefreshCommand=function(self, params) 
                 self:settext(GroupsList[CurMainIndex].SubGroups[SubTargets[i]].Name) 
-                :y(CurMainIndex == OrigGroupIndex and 64 or -8):zoom(CurMainIndex == OrigGroupIndex and 0.4 or 1.2)
+                :y(CurMainIndex == OrigGroupIndex and 64 or 0):zoom(CurMainIndex == OrigGroupIndex and 0.4 or 1.18)
             end
         }
     }
