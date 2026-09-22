@@ -19,7 +19,7 @@ local t = Def.ActorFrame {
     Def.Sprite { 
         Texture=THEME:GetPathG("", "UI/euv_playername_plate"), 
         OnCommand=function(self)
-            self:visible(PROFILEMAN:IsPersistentProfile(pn)):fadeleft(0.4):faderight(0.4):zoomy(0.8):zoomx(0):sleep(0.4):easeoutexpo(0.45):zoomx(0.8) 
+            self:visible(PROFILEMAN:IsPersistentProfile(pn)):cropleft(0.2):cropright(0.2):fadeleft(0.2):faderight(0.2):zoomy(0.8):zoomx(0):sleep(0.4):easeoutexpo(0.45):zoomx(1) 
         end
     },
 
@@ -27,7 +27,7 @@ local t = Def.ActorFrame {
         Font="Inter medium 25px",
         Name="Username",
         OnCommand=function(self) 
-            self:visible(PROFILEMAN:IsPersistentProfile(pn)):y(-6):zoom(0):sleep(0.45):easeoutexpo(0.9):zoom(0.7)
+            self:visible(PROFILEMAN:IsPersistentProfile(pn)):y(-2.5):diffusealpha(0):zoom(0.8):sleep(0.4):easeoutexpo(0.7):diffusealpha(1):zoom(0.7)
         end
     }
 }
