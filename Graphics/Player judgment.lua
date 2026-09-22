@@ -43,7 +43,7 @@ return Def.ActorFrame {
         ResetCommand=function(self) self:finishtweening():stopeffect():visible(false) end
     },
     
-    LoadFont("Montserrat extrabold 20px") .. {
+    LoadFont("inter medium 25px") .. {
         Name="Protiming",
         Text="",
         InitCommand=function(self) self:visible(false) end,
@@ -99,9 +99,9 @@ return Def.ActorFrame {
         self:playcommand("Reset")
 
         Judg:visible(not bHideJudgment):setstate(iFrame)
-        :stoptweening():zoom(0.88 * AddZoom):y(5):diffusealpha(1):decelerate(0.15)
-        :zoom(0.70 * AddZoom):y(7):diffusealpha(1):sleep(0.35):smooth(0.45)
-        :diffusealpha(0):zoomy(0):y(8):zoomx(0.8 * AddZoom)
+        :stoptweening():zoom(0.9 * AddZoom):y(5):diffusealpha(1):decelerate(0.15)
+        :zoom(0.70 * AddZoom):y(7):diffusealpha(1):sleep(0.35):smooth(0.35)
+        :diffusealpha(0):zoomy(0):y(-8):zoomx(0.9 * AddZoom)
         
         Prot:visible(bProtiming)
         OFB:GetChild("Background"):visible(bOffsetBar)
