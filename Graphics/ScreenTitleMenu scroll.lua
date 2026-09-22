@@ -8,7 +8,7 @@ return Def.ActorFrame {
             self:glowramp()
             :effectperiod(0.5)
             :effectcolor1(1,1,1,0)
-            :effectcolor2(1,1,1,0.5)
+            :effectcolor2(1,1,1,0.3)
             :visible(false)
         end,
         GainFocusCommand=function(self) self:stoptweening():easeoutexpo(0.25):zoom(MaxZoom):visible(true) end,
