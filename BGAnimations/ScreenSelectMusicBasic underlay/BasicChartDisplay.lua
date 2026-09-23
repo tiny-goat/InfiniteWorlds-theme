@@ -257,19 +257,19 @@ for i=1,ItemAmount do
             end
         },
 
-        LoadActor(THEME:GetPathS("","euv_change_diff")) .. {}
+        LoadActor(THEME:GetPathS("","tg_change_diff")) .. {}
     }
 end
 
 t[#t+1] = Def.ActorFrame {
     Def.Sound {
-        File=THEME:GetPathS("", "euv_change_diff"),
+        File=THEME:GetPathS("", "tg_change_diff"),
         IsAction=true,
         UpdateChartDisplayMessageCommand=function(self) self:play() end
     },
 
     Def.Sound {
-        File=THEME:GetPathS("", "euv_stepsselect"),
+        File=THEME:GetPathS("", "tg_stepsselect"),
         IsAction=true,
         StepsChosenMessageCommand=function(self) self:play() end
     },

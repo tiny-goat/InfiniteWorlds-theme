@@ -199,7 +199,7 @@ local t = Def.ActorFrame {
     },
 
     Def.Sound {
-        File=THEME:GetPathS("", "euv_stepsselect"),
+        File=THEME:GetPathS("", "tg_stepsselect"),
         IsAction=true,
         MusicWheelStartMessageCommand=function(self) self:play() end
     },
