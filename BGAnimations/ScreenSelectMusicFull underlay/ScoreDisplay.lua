@@ -17,7 +17,7 @@ for pn in ivalues(GAMESTATE:GetHumanPlayers()) do
             
             SongChosenMessageCommand=function(self)
                 SongIsChosen = true
-                self:stoptweening():easeoutexpo(0.3)
+                self:stoptweening():x(258 * (pn == PLAYER_2 and 1 or -1)):easeoutexpo(0.3)
                 :x(358 * (pn == PLAYER_2 and 1 or -1))
                 self:playcommand("Refresh")
             end,
