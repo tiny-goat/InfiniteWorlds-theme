@@ -1,4 +1,18 @@
+local previousCredits = nil
+
 local t = Def.ActorFrame {
+
+	-- dual-coinsound of kpump
+	Def.Sound {
+        Name = "CoinInsertedSound",
+        File = THEME:GetPathS("", "coin_in"),
+    },
+
+    Def.Sound {
+        Name = "CreditAddedSound",
+        File = THEME:GetPathS("", "credit_add"),
+    },
+	
     InitCommand=function(self)
         if LoadModule("Config.Load.lua")("AutogenBasicMode", "Save/OutFoxPrefs.ini") == true then
             AssembleBasicMode()
@@ -12,9 +26,11 @@ local t = Def.ActorFrame {
     Def.BitmapText {
         Font="Common normal",
         InitCommand=function(self)
-            self:xy(SCREEN_CENTER_X, SCREEN_BOTTOM - 15):zoom(0.8):strokecolor(Color.Black):queuecommand('Refresh')
+            self:xy(SCREEN_CENTER_X, SCREEN_BOTTOM - 19):zoom(0.8):strokecolor(Color.Black):queuecommand('Refresh')
         end,
         
+        OnCommand=function(self) self:playcommand('Refresh') end,
+		
         ScreenChangedMessageCommand=function(self)
             local Screen = SCREENMAN:GetTopScreen()
             local IsVisible = true
@@ -24,21 +40,31 @@ local t = Def.ActorFrame {
             end
             
             self:visible(IsVisible)
+			self:playcommand('Refresh')
         end,
-        
-        OnCommand=function(self) self:playcommand('Refresh') end,
-        CoinInsertedMessageCommand=function(self) self:playcommand('Refresh') end,
+		
+		-- kpump dual-coinsound system
+        CoinInsertedMessageCommand=function(self)
+			local creditCount = math.floor(GAMESTATE:GetCoins() / GAMESTATE:GetCoinsNeededToJoin())
+		
+			if previousCredits ~= nil and creditCount > previousCredits then
+				self:GetParent():GetChild("CreditAddedSound"):play()
+			else
+				self:GetParent():GetChild("CoinInsertedSound"):play()
+			end
+
+			previousCredits = creditCount
+			self:playcommand('Refresh')
+		end,
+		
         PlayerJoinedMessageCommand=function(self) self:playcommand('Refresh') end,
-        ScreenChangedMessageCommand=function(self) self:playcommand('Refresh') end,
         RefreshCreditTextMessageCommand=function(self) self:playcommand('Refresh') end,
 
         RefreshCommand=function(self)
             local CoinMode = GAMESTATE:GetCoinMode()
             local EventMode = GAMESTATE:IsEventMode()
+			local creditCount = math.floor(GAMESTATE:GetCoins() / GAMESTATE:GetCoinsNeededToJoin())
 			
-			
-			local totalCredits = math.floor(GAMESTATE:GetCoins() / GAMESTATE:GetCoinsNeededToJoin())
-            
             -- no one wants screen burn-in at home!
             if CoinMode == "CoinMode_Home" then
                 self:visible(false)
@@ -47,7 +73,7 @@ local t = Def.ActorFrame {
             elseif CoinMode == 'CoinMode_Free' then
                 self:visible(true):diffuse(color("#FFFFFF")):settext("FREE PLAY")
             elseif CoinMode == 'CoinMode_Pay' then
-                local CreditText = "CREDIT(S) " .. totalCredits .. " [" .. GAMESTATE:GetCoinsNeededToJoin() .. "/" .. GAMESTATE:GetCoins() .. "]"
+                local CreditText = "CREDIT(S) " .. creditCount .. " [" .. GAMESTATE:GetCoinsNeededToJoin() .. "/" .. GAMESTATE:GetCoins() .. "]"
                 self:visible(true):settext(CreditText):diffusebottomedge(color("#EECC33")):diffusetopedge(color("#DDFF33"))
             end
         end
