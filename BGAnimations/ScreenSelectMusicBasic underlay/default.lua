@@ -89,32 +89,38 @@ t[#t+1] = Def.Quad {
 t[#t+1] = LoadActor("MusicWheel")..{ Name="MusicWheel" }
 
 t[#t+1] = Def. ActorFrame {
+	-- theres gotta be a more efficient way of recreating the kpump counterpart of this (tiny)
 	Def.ActorFrame {
-        InitCommand=function(self)
+    InitCommand=function(self)
             self:diffusealpha(0):xy(SCREEN_CENTER_X, SCREEN_BOTTOM-164)
             :zoomx(1):zoomy(1.35)
-        end,
-	OnCommand=function(self) self:diffusealpha(0):zoomx(1):zoomy(1):sleep(0.4):linear(0.2):diffusealpha(1):zoomx(0.8):zoomy(0.8):pulse():effectmagnitude(1,1.05,0) end,
+    end,
+		
+	OnCommand=function(self) 
+			self:diffusealpha(0):zoomx(1):zoomy(0.8):sleep(0.45):decelerate(0.2):diffusealpha(1):zoomx(0.8):zoomy(0.8):pulse():effectmagnitude(1,1.05,0) end,
+	
  	SongChosenMessageCommand=function(self)
-            self:stoptweening():easeoutquad(0.2):zoomx(1.2):zoomy(0.8):diffusealpha(0)
-        end,
-        SongUnchosenMessageCommand=function(self)
-            self:stoptweening():zoomx(1.2):zoomy(0.8):easeoutquad(0.2):zoomx(0.8):zoomy(0.8):diffusealpha(1)
-        end,
+            self:stoptweening():easeoutexpo(0.2):zoomx(1.2):zoomy(0.8):diffusealpha(0)
+    end,
+	
+    SongUnchosenMessageCommand=function(self)
+            self:stoptweening():zoomx(1.2):zoomy(0.8):easeoutexpo(0.15):zoomx(0.8):zoomy(0.8):diffusealpha(1)
+    end,
+		
 	CloseGroupWheelMessageCommand=function(self) self:zoomx(1.2):zoomy(0.8):sleep(0.2):easeoutexpo(1):zoomx(0.8):zoomy(0.8) end,
 
 	-- left
 	LoadActor(THEME:GetPathB("", "ScreenSelectMusicFull overlay/tg_pointerwheel_music")) .. {
 		InitCommand=function(self) self:cropleft(0.5) end,
 		ScrollMessageCommand=function(self, params) if params.Direction == 1 then
-		self:stoptweening():x(0):linear(0.1):x(60):decelerate(0.3):x(0) end
+		self:stoptweening():x(0):linear(0.1):x(60):decelerate(0.2):x(0) end
 		end,
 	},
 	-- right
 	LoadActor(THEME:GetPathB("", "ScreenSelectMusicFull overlay/tg_pointerwheel_music")) .. {
 		InitCommand=function(self) self:cropright(0.5) end,
 		ScrollMessageCommand=function(self, params) if params.Direction == -1 then
-		self:stoptweening():x(0):linear(0.1):x(-60):decelerate(0.3):x(0) end
+		self:stoptweening():x(0):linear(0.1):x(-60):decelerate(0.2):x(0) end
 		end,
 	},
 	

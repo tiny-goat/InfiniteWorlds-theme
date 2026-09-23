@@ -61,12 +61,12 @@ local function InputHandler(event)
 end
 
 local t = Def.ActorFrame {
-    -- Since we now use an input handler to exit the screen, play the start sound effect here
-    Def.Sound {
+	-- kpump doesnt have a start sound on evaluation however
+    --[[Def.Sound {
         File=THEME:GetPathS("Common", "Start"),
         IsAction=true,
         OffCommand=function(self) self:play() end
-    },
+    },]]--
 
     LoadActor("EvalLines"),
 

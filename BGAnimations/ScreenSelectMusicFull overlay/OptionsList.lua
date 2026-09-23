@@ -14,7 +14,7 @@ local t = Def.ActorFrame {
     },
 
     Def.Sound {
-        File=THEME:GetPathS("", "MoveCommandWindow"),
+        File=THEME:GetPathS("", "commw_move"),
         OptionsListRightMessageCommand=function(self) self:queuecommand("Refresh") end,
         OptionsListLeftMessageCommand=function(self) self:queuecommand("Refresh") end,
         OptionsListQuickChangeMessageCommand=function(self) self:queuecommand("Refresh") end,
