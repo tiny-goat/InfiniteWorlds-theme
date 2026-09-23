@@ -81,9 +81,9 @@ local t = Def.ActorFrame {
 		        self:GetChild("Tip-Danger"):visible(1)
                 MeterDanger = true
             elseif LifeAmount > 0.33 and MeterDanger and not MeterFail then
-                self:GetChild("BarBody"):stoptweening():linear(0.5):diffusebottomedge(Color.White)
-                self:GetChild("BarEdgeL"):stoptweening():linear(0.5):diffusebottomedge(Color.White)
-                self:GetChild("BarEdgeR"):stoptweening():linear(0.5):diffusebottomedge(Color.White)
+                self:GetChild("BarBody"):stoptweening():linear(0.1):diffusebottomedge(Color.White)
+                self:GetChild("BarEdgeL"):stoptweening():linear(0.1):diffusebottomedge(Color.White)
+                self:GetChild("BarEdgeR"):stoptweening():linear(0.1):diffusebottomedge(Color.White)
 		        self:GetChild("Tip-Danger"):visible(0)
                 MeterDanger = false
             end
@@ -141,13 +141,13 @@ local t = Def.ActorFrame {
 				self:GetChild("Pulse"):finishtweening():linear(0.1):x(-(((BarW - 12) / 2) - ((BarW - 12) * LifeAmount)) - 20)
 			end
 			
-			self:GetChild("Tip"):finishtweening():linear(0.1):x(-(((BarW - 12) / 2) - ((BarW - 12) * LifeAmount)))
-			self:GetChild("Tip-Danger"):finishtweening():linear(0.1):x(-(((BarW - 12) / 2) - ((BarW - 12) * LifeAmount)))
+			self:GetChild("Tip"):finishtweening():linear(0.05):x(-(((BarW - 12) / 2) - ((BarW - 12) * LifeAmount)))
+			self:GetChild("Tip-Danger"):finishtweening():linear(0.05):x(-(((BarW - 12) / 2) - ((BarW - 12) * LifeAmount)))
 			
 			-- garbage to make sure that the lifebar actually tweens properly and doesn't just run away from the edge of the lifebar
 			-- extra tweening despite lifebar being capped out is just to ensure less jank when the lifebar exits a 'hot' state
 			if LifeAmount >=1 and MeterHot and not MeterFail then
-				self:GetChild("Tip"):finishtweening():linear(0.1):x(-(((BarW - 12) / 2) - ((BarW - 12) * 1)))
+				self:GetChild("Tip"):finishtweening():x(-(((BarW - 12) / 2) - ((BarW - 12) * 1.011)))
 				self:GetChild("Pulse"):finishtweening():visible(false)
 				self:GetChild("Tip"):visible(0)
 		    elseif LifeAmount > 0.33 and not MeterDanger and not MeterFail then
@@ -262,8 +262,8 @@ local t = Def.ActorFrame {
         Name="RainbowMeter",
         Texture=THEME:GetPathG("", "UI/RainbowBar"),
         InitCommand=function(self)
-            self:zoomto(BarW - 11, BarH - 16)
-            :texcoordvelocity(-0.9, 0)
+            self:zoomto(BarW - 10, BarH - 16)
+            :texcoordvelocity(0.9, 0)
             :diffusealpha(0):diffuseblink():effectcolor1(color("#FFFFFF")):effectcolor2(color("#bbbbbb")):effectperiod(0.09)
         end
     },
@@ -272,16 +272,15 @@ local t = Def.ActorFrame {
         Name="BarBodyShine",
         Texture=THEME:GetPathG("", "UI/euv_shine_lifebars"),
         InitCommand=function(self)
-            self:setsize(BarW - 12, BarH):diffusealpha(0.5)
+            self:setsize(BarW - 11, BarH):diffusealpha(0.5)
         end
     },
 
-	-- was the oddly specifiic cropping even necessary? i dont know (tiny)
     Def.Sprite {
         Name="Tip",
         Texture=THEME:GetPathG("", "UI/LifeBarTip/normal-tip"),
         InitCommand=function(self)
-            self:zoomto(50, 57):croptop(0.275):cropbottom(0.275)
+            self:zoomto(50, 76)
         end
     },
 
@@ -290,7 +289,7 @@ local t = Def.ActorFrame {
         Texture=THEME:GetPathG("", "UI/LifebarTip/danger-tip"),
         InitCommand=function(self)
 			self:visible(0)
-            self:zoomto(50, 57):croptop(0.275):cropbottom(0.275)
+            self:zoomto(50, 76)
 		end
     },
 	
@@ -299,7 +298,7 @@ local t = Def.ActorFrame {
         Texture=THEME:GetPathG("", "UI/LifebarTip/pro-tip"),
         InitCommand=function(self)
 			self:visible(0)
-            self:zoomto(50, 57):croptop(0.275):cropbottom(0.275)
+            self:zoomto(50, 76)
 		end
     },
 
