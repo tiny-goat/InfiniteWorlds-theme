@@ -93,7 +93,7 @@ t[#t+1] = Def.ActorFrame {
         Name="Title",
         InitCommand=function(self)
             self:zoom(1)
-            :maxwidth(FrameW * 0.5 / self:GetZoom())
+            :maxwidth(FrameW * 0.78 / self:GetZoom())
             :x(0)
             :y(142)
         end,

@@ -15,7 +15,7 @@ local t = Def.ActorFrame {
     Def.BitmapText {
         Font="Combo Numbers",
         Name="Number",
-        OnCommand = function(self) self:zoomy(0.8):zoomx(0.8)end
+        OnCommand = function(self) self:zoom(0.8) end
     },
 
     Def.Sprite {
@@ -47,13 +47,14 @@ local t = Def.ActorFrame {
         c.Number:visible(true)
         c.Number:settext(string.rep("0",3-string.len(iCombo))..iCombo)
 
+        c.ComboLabel:stoptweening():diffuse(params.Misses and Color.Red or Color.White)
+        :glow(1,1,1,0):diffusealpha(1):y(-22):zoomx(1.7):zoomy(1.7):decelerate(0.15):zoom(1.1)
+        :sleep(0.4):decelerate(0.24):glow(1,1,1,0.8):diffusealpha(0):y(-19):zoomx(1.7):zoomy(0)
+		
         c.Number:stoptweening():diffuse(params.Misses and Color.Red or Color.White)
         :zoom(0.8):diffusealpha(1):y(7):decelerate(0.15):y(1):zoom(0.8)
-        :sleep(0.35):accelerate(0.4):diffusealpha(0)
+        :sleep(0.4):smooth(0.24):diffusealpha(0)
         
-        c.ComboLabel:stoptweening():diffuse(params.Misses and Color.Red or Color.White)
-        :diffusealpha(1):y(-22):zoomx(1.6):zoomy(1.6):decelerate(0.15):diffusealpha(1.0):y(-22):zoom(1.1)
-        :sleep(0.35):accelerate(0.35):diffusealpha(0):zoomx(1.5):zoomy(0):y(-12)
     end
 }
 

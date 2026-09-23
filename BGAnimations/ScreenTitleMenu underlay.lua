@@ -17,13 +17,13 @@ local t = Def.ActorFrame {
 	
 	Def.Quad {
 		InitCommand=function(self) self:FullScreen():diffuse(Color.Black):diffusealpha(0) end,
-		OnCommand=function(self) self:sleep(1.8):queuecommand("Flash") end,
+		OnCommand=function(self) self:sleep(2):queuecommand("Flash") end,
 		
 		FlashCommand=function(self)
-			self:sleep(3.4288)
-            :accelerate(0.4):diffuse(Color.Black):diffusealpha(1)
-            :sleep(3.4288)
-            :decelerate(0.1):diffuse(Color.White):accelerate(0.4):diffusealpha(0)
+			self:sleep(3.4)
+            :easeinquad(0.5):diffuse(Color.Black):diffusealpha(1)
+            :sleep(3.4)
+            :easeinquad(0.1):diffuse(Color.White):accelerate(0.4):diffusealpha(0)
             :queuecommand("Flash")
         end,
 	},

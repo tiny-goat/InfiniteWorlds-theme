@@ -95,19 +95,19 @@ return Def.ActorFrame {
         end,
         AnimateCommand=function(self)
             self:diffusealpha(0)
-            :zoom(1.5):y(150):cropright(1):rotationz(-40):rotationy(90)
+            :zoom(1.5):y(-150):cropright(1):rotationz(-40)
             :sleep(1.45):queuecommand("Displace")
             :diffusealpha(1)
             :glow(1,1,1,1)
             :easeoutexpo(1)
-            :zoom(0.9):y(0):cropright(0):rotationz(0):rotationy(0)
+            :zoom(0.9):y(0):cropright(0):rotationz(0)
             :glow(1,1,1,0)
         end,
 		
 		DisplaceCommand=function(self)
-			self:sleep(3.4288)
-            :accelerate(0.4):zoom(1.1):cropleft(1):diffusealpha(0)
-            :sleep(3.4288)
+			self:sleep(3.4)
+            :easeinquad(0.4):zoom(1.1):cropleft(1):diffusealpha(0)
+            :sleep(3.4)
             :decelerate(0.5):zoom(0.9):cropleft(0):diffusealpha(1)
             :queuecommand("Displace")
 		end,
@@ -131,9 +131,9 @@ return Def.ActorFrame {
         end,
 		
 		DisplaceCommand=function(self)
-			self:sleep(3.4288)
-            :accelerate(0.4):zoom(1.1):cropright(1):diffusealpha(0)
-            :sleep(3.4288)
+			self:sleep(3.4)
+            :easeinquad(0.4):zoom(1.1):cropright(1):diffusealpha(0)
+            :sleep(3.4)
             :decelerate(0.5):zoom(0.9):cropright(0):diffusealpha(1)
             :queuecommand("Displace")
 		end,

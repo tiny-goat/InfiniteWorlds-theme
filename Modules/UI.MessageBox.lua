@@ -17,7 +17,7 @@ return function(PosX, PosY, BoxWidth, DelayTime, DisplayTime, Title, Body)
                 :xy(PosX, PosY):MaskSource()
             end,
             OnCommand=function(self)
-                self:sleep(DelayTime):zoomto(BoxWidth + 10, self:GetParent():GetChild("BodyText"):GetHeight()*0.75+20)
+                self:sleep(DelayTime):zoomto(BoxWidth + 35, self:GetParent():GetChild("BodyText"):GetHeight()*0.79+20)
             end
         },
 
@@ -25,11 +25,11 @@ return function(PosX, PosY, BoxWidth, DelayTime, DisplayTime, Title, Body)
             Name="BodyBackground",
             InitCommand=function(self)
                 self:diffuse(0,0,0,0.75):halign(0):valign(0)
-                :xy(PosX, PosY):zoomtowidth(BoxWidth + 10)
+                :xy(PosX, PosY):zoomtowidth(BoxWidth + 38)
             end,
             OnCommand=function(self)
                 self:sleep(DelayTime):easeoutexpo(0.5)
-                :zoomtoheight(self:GetParent():GetChild("BodyText"):GetHeight()*0.75+20)
+                :zoomtoheight(self:GetParent():GetChild("BodyText"):GetHeight()*0.79+20)
                 :sleep(DisplayTime):queuecommand("Off")
             end,
             OffCommand=function(self)
@@ -48,10 +48,10 @@ return function(PosX, PosY, BoxWidth, DelayTime, DisplayTime, Title, Body)
             end,
             OnCommand=function(self)
                 TitleText = self:GetParent():GetChild("TitleText")
-                TargetWidth = TitleText:GetWidth() * 0.5 + 11
+                TargetWidth = TitleText:GetWidth() * 0.64 + 11
                 if TargetWidth > (BoxWidth) then TargetWidth = BoxWidth + 5 end
                 self:sleep(DelayTime)
-                :zoomto(TargetWidth, TitleText:GetHeight() * 0.75)
+                :zoomto(TargetWidth, TitleText:GetHeight() * 0.9)
                 :easeoutexpo(0.5)
                 :y(PosY - TitleText:GetHeight() * 0.75)
                 :sleep(DisplayTime):queuecommand("Off")
@@ -66,7 +66,7 @@ return function(PosX, PosY, BoxWidth, DelayTime, DisplayTime, Title, Body)
             Name="TitleText",
             Font="inter extrabold 40px",
             InitCommand=function(self)
-                self:zoom(0.5):skewx(-0.1):halign(0):valign(0):shadowlength(1):diffusealpha(0)
+                self:zoom(0.6):halign(0):valign(0):shadowlength(1):diffusealpha(0)
                 :maxwidth(BoxWidth / 0.5 - 5)
                 :xy(PosX + 5, PosY + 5)
                 :settext(Title)
@@ -76,7 +76,7 @@ return function(PosX, PosY, BoxWidth, DelayTime, DisplayTime, Title, Body)
                 self:sleep(DelayTime)
                 :diffusealpha(1)
                 :easeoutexpo(0.5)
-                :y(PosY - 18)
+                :y(PosY - 20)
                 :sleep(DisplayTime):queuecommand("Off")
             end,
             OffCommand=function(self)
@@ -89,7 +89,7 @@ return function(PosX, PosY, BoxWidth, DelayTime, DisplayTime, Title, Body)
             Name="BodyText",
             Font="Montserrat semibold 20px",
             InitCommand=function(self)
-                self:zoom(0.75):halign(0):valign(0)
+                self:zoom(0.8):halign(0):valign(0)
                 :wrapwidthpixels((BoxWidth/0.75) - 5)
                 :xy(-BoxWidth - 10, PosY + 10)
                 :settext(Body)

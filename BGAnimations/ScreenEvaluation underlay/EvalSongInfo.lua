@@ -32,22 +32,23 @@ return Def.ActorFrame {
 
     Def.Sprite {
         Texture=THEME:GetPathG("", "Evaluation/tg_songinfo"),
-	InitCommand=function(self) self:zoomx(0):zoomy(0.5):sleep(0.3):easeoutexpo(0.3):zoomx(0.5) end
+	InitCommand=function(self) self:zoomx(0):zoomy(0.5):fadeleft(0.34):faderight(0.34):sleep(0.1):smooth(0.3):zoomx(0.7) end
     },
 
     Def.BitmapText {
         Font="inter extrabold 40px",
         Name="Title",
         InitCommand=function(self)
-            self:zoom(0.3):valign(0)
-            :diffuse(Color.Black)
-	    :diffusealpha(0)
-            :y(-30)
-	    :sleep(0.4)
-	    :easeoutexpo(0.3)
-	    :zoom(0.7)
-	    :maxwidth(FrameW * 0.79 / self:GetZoom())
-	    :diffusealpha(1)
+            self:valign(0)
+			:maxwidth(FrameW * 1.58 / self:GetZoom())
+            :diffuse(Color.White)
+			:diffusealpha(0)
+			:zoom(0.7)
+            :y(-25)
+			:sleep(0.4)
+			:linear(0.5)
+			:y(-30)
+			:diffusealpha(1)
         end
     },
 
@@ -55,15 +56,16 @@ return Def.ActorFrame {
         Font="inter medium 25px",
         Name="Artist",
         InitCommand=function(self)
-            self:zoom(0.1):valign(1)
+            self:valign(1)
             :maxwidth(FrameW * 0.5 / self:GetZoom())
-            :diffuse(Color.Black)
-   	    :diffusealpha(0)
+            :diffuse(Color.White)
+			:diffusealpha(0)
+			:zoom(0.7)
+            :y(15)
+			:sleep(0.4)
+			:linear(0.5)
             :y(24)
-	    :sleep(0.45)
-	    :easeoutexpo(0.3)
-	    :diffusealpha(1)
-	    :zoom(0.7)
+			:diffusealpha(1)
         end
     },
 
@@ -71,10 +73,17 @@ return Def.ActorFrame {
         Font="inter medium 25px",
         Name="Length",
         InitCommand=function(self)
-            self:zoom(0):sleep(0.50):easeoutexpo(0.35):zoom(0.7):halign(1):valign(1)
+            self:halign(1):valign(1)
             :maxwidth(FrameW * 0.2 / self:GetZoom())
-            :diffuse(Color.Black)
-            :xy(FrameW / 2 - 36, 24)
+            :diffuse(Color.White)
+			:diffusealpha(0)
+			:zoom(0.7)
+			:y(24)
+            :x(FrameW / 2 + 30)
+			:sleep(0.4)
+			:linear(0.5)
+            :x(FrameW / 2 - 36)
+			:diffusealpha(1)
         end
     },
 
@@ -82,10 +91,17 @@ return Def.ActorFrame {
         Font="inter medium 25px",
         Name="BPM",
         InitCommand=function(self)
-            self:zoom(0):sleep(0.50):easeoutexpo(0.35):zoom(0.7):halign(0):valign(1)
+            self:halign(0):valign(1)
             :maxwidth(FrameW * 0.175 / self:GetZoom())
-            :diffuse(Color.Black)
-            :xy(-FrameW / 2 + 36, 24)
+            :diffuse(Color.White)
+			:diffusealpha(0)
+			:zoom(0.7)
+			:y(24)
+            :x(-FrameW / 2 + 30)
+			:sleep(0.4)
+			:linear(0.5)
+            :x(-FrameW / 2 + 36)
+			:diffusealpha(1)
         end
     }
 }

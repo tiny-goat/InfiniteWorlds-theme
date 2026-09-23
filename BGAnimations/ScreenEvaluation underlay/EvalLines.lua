@@ -10,7 +10,7 @@ Length = Length + 4
 
 local RowAmount = Length
 local RowH = 40
-local RowX = IsUsingWideScreen() and 490 or 380
+local RowX = IsUsingWideScreen() and 480 or 380
 local RowY = SCREEN_CENTER_Y - (RowAmount * RowH) / 2
 
 -- And a function to make even better use out of the table.
@@ -78,7 +78,7 @@ for i = 1, RowAmount do
         Def.Sprite {
             Texture=THEME:GetPathG("", "Evaluation/EvalRow"),
             InitCommand=function(self)
-                self:xy(SCREEN_CENTER_X, RowY + RowH * (i - 1) + 24):zoomy(0):sleep(0.2):easeoutexpo(0.9):xy(SCREEN_CENTER_X, RowY + RowH * (i - 1) + 24):zoomx(0.92):zoomy(0.9)
+                self:xy(SCREEN_CENTER_X, RowY + RowH * (i - 1) + 24):zoomy(0):sleep(0.2):easeoutexpo(0.5):xy(SCREEN_CENTER_X, RowY + RowH * (i - 1) + 24):zoomx(0.92):zoomy(0.85)
             end
         }
     }
@@ -163,13 +163,13 @@ t[#t+1] = Def.ActorFrame {
     Def.Sprite {
         Texture=THEME:GetPathG("", "Evaluation/tg_curve_glow"),
         InitCommand=function(self)
-            self:y(SCREEN_CENTER_Y+4):x(SCREEN_CENTER_X):diffusealpha(0):diffuseleftedge(color("#16EEFFFF")):diffuserightedge(color("#EE16FFFF")):sleep(0.2):zoomx(6):zoomy(0.64):easeoutexpo(0.2):zoomx(RowAmount == 9 and 0.78 or 0.7):zoomy(RowAmount == 9 and 0.71 or 0.64):diffusealpha(1)
+            self:y(SCREEN_CENTER_Y+4):x(SCREEN_CENTER_X):diffusealpha(0):diffuseleftedge(color("#16EEFFFF")):diffuserightedge(color("#EE16FFFF")):zoomx(6):zoomy(0.64):sleep(0.1):easeoutexpo(0.5):zoomx(RowAmount == 9 and 0.78 or 0.7):zoomy(RowAmount == 9 and 0.71 or 0.63):diffusealpha(1)
         end,
     },
     Def.Sprite {
         Texture=THEME:GetPathG("", "Evaluation/tg_eval_curve"),
         InitCommand=function(self)
-            self:y(SCREEN_CENTER_Y+4):x(SCREEN_CENTER_X):zoomy(0.65):zoomx(6.3):sleep(0.1):easeoutexpo(0.5):zoomy(RowAmount == 9 and 0.71 or 0.64):zoomx(RowAmount == 9 and 0.78 or 0.7)
+            self:y(SCREEN_CENTER_Y+4):x(SCREEN_CENTER_X):zoomy(0.6):zoomx(6.3):sleep(0.1):easeoutexpo(0.5):zoomy(RowAmount == 9 and 0.71 or 0.63):zoomx(RowAmount == 9 and 0.78 or 0.7)
         end,
     },
 }
@@ -178,15 +178,16 @@ t[#t+1] = Def.ActorFrame {
 for i = 1, RowAmount do
     t[#t+1] = Def.ActorFrame {
         InitCommand=function(self)
-            self:xy(SCREEN_CENTER_X, RowY + RowH * (i - 1) + 22)
-            :zoomy(0):diffusealpha(1):sleep(0.5 + i * 0.1):easeoutexpo(0.1):zoomy(1):diffusealpha(1)
+            self:x(SCREEN_CENTER_X):y(RowY + RowH * (i - 1) + 15)
+            :zoomy(0):diffusealpha(1):sleep(0.5 + i * 0.1):smooth(0.2):y(RowY + RowH * (i - 1) + 22):zoomy(1):diffusealpha(1)
         end,
 
-        Def.BitmapText {
+
+		Def.BitmapText {
             Font="inter medium 25px",
             Text=GetJLineValue(Name[i], PLAYER_1),
             InitCommand=function(self)
-                self:x(-RowX):zoom(0.95)
+                self:x(-RowX):zoom(0.95):strokecolor(Color.Black)
                 :halign(0):maxwidth(360):visible(GAMESTATE:IsSideJoined(PLAYER_1))
                 if Name[i] == "Score" then
                     ColourHighScoreCount(self)

@@ -46,9 +46,9 @@ local t = Def.ActorFrame {
         self:queuecommand("Message1")
     end,
 
-    LoadModule("UI.MessageBox.lua")(SCREEN_CENTER_X - 320, SCREEN_CENTER_Y / 1.75, 290, 2, 14, Title1, Body1),
-    LoadModule("UI.MessageBox.lua")(SCREEN_CENTER_X - 320, SCREEN_CENTER_Y / 1.75, 290, 17, 5, Title2, Body2),
-    LoadModule("UI.MessageBox.lua")(SCREEN_CENTER_X - 320, SCREEN_CENTER_Y / 1.75, 290, 23, 6, Title3, Body3),
+    LoadModule("UI.MessageBox.lua")(SCREEN_CENTER_X - 570, SCREEN_CENTER_Y / 1.97, 450, 2, 14, Title1, Body1),
+    LoadModule("UI.MessageBox.lua")(SCREEN_CENTER_X - 570, SCREEN_CENTER_Y / 1.97, 400, 17, 5, Title2, Body2),
+    LoadModule("UI.MessageBox.lua")(SCREEN_CENTER_X - 570, SCREEN_CENTER_Y / 1.97, 400, 23, 6, Title3, Body3),
 
     Message1Command=function(self)
 
@@ -57,7 +57,7 @@ local t = Def.ActorFrame {
     Def.Quad {
         Name="HowToPlayBarBG",
         InitCommand=function(self)
-            self:halign(0):valign(0):diffuse(0,0,0,0.8):zoomto(550, 65):xy(70, 80):cropright(1)
+            self:halign(0):valign(0):diffuse(0,0,0,0.8):zoomto(550, 65):xy(70, 69):cropright(1)
             :sleep(1.9)
             :easeoutquad(0.5):cropright(0)
         end
@@ -67,12 +67,12 @@ local t = Def.ActorFrame {
         Name="HowToPlay",
         Texture=THEME:GetPathG("", "UI/HowToPlay"),
         InitCommand=function(self)
-            self:diffusealpha(0):cropright(1):sleep(0.25):xy(SCREEN_CENTER_X - self:GetWidth() / 2, SCREEN_CENTER_Y - self:GetHeight() / 2 - 20):halign(0):valign(0)
+            self:diffusealpha(0):cropright(1):sleep(0.25):xy(SCREEN_CENTER_X - self:GetWidth() / 2, SCREEN_CENTER_Y - self:GetHeight() / 2):halign(0):valign(0)
             :easeoutquad(0.5)
-            :y(SCREEN_CENTER_Y - self:GetHeight() / 2):cropright(0):diffusealpha(1)
+            :cropright(0):diffusealpha(1)
             :sleep(1)
             :easeinoutquad(0.5)
-            :xy(90, 80):zoom(0.5)
+            :xy(90, 69):zoom(0.5)
         end
     },
 
