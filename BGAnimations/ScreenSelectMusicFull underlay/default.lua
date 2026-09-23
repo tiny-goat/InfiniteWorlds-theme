@@ -174,17 +174,17 @@ t[#t+1] = Def.ActorFrame {
         SongUnchosenMessageCommand=function(self)
             self:stoptweening():easeoutexpo(0.7):zoom(1)
         end,
-        
-        LoadActor("PadIcons") .. {
-            InitCommand=function(self) self:diffusealpha(0) end,
-			SongChosenMessageCommand=function(self) self:stoptweening():easeoutexpo(0.3):diffusealpha(1) end,
-            SongUnchosenMessageCommand=function(self) self:stoptweening():diffusealpha(0) end
-        },
-
+		
         LoadActor("SongsInfo") .. {
             InitCommand=function(self) self:zoom(0.8):y(-120):diffusealpha(0):easeoutexpo(1):y(-100):diffusealpha(1) end,
 			SongChosenMessageCommand=function(self) self:stoptweening():easeoutexpo(0.8):y(-110) end,
             SongUnchosenMessageCommand=function(self) self:stoptweening():easeoutexpo(0.8):y(-100) end
+        },
+		
+		LoadActor("PadIcons") .. {
+            InitCommand=function(self) self:diffusealpha(0) end,
+			SongChosenMessageCommand=function(self) self:stoptweening():easeoutexpo(0.3):y(0):diffusealpha(1) end,
+            SongUnchosenMessageCommand=function(self) self:stoptweening():easeoutexpo(0.3):y(8):diffusealpha(0) end
         },
         
         Def.ActorFrame {

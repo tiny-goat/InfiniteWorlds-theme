@@ -81,10 +81,10 @@ t[#t+1] = Def.ActorFrame {
     Def.Quad {
         InitCommand=function(self)
             self:zoomto(FrameW, 50):y(FrameH / 2):valign(1)
-            :diffuse(Color.Black):diffusealpha(0.5):fadeleft(0.2):faderight(0.2)
+            :diffuse(Color.Black):diffusealpha(0.5):fadeleft(0.05):faderight(0.05)
         end,
         CurrentSongChangedMessageCommand=function(self)
-            self:stoptweening():zoomto(30, 67):y(FrameH / 1.84):diffusealpha(0.8):easeoutquad(0.4):zoomto(FrameW, 67):diffusealpha(0.9)
+            self:stoptweening():zoomto(20, 67):y(FrameH / 1.84):diffusealpha(0.8):easeoutquad(0.4):zoomto(FrameW * 1.38, 67):diffusealpha(0.9)
         end
     },
 
@@ -142,7 +142,7 @@ t[#t+1] = Def.ActorFrame {
         InitCommand=function(self)
             self:zoom(1):halign(0)
             :x(-265)
-            :y(142)
+            :y(158)
 
             local Hearts = GAMESTATE:GetNumStagesLeft(PLAYER_1) + GAMESTATE:GetNumStagesLeft(PLAYER_2)
             self:settext(" " .. (GAMESTATE:IsEventMode() and "∞" or Hearts))
@@ -157,7 +157,7 @@ t[#t+1] = Def.ActorFrame {
         InitCommand=function(self)
             self:zoom(0.2):halign(0)
             :x(-315)
-            :y(144)
+            :y(160)
 	end,
 	CurrentSongChangedMessageCommand=function(self)
             self:stoptweening():x(-244):diffusealpha(0):sleep(0.18):easeoutexpo(0.6):diffusealpha(1):x(-315) end

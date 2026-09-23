@@ -7,7 +7,7 @@ for pn in ivalues(GAMESTATE:GetEnabledPlayers()) do
     t[#t+1] = Def.Sprite {
         Name="Pad_"..pn,
         InitCommand=function(self)
-            self:zoom(0.4):y(70):x(307 * (pn == PLAYER_2 and 1 or -1)):queuecommand("Refresh")
+            self:zoom(0.4):y(20):x(307 * (pn == PLAYER_2 and 1 or -1)):queuecommand("Refresh")
         end,
         
         SongChosenMessageCommand=function(self)
@@ -18,7 +18,7 @@ for pn in ivalues(GAMESTATE:GetEnabledPlayers()) do
         end,
         SongUnchosenMessageCommand=function(self)
             SongIsChosen = false
-            self:stoptweening():easeoutexpo(0.5):y(70)
+            self:stoptweening():easeoutexpo(0.5):y(20)
         end,
         CurrentChartChangedMessageCommand=function(self) if SongIsChosen then self:playcommand("Refresh") end end,
         
