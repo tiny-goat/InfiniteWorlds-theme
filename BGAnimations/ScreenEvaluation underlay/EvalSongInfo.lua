@@ -92,7 +92,7 @@ return Def.ActorFrame {
         Name="BPM",
         InitCommand=function(self)
             self:halign(0):valign(1)
-            :maxwidth(FrameW * 0.175 / self:GetZoom())
+            :maxwidth(FrameW * 0.2 / self:GetZoom())
             :diffuse(Color.White)
 			:diffusealpha(0)
 			:zoom(0.7)
