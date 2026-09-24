@@ -178,8 +178,8 @@ t[#t+1] = Def.ActorFrame {
 for i = 1, RowAmount do
     t[#t+1] = Def.ActorFrame {
         InitCommand=function(self)
-            self:x(SCREEN_CENTER_X):y(RowY + RowH * (i - 1) + 15)
-            :zoomy(0):diffusealpha(1):sleep(0.5 + i * 0.1):smooth(0.2):y(RowY + RowH * (i - 1) + 22):zoomy(1):diffusealpha(1)
+            self:x(SCREEN_CENTER_X):y(RowY + RowH * (i - 1) + 22)
+            :zoomy(0):diffusealpha(0):sleep(0.6+i*0.1):decelerate(0.1):zoomy(1):diffusealpha(1)
         end,
 
 
